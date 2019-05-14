@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="assets/css/elements.min.css">
+    <link rel="stylesheet" href="assets/css/utils.min.css">
+    <link rel="stylesheet" href="assets/css/layout.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+</head>
+
+<body class="nav-padding">
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fa fa-truck-pickup"></i>
+            </div>
+            <ul class="menu mr-2">
+                <li><a href="index.html"><i class="fa fa-home mr-2"></i>Home</a></li>
+                <li><a href="admin.html"><i class="fa fa-user mr-2"></i>Admin</a></li>
+                <li><a class="active" href="dashboard.html"><i class="fa fa-chart-bar mr-2"></i>Dashboard</a></li>
+                <li><a href="#"><i class="fa fa-sign-out-alt mr-2"></i>Logout</a></li>
+            </ul>
+        </div>
+    </nav>
+    <main>
+        <div class="container">
+            <div class="flex justify-between align-center mb-4">
+                <div class="tab-items">
+                    <div class="tab-item active">My Ads</div>
+                    <div class="tab-item">Orders</div>
+                </div>
+                <button class="btn primary md" id="addModalTrigger"><i class="fa fa-plus-circle mr-2"></i>
+                    New Ad
+                </button>
+            </div>
+            <div class="tab-views">
+                <div class="tab-view active">
+                    <div class="dashboard-items">
+                        <div class="dashboard-item">
+                            <div class="flex justify-between">
+                                <div>
+                                    <div class="title">Toyota Camry 2.4 XLE - Used</div>
+                                    <div class="subtitle">#234,000</div>
+                                </div>
+                                <div>
+                                    <button class="btn primary sm outline" id="offersModalTrigger">
+                                        <i class="fa fa-handshake"></i> 3 offers</button>
+                                </div>
+                            </div>
+                            <div class="actions flex justify-between">
+                                <div>
+                                    <a href="car.html" class="btn primary sm outline">View</a>
+                                    <button class="btn primary sm outline updatePriceModalTrigger">Update
+                                        Price</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-item">
+                            <div class="flex justify-between">
+                                <div>
+                                    <div class="title">Toyota Camry 2.4 XLE - New</div>
+                                    <div class="subtitle">#234,000</div>
+                                </div>
+                                <div>
+                                    <button class="btn primary sm outline">Mark as sold</button>
+                                </div>
+                            </div>
+                            <div class="actions flex justify-between">
+                                <div>
+                                    <a href="car.html" class="btn primary sm outline">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-item">
+                            <div class="flex justify-between">
+                                <div>
+                                    <div class="title">Toyota Camry 2.4 XLE - New</div>
+                                    <div class="subtitle">#234,000</div>
+                                </div>
+                                <div>
+                                    <div class="chip green">Sold <i class="fa fa-check ml-2"></i></div>
+                                </div>
+                            </div>
+                            <div class="actions flex justify-between">
+                                <div>
+                                    <a href="car.html" class="btn primary sm outline">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-view">
+                    <div class="dashboard-items">
+                        <div class="dashboard-item">
+                            <div class="flex justify-between">
+                                <div>
+                                    <div class="title">Toyota Camry 2.4 XLE - Used</div>
+                                    <div class="subtitle">#234,000</div>
+                                </div>
+                                <div>
+                                    <div class="chip red">Rejected</div>
+                                </div>
+                            </div>
+                            <div class="actions flex justify-between">
+                                <div>
+                                    <a href="car.html" class="btn primary sm outline">View</a>
+                                    <button class="btn primary sm outline updatePriceModalTrigger">
+                                        Update Price</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-item">
+                            <div class="flex justify-between">
+                                <div>
+                                    <div class="title">Toyota Camry 2.4 XLE - New</div>
+                                    <div class="subtitle">#234,000</div>
+                                </div>
+                                <div>
+                                    <div class="chip green">Accepted</div>
+                                </div>
+                            </div>
+                            <div class="actions flex justify-between">
+                                <div>
+                                    <a href="car.html" class="btn primary sm outline">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dashboard-item">
+                            <div class="flex justify-between">
+                                <div>
+                                    <div class="title">Toyota Camry 2.4 XLE - New</div>
+                                    <div class="subtitle">#234,000</div>
+                                </div>
+                                <div>
+                                    <div class="chip blue">Pending</div>
+                                </div>
+                            </div>
+                            <div class="actions flex justify-between">
+                                <div>
+                                    <a href="car.html" class="btn primary sm outline">View</a>
+                                    <button class="btn primary sm outline updatePriceModalTrigger">Update
+                                        Price</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal-overlay" id="addModal">
+        <div class="card">
+            <div class="card-body">
+                <div class="title flex justify-between align-center mb-4">
+                    Post New Ad
+                    <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="form-group">
+                    <label class="input-box">
+                        <input type="text" class="control" placeholder=" " name="manufacturer">
+                        <span class="label-text">Manufacturer</span>
+                    </label>
+                    <label class="input-box">
+                        <input type="text" class="control" placeholder=" " name="model">
+                        <span class="label-text">Model</span>
+                    </label>
+                    <label class="input-box">
+                        <input type="number" class="control" placeholder=" " name="price">
+                        <span class="label-text">Price</span>
+                    </label>
+                    <label class="input-box">
+                        <select class="control" name="state">
+                            <option value="used">Used</option>
+                            <option value="new">New</option>
+                        </select>
+                        <span class="label-text">State</span>
+                    </label>
+                    <label class="input-box">
+                        <select class="control" name="bodyType">
+                            <option value="car">Car</option>
+                            <option value="truck">Truck</option>
+                            <option value="van">Van</option>
+                        </select>
+                        <span class="label-text">Body Type</span>
+                    </label>
+                </div>
+                <button class="btn lg primary outline mt-2">Post Ad</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="updatePriceModal">
+        <div class="card">
+            <div class="card-body">
+                <div class="title flex justify-between align-center mb-4">
+                    Update Price
+                    <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="form-group">
+                    <label class="input-box">
+                        <input type="number" class="control" placeholder=" " name="price">
+                        <span class="label-text">Price</span>
+                    </label>
+                </div>
+                <button class="btn lg primary outline mt-2">Update</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="offersModal">
+        <div class="card">
+            <div class="card-body">
+                <div class="title flex justify-between align-center mb-4">
+                    Offers
+                    <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
+                </div>
+                <div class="offer flex justify-between">
+                    <div>
+                        <div class="price">#200,000</div>
+                        <div class="name"><i class="fa fa-user-circle mr-2"></i> abcxyz</div>
+                    </div>
+                    <div class="flex">
+                        <button class="btn sm primary outline">Accept</button>
+                        <button class="btn sm red outline ml-1">Reject</button>
+                    </div>
+                </div>
+                <div class="offer flex justify-between">
+                    <div>
+                        <div class="price">#200,000</div>
+                        <div class="name"><i class="fa fa-user-circle mr-2"></i> abcxyz</div>
+                    </div>
+                    <div class="flex">
+                        <button class="btn sm primary outline">Accept</button>
+                        <button class="btn sm red outline ml-1">Reject</button>
+                    </div>
+                </div>
+                <div class="offer flex justify-between">
+                    <div>
+                        <div class="price">#200,000</div>
+                        <div class="name"><i class="fa fa-user-circle mr-2"></i> abcxyz</div>
+                    </div>
+                    <div class="flex">
+                        <button class="btn sm primary outline">Accept</button>
+                        <button class="btn sm red outline ml-1">Reject</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="assets/js/modal.js"></script>
+    <script>
+        // MODALS
+        const addModal = new ModalController(document.getElementById('addModal'));
+        const updatePriceModal = new ModalController(document.getElementById('updatePriceModal'));
+        const offersModal = new ModalController(document.getElementById('offersModal'));
+
+        document.getElementById('addModalTrigger').addEventListener('click', addModal.show);
+        document.getElementById('offersModalTrigger').addEventListener('click', offersModal.show);
+        document.querySelectorAll('.updatePriceModalTrigger').forEach((el) => el.addEventListener('click',
+            updatePriceModal.show));
+
+        // TABS
+        const tabItems = document.querySelector('.tab-items');
+        const tabItemsChildren = [...tabItems.children];
+
+        tabItemsChildren.forEach(el => el.addEventListener('click', (e) => {
+            const tabViews = document.querySelector('.tab-views');
+            const index = tabItemsChildren.indexOf(e.target);
+
+            const activeView = tabViews.querySelector('.active');
+            if (activeView) activeView.classList.remove('active');
+
+            const activeTab = tabItems.querySelector('.active');
+            if (activeTab) activeTab.classList.remove('active');
+
+            [...tabViews.children][index].classList.add('active');
+            tabItemsChildren[index].classList.add('active');
+        }));
+    </script>
+</body>
+
+</html>
