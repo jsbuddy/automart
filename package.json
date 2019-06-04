@@ -1,0 +1,36 @@
+{
+  "name": "automart",
+  "version": "1.0.0",
+  "description": "Auto Mart is an online market place for automobiles of diverse makes, model or body type.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --exec babel-node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jsbuddy/automart.git"
+  },
+  "author": "Jude Francis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jsbuddy/automart/issues"
+  },
+  "homepage": "https://github.com/jsbuddy/automart#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/register": "^7.4.4",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.3",
+    "nodemon": "^1.19.1"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1"
+  }
+}
