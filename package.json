@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore .",
-    "test": "mocha --require @babel/register 'src/**/**spec.js'",
+    "test": "mocha --exit --require @babel/register 'src/**/**spec.js'",
     "dev": "nodemon --exec babel-node src/index.js"
   },
   "repository": {
