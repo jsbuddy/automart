@@ -152,7 +152,7 @@ describe('/api', () => {
       request(app).delete(`/api/v1/car/${carId}`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('car');
+          expect(res.body).to.have.property('success').that.equals(true);
           done();
         });
     });
