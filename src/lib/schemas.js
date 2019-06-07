@@ -18,7 +18,7 @@ export const userSigninSchema = {
   },
 };
 
-export const carSchema = {
+export const carPostSchema = {
   body: {
     state: Joi.string().valid('new', 'used').required(),
     price: Joi.number().required(),
@@ -26,6 +26,17 @@ export const carSchema = {
     model: Joi.string().trim().required(),
     bodyType: Joi.string().valid('car', 'truck', 'trailer', 'van').required(),
     status: Joi.string().valid('available', 'sold').default('available'),
+  },
+};
+
+export const carPatchSchema = {
+  body: {
+    state: Joi.string().valid('new', 'used'),
+    price: Joi.number(),
+    manufacturer: Joi.string().trim(),
+    model: Joi.string().trim(),
+    bodyType: Joi.string().valid('car', 'truck', 'trailer', 'van'),
+    status: Joi.string().valid('available', 'sold'),
   },
 };
 
