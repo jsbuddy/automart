@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
 import api from './api';
+import swagger from './docs/swagger'
 
 const app = express();
 const port = process.env.PORT || 2999;
@@ -17,6 +18,7 @@ if (dev) {
   app.use(morgan('common'));
 }
 
+app.use('/docs', swagger);
 app.use('/api', api);
 
 app.use((err, req, res, next) => {
