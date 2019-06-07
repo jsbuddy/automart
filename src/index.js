@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import api from './api';
 import swagger from './docs/swagger'
+import path from 'path';
 
 const app = express();
 const port = process.env.PORT || 2999;
@@ -20,6 +21,9 @@ if (dev) {
 
 app.use('/docs', swagger);
 app.use('/api', api);
+
+app.use(express.static(path.resolve(__dirname, '../ui')));
+app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'build', '../ui/index.html')))
 
 app.use((err, req, res, next) => {
   if (err.isBoom) {
