@@ -25,6 +25,8 @@ app.use('/api', api);
 app.use(express.static(path.resolve(__dirname, '../ui')));
 app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'build', '../ui/index.html')));
 
+app.all('*', (req, res) => res.status(404).json({ success: false, message: 'Unknown resource endpoint' }));
+
 app.use((err, req, res, next) => {
   if (err.isBoom) {
     return res.status(err.output.statusCode).json(err.data[0].message);
