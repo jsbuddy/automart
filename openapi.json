@@ -1,287 +1,333 @@
 {
-  "openapi" : "3.0.0",
-  "info" : {
-    "title" : "Automart API",
-    "description" : "Auto Mart is an online market place for automobiles of diverse makes, model or body type. With Auto Mart, users can sell their cars or buy from trusted dealerships or private sellers.\n",
-    "contact" : {
-      "email" : "judecodes@yahoo.com"
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Automart API",
+    "description": "Auto Mart is an online market place for automobiles of diverse makes, model or body type. With Auto Mart, users can sell their cars or buy from trusted dealerships or private sellers.\n",
+    "contact": {
+      "email": "judecodes@yahoo.com"
     },
-    "version" : "1.0.0"
+    "version": "1.0.0"
   },
-  "servers" : [ {
-    "url" : "https://virtserver.swaggerhub.com/jsbuddy/automart/1.0.0",
-    "description" : "SwaggerHub API Auto Mocking"
-  } ],
-  "tags" : [ {
-    "name" : "user",
-    "description" : "Operations about user"
-  }, {
-    "name" : "car",
-    "description" : "Every car ads"
-  }, {
-    "name" : "order",
-    "description" : "Access to Car orders"
-  }, {
-    "name" : "flag",
-    "description" : "Operations about fraudulent cars"
-  } ],
-  "paths" : {
-    "/flag" : {
-      "post" : {
-        "tags" : [ "flag" ],
-        "summary" : "Report a vehicle as fraudulent",
-        "operationId" : "createFlag",
-        "requestBody" : {
-          "$ref" : "#/components/requestBodies/Flag"
+  "servers": [
+    {
+      "url": "https://automartt.herokuapp.com/api/v1",
+      "description": "Production server (uses live data and requires authentication)"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user",
+      "description": "Operations on user"
+    },
+    {
+      "name": "car",
+      "description": "Operations on car ads"
+    },
+    {
+      "name": "order",
+      "description": "Operations on car orders"
+    },
+    {
+      "name": "flag",
+      "description": "Operations on fraudulent cars"
+    }
+  ],
+  "paths": {
+    "/flag": {
+      "post": {
+        "tags": [
+          "flag"
+        ],
+        "summary": "Report a vehicle as fraudulent",
+        "operationId": "createFlag",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Flag"
         },
-        "responses" : {
-          "201" : {
-            "description" : "Created successfully"
+        "responses": {
+          "201": {
+            "description": "Created successfully"
           },
-          "405" : {
-            "description" : "Invalid input"
+          "405": {
+            "description": "Invalid input"
           }
         }
       }
     },
-    "/car" : {
-      "get" : {
-        "tags" : [ "car" ],
-        "summary" : "Get all cars",
-        "operationId" : "AllCars",
-        "parameters" : [ {
-          "name" : "status",
-          "in" : "query",
-          "description" : "Status to filter by",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "string",
-            "enum" : [ "available", "sold" ]
+    "/car": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Get all cars",
+        "operationId": "AllCars",
+        "parameters": [
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Status to filter by",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "available",
+                "sold"
+              ]
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "description": "State to filter by",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "available",
+                "new"
+              ]
+            }
+          },
+          {
+            "name": "manufacturer",
+            "in": "query",
+            "description": "Manufacturer to filter by",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "description": "Model to filter by",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "bodyType",
+            "in": "query",
+            "description": "Body Type to filter by",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "car",
+                "truck",
+                "trailer",
+                "van"
+              ]
+            }
+          },
+          {
+            "name": "minPrice",
+            "in": "query",
+            "description": "Minimum price to filter by",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "maxPrice",
+            "in": "query",
+            "description": "Maximum price to filter by",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "number"
+            }
           }
-        }, {
-          "name" : "state",
-          "in" : "query",
-          "description" : "State to filter by",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "string",
-            "enum" : [ "available", "new" ]
-          }
-        }, {
-          "name" : "manufacturer",
-          "in" : "query",
-          "description" : "Manufacturer to filter by",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "model",
-          "in" : "query",
-          "description" : "Model to filter by",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "string"
-          }
-        }, {
-          "name" : "bodyType",
-          "in" : "query",
-          "description" : "Body Type to filter by",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "string",
-            "enum" : [ "car", "truck", "trailer", "van" ]
-          }
-        }, {
-          "name" : "minPrice",
-          "in" : "query",
-          "description" : "Minimum price to filter by",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "number"
-          }
-        }, {
-          "name" : "maxPrice",
-          "in" : "query",
-          "description" : "Maximum price to filter by",
-          "required" : false,
-          "style" : "form",
-          "explode" : true,
-          "schema" : {
-            "type" : "number"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Cars found",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/Car"
+        ],
+        "responses": {
+          "200": {
+            "description": "Cars found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Car"
                   }
                 }
               }
             }
           },
-          "204" : {
-            "description" : "No cars"
+          "204": {
+            "description": "No cars"
           }
         }
       },
-      "post" : {
-        "tags" : [ "car" ],
-        "summary" : "Create a car sale ad",
-        "operationId" : "createCar",
-        "requestBody" : {
-          "$ref" : "#/components/requestBodies/Car"
+      "post": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Create a car sale ad",
+        "operationId": "createCar",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Car"
         },
-        "responses" : {
-          "201" : {
-            "description" : "Created successfully",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Car"
+        "responses": {
+          "201": {
+            "description": "Created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
                 }
               }
             }
           },
-          "400" : {
-            "description" : "Invalid username/password supplied"
+          "400": {
+            "description": "Invalid username/password supplied"
           },
-          "405" : {
-            "description" : "Invalid input"
+          "405": {
+            "description": "Invalid input"
           }
         }
       }
     },
-    "/car/{id}" : {
-      "get" : {
-        "tags" : [ "car" ],
-        "summary" : "Finds a single car by id",
-        "operationId" : "findCarById",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "ID used to find car with matching ID",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "type" : "integer"
+    "/car/{id}": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Finds a single car by id",
+        "operationId": "findCarById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID used to find car with matching ID",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Car"
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
                 }
               }
             }
           },
-          "400" : {
-            "description" : "Invalid Car ID"
+          "400": {
+            "description": "Invalid Car ID"
           }
         }
       },
-      "delete" : {
-        "tags" : [ "car" ],
-        "summary" : "Deletes a car",
-        "operationId" : "deleteCar",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "Car id to delete",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
+      "delete": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Deletes a car",
+        "operationId": "deleteCar",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Car id to delete",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "Successfully deleted"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted"
           },
-          "400" : {
-            "description" : "Invalid ID supplied"
+          "400": {
+            "description": "Invalid ID supplied"
           }
         }
       },
-      "patch" : {
-        "tags" : [ "car" ],
-        "summary" : "Updates a car",
-        "operationId" : "updateCar",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "ID of car that needs to be updated",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
+      "patch": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Updates a car",
+        "operationId": "updateCar",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of car that needs to be updated",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Car"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Car"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Updated successfully",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Car"
+        "responses": {
+          "200": {
+            "description": "Updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
                 }
               }
             }
           },
-          "405" : {
-            "description" : "Invalid input"
+          "405": {
+            "description": "Invalid input"
           }
         }
       }
     },
-    "/order" : {
-      "get" : {
-        "tags" : [ "order" ],
-        "summary" : "Returns all orders",
-        "operationId" : "getOrders",
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "type" : "array",
-                  "items" : {
-                    "$ref" : "#/components/schemas/Car"
+    "/order": {
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Returns all orders",
+        "operationId": "getOrders",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Car"
                   }
                 }
               }
@@ -289,324 +335,355 @@
           }
         }
       },
-      "post" : {
-        "tags" : [ "order" ],
-        "summary" : "Create new order",
-        "operationId" : "createOrder",
-        "requestBody" : {
-          "$ref" : "#/components/requestBodies/Order"
+      "post": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Create new order",
+        "operationId": "createOrder",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Order"
         },
-        "responses" : {
-          "200" : {
-            "description" : "Order created",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Order"
+        "responses": {
+          "200": {
+            "description": "Order created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
                 }
               }
             }
           },
-          "405" : {
-            "description" : "Invalid input"
+          "405": {
+            "description": "Invalid input"
           }
         }
       }
     },
-    "/order/id" : {
-      "patch" : {
-        "tags" : [ "order" ],
-        "summary" : "Updates an order's price",
-        "operationId" : "updateOrder",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "path",
-          "description" : "ID of order that needs to be updated",
-          "required" : true,
-          "style" : "simple",
-          "explode" : false,
-          "schema" : {
-            "type" : "integer",
-            "format" : "int64"
+    "/order/id": {
+      "patch": {
+        "tags": [
+          "order"
+        ],
+        "summary": "Updates an order's price",
+        "operationId": "updateOrder",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of order that needs to be updated",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
           }
-        } ],
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/price"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PriceBody"
               }
             }
           }
         },
-        "responses" : {
-          "200" : {
-            "description" : "Order updated successfully",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/Order"
+        "responses": {
+          "200": {
+            "description": "Order updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Order"
                 }
               }
             }
           },
-          "405" : {
-            "description" : "Invalid input"
+          "405": {
+            "description": "Invalid input"
           }
         }
       }
     },
-    "/auth/signup" : {
-      "post" : {
-        "tags" : [ "user" ],
-        "summary" : "Sign up new user",
-        "operationId" : "createUser",
-        "requestBody" : {
-          "description" : "Created user object",
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/User"
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Sign up new user",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "Created user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
               }
             }
           },
-          "required" : true
+          "required": true
         },
-        "responses" : {
-          "201" : {
-            "description" : "User created",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/User"
+        "responses": {
+          "201": {
+            "description": "User created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
                 }
               }
             }
           },
-          "400" : {
-            "description" : "Invalid body supplied"
+          "400": {
+            "description": "Invalid body supplied"
           }
         }
       }
     },
-    "/auth/signin" : {
-      "post" : {
-        "tags" : [ "user" ],
-        "summary" : "Signs user into the system",
-        "operationId" : "loginUser",
-        "requestBody" : {
-          "content" : {
-            "application/json" : {
-              "schema" : {
-                "$ref" : "#/components/schemas/Login"
+    "/auth/signin": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Signs user into the system",
+        "operationId": "loginUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginBody"
               }
             }
           },
-          "required" : true
+          "required": true
         },
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "content" : {
-              "application/json" : {
-                "schema" : {
-                  "$ref" : "#/components/schemas/User"
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
                 }
               }
             }
           },
-          "400" : {
-            "description" : "Invalid username/password supplied"
+          "400": {
+            "description": "Invalid username/password supplied"
           }
         }
       }
     }
   },
-  "components" : {
-    "schemas" : {
-      "User" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer",
-            "format" : "int64"
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
           },
-          "firstName" : {
-            "type" : "string"
+          "firstName": {
+            "type": "string"
           },
-          "lastName" : {
-            "type" : "string"
+          "lastName": {
+            "type": "string"
           },
-          "email" : {
-            "type" : "string"
+          "email": {
+            "type": "string"
           },
-          "password" : {
-            "type" : "string"
+          "password": {
+            "type": "string"
           },
-          "createdAt" : {
-            "type" : "string",
-            "format" : "date-time"
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           },
-          "address" : {
-            "type" : "string"
+          "address": {
+            "type": "string"
           },
-          "isAdmin" : {
-            "type" : "boolean",
-            "default" : false
+          "isAdmin": {
+            "type": "boolean",
+            "default": false
           }
         },
-        "xml" : {
-          "name" : "User"
+        "xml": {
+          "name": "User"
         }
       },
-      "Car" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer",
-            "format" : "int64"
+      "Car": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
           },
-          "owner" : {
-            "$ref" : "#/components/schemas/User"
+          "owner": {
+            "type": "integer",
+            "format": "int64"
           },
-          "state" : {
-            "type" : "string",
-            "enum" : [ "new", "used" ]
+          "state": {
+            "type": "string",
+            "enum": [
+              "new",
+              "used"
+            ]
           },
-          "status" : {
-            "type" : "string",
-            "default" : "available",
-            "enum" : [ "sold", "available" ]
+          "status": {
+            "type": "string",
+            "default": "available",
+            "enum": [
+              "sold",
+              "available"
+            ]
           },
-          "price" : {
-            "type" : "integer"
+          "price": {
+            "type": "integer"
           },
-          "manufacturer" : {
-            "type" : "string"
+          "manufacturer": {
+            "type": "string"
           },
-          "model" : {
-            "type" : "string"
+          "model": {
+            "type": "string"
           },
-          "bodyType" : {
-            "type" : "string",
-            "enum" : [ "car", "truck", "trailer", "van" ]
+          "bodyType": {
+            "type": "string",
+            "enum": [
+              "car",
+              "truck",
+              "trailer",
+              "van"
+            ]
           }
         },
-        "xml" : {
-          "name" : "Car"
+        "xml": {
+          "name": "Car"
         }
       },
-      "Order" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer",
-            "format" : "int64"
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
           },
-          "buyer" : {
-            "$ref" : "#/components/schemas/User"
+          "buyer": {
+            "type": "integer",
+            "format": "int64"
           },
-          "car" : {
-            "$ref" : "#/components/schemas/Car"
+          "car": {
+            "$ref": "#/components/schemas/Car"
           },
-          "amount" : {
-            "type" : "number"
+          "amount": {
+            "type": "number"
           },
-          "status" : {
-            "type" : "string",
-            "default" : "pending",
-            "enum" : [ "accepted", "pending", "rejected" ]
+          "status": {
+            "type": "string",
+            "default": "pending",
+            "enum": [
+              "accepted",
+              "pending",
+              "rejected"
+            ]
           }
         }
       },
-      "Flag" : {
-        "type" : "object",
-        "properties" : {
-          "id" : {
-            "type" : "integer",
-            "format" : "int64"
+      "Flag": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
           },
-          "car" : {
-            "$ref" : "#/components/schemas/Car"
+          "car": {
+            "type": "integer",
+            "format": "int64"
           },
-          "reason" : {
-            "type" : "string",
-            "enum" : [ "pricing", "wierd demands" ]
+          "reason": {
+            "type": "string",
+            "enum": [
+              "pricing",
+              "wierd demands"
+            ]
           },
-          "description" : {
-            "type" : "string"
+          "description": {
+            "type": "string"
           }
         }
       },
-      "Price" : {
-        "type" : "object",
-        "properties" : {
-          "price" : {
-            "type" : "number"
+      "PriceBody": {
+        "type": "object",
+        "properties": {
+          "price": {
+            "type": "number"
           }
         }
       },
-      "Login" : {
-        "type" : "object",
-        "properties" : {
-          "email" : {
-            "type" : "string",
-            "description" : "The user's email address for login"
+      "LoginBody": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The user's email address for login"
           },
-          "password" : {
-            "type" : "string",
-            "description" : "The user's password for login in clear text"
+          "password": {
+            "type": "string",
+            "description": "The user's password for login in clear text"
           }
         }
       }
     },
-    "requestBodies" : {
-      "Car" : {
-        "description" : "Car object that needs to be created",
-        "content" : {
-          "application/json" : {
-            "schema" : {
-              "$ref" : "#/components/schemas/Car"
+    "requestBodies": {
+      "Car": {
+        "description": "Car object that needs to be created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Car"
             }
           }
         },
-        "required" : true
+        "required": true
       },
-      "CarArray" : {
-        "description" : "List of Car object",
-        "content" : {
-          "application/json" : {
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/components/schemas/Car"
+      "CarArray": {
+        "description": "List of Car object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Car"
               }
             }
           }
         },
-        "required" : true
+        "required": true
       },
-      "Order" : {
-        "description" : "Order object that needs to be created",
-        "content" : {
-          "application/json" : {
-            "schema" : {
-              "$ref" : "#/components/schemas/Order"
+      "Order": {
+        "description": "Order object that needs to be created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Order"
             }
           }
         },
-        "required" : true
+        "required": true
       },
-      "Flag" : {
-        "description" : "Flag object that needs to be created",
-        "content" : {
-          "application/json" : {
-            "schema" : {
-              "$ref" : "#/components/schemas/Flag"
+      "Flag": {
+        "description": "Flag object that needs to be created",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Flag"
             }
           }
         },
-        "required" : true
+        "required": true
       }
     }
   }
