@@ -7,8 +7,14 @@ const Order = {
   },
   update: (req, res) => {
     const { id } = req.params;
-    const data = req.body;
+    let data = req.body;
     let order = OrderModel.findOne(id);
+    if (data.price) {
+      const { newPriceOffered: oldPrice, priceOffered } = order;
+      const oldPriceOffered = oldPrice || priceOffered;
+      const { price, priceOffered: newPriceOffered, ...newData } = data;
+      data = { ...newData, oldPriceOffered, newPriceOffered };
+    }
     if (order.status === 'pending') {
       order = OrderModel.update(id, data);
       res.status(200).json({ success: true, order });
