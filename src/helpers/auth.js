@@ -10,6 +10,15 @@ export function generateToken(payload, secret) {
   });
 }
 
+export function verifyToken(token, secret) {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, secret, (err, payload) => {
+      if (err || !payload) reject(err);
+      resolve(payload);
+    });
+  });
+}
+
 export function hashPassword(password) {
   return new Promise((resolve, reject) => {
     bcrypt.genSalt(10, (_, salt) => {
