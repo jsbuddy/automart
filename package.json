@@ -4,6 +4,7 @@
   "description": "Auto Mart is an online market place for automobiles of diverse makes, model or body type.",
   "main": "index.js",
   "scripts": {
+    "pretest": "eslint --ignore-path .eslintignore .",
     "test": "nyc mocha --exit --require @babel/register 'src/**/**spec.js'",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "dev": "nodemon --exec babel-node src/index.js",
