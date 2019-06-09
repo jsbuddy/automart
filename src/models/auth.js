@@ -47,6 +47,10 @@ class Auth {
   findByEmail(email) {
     return this.users.find(user => user.email === email);
   }
+
+  findById(id) {
+    return this.users.find(user => user.id === id);
+  }
 }
 
 export default new Auth();
