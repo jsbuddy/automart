@@ -24,22 +24,14 @@ const Car = {
   },
 
   getAll: (req, res) => {
-    const {
-      status,
-      state,
-      manufacturer,
-      bodyType,
-      minPrice,
-      maxPrice,
-    } = req.query;
     let cars = CarModel.findAll();
-    if (status) cars = cars.filter(car => car.status === status);
-    if (state) cars = cars.filter(car => car.state === state);
-    if (bodyType) cars = cars.filter(car => car.bodyType === bodyType);
-    if (minPrice) cars = cars.filter(car => car.price >= minPrice);
-    if (maxPrice) cars = cars.filter(car => car.price <= maxPrice);
-    if (manufacturer) {
-      const manufacturerRegex = new RegExp(manufacturer, 'gi');
+    if (req.query.status) cars = cars.filter(car => car.status === req.query.status);
+    if (req.query.state) cars = cars.filter(car => car.state === req.query.state);
+    if (req.query.bodyType) cars = cars.filter(car => car.bodyType === req.query.bodyType);
+    if (req.query.minPrice) cars = cars.filter(car => car.price >= req.query.minPrice);
+    if (req.query.maxPrice) cars = cars.filter(car => car.price <= req.query.maxPrice);
+    if (req.query.manufacturer) {
+      const manufacturerRegex = new RegExp(req.query.manufacturer, 'gi');
       cars = cars.filter(car => car.manufacturer.search(manufacturerRegex) !== -1);
     }
     res.status(200).json({ success: true, cars });
