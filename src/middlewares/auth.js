@@ -1,7 +1,6 @@
 import { secret } from '../config/auth';
 import { verifyToken } from '../helpers/auth';
 
-// eslint-disable-next-line import/prefer-default-export, consistent-return
 export async function authorize(req, res, next) {
   try {
     if (!req.headers.authorization) return res.status(403).json({ success: false, message: 'No authorization token provided, login to get an authorization token' });
