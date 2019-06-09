@@ -1,10 +1,8 @@
 import FlagModel from '../../../models/car';
+import { handleCreate } from '../../../helpers/callback';
 
 const Flag = {
-  create: (req, res) => {
-    const flag = FlagModel.create({ ...req.body, owner: req.user.id });
-    res.status(201).json({ success: true, flag });
-  },
+  create: (req, res) => handleCreate(FlagModel, { ...req.body, owner: req.user.id }, res, 'flag'),
 };
 
 export default Flag;
