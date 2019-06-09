@@ -16,6 +16,8 @@
     "rules": {
         "no-console": "off",
         "object-curly-newline": "off",
-        "linebreak-style": "off"
+        "linebreak-style": "off",
+        "consistent-return": "off",
+        "import/prefer-default-export": "off"
     }
 }
