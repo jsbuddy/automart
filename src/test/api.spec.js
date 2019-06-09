@@ -156,6 +156,19 @@ describe('/api', () => {
           done();
         });
     });
+
+    it('POST: should create a new car ad', (done) => {
+      request(app).post('/api/v1/car')
+        .send({
+          manufacturer: 'Toyota', model: 'X1', state: 'new', bodyType: 'car', price: 1000,
+        }).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(201);
+          expect(res.body).to.have.property('car').that.is.an('object').that.includes.all.keys('id', 'manufacturer', 'model');
+          carId = res.body.car.id;
+          done();
+        });
+    });
   });
 
   describe('/order', () => {
