@@ -5,11 +5,21 @@ class ModalController {
         this.closeTrigger = this.el.querySelector('.trigger-close');
     }
     show = () => {
-        this.el.classList.add('show');
-        this.closeTrigger.addEventListener('click', this.close);
+        this.changeElClass('add', 'show');
+        this.addCloseTriggerEvent();
     }
     close = () => {
-        this.el.classList.remove('show');
+        this.changeElClass('remove', 'show');
+        this.removeCloseTriggerEvent();
+    }
+    changeElClass = (action, _class) => {
+        this.el.classList[action](_class);
+    }
+    addCloseTriggerEvent = () => {
+        this.closeTrigger.addEventListener('click', this.close);
+    }
+    removeCloseTriggerEvent = () => {
         this.closeTrigger.removeEventListener('click', this.close);
     }
 }
+
