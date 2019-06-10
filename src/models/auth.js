@@ -11,6 +11,7 @@ class Auth {
     try {
       const newUser = { ...user, id: uuid.v4(), createdAt: Date.now() };
       const { id, firstName, lastName, email } = newUser;
+      if (this.emailExists(email)) return callback({ status: 400, message: 'Email address already in use' });
       const token = await generateToken({ id, firstName, lastName }, secret);
       newUser.token = token;
       newUser.password = await hashPassword(newUser.password);
@@ -42,6 +43,10 @@ class Auth {
       console.log('Signin error', e);
       return callback({ status: 500, message: 'An error occurred' }, null);
     }
+  }
+
+  emailExists(email) {
+    return this.users.some(user => user.email === email);
   }
 
   findByEmail(email) {
