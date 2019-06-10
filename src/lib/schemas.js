@@ -18,6 +18,17 @@ export const userSigninSchema = {
   },
 };
 
+export const carGetSchema = {
+  query: {
+    status: Joi.string().trim(),
+    state: Joi.string().trim(),
+    bodyType: Joi.string().trim(),
+    minPrice: Joi.string().trim(),
+    maxPrice: Joi.string().trim(),
+    manufacturer: Joi.string().trim(),
+  },
+};
+
 export const carPostSchema = {
   body: {
     state: Joi.string().valid('new', 'used').required(),
