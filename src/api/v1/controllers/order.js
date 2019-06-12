@@ -1,27 +1,27 @@
 import OrderModel from '../../../models/order';
 import CarModel from '../../../models/car';
 import { handleCreate } from '../../../helpers/callback';
-import { notfound, unauthorized } from '../../../helpers/response';
+import { notfound, unauthorized, success } from '../../../helpers/response';
 
 const Order = {
   create: (req, res) => {
     const car = CarModel.findOne(req.body.carId);
-    if (!car) return notfound(res, 'There is no car with that id');
+    if (!car) return notfound(res, 'Car not found');
     handleCreate(OrderModel, { ...req.body, buyer: req.user.id }, res, 'order');
   },
   update: (req, res) => {
     const { id } = req.params;
     let data = req.body;
     let order = OrderModel.findOne(id);
+    if (!order) return notfound(res, 'Order not found');
     if (order.status !== 'pending') return unauthorized(res);
     if (data.price) {
-      const { newPriceOffered: oldPrice, priceOffered } = order;
-      const oldPriceOffered = oldPrice || priceOffered;
-      const { price, priceOffered: newPriceOffered, ...newData } = data;
-      data = { ...newData, oldPriceOffered, newPriceOffered };
+      const oldPriceOffered = order.priceOffered;
+      const { price, ...newData } = data;
+      data = { ...newData, oldPriceOffered, priceOffered: price };
     }
     order = OrderModel.update(id, data);
-    res.status(200).json({ success: true, order });
+    success(res, null, { order });
   },
 };
 

@@ -13,14 +13,12 @@ class Auth {
       const { id, firstName, lastName, email } = newUser;
       if (this.emailExists(email)) return callback({ status: 400, message: 'Email address already in use' });
       const token = await generateToken({ id, firstName, lastName }, secret);
-      newUser.token = token;
       newUser.password = await hashPassword(newUser.password);
       this.users.push(newUser);
-      return callback(null, { id, firstName, lastName, email, token });
-    } catch (e) {
+      return callback(null, { user: { id, firstName, lastName, email }, message: 'User created successfully', token });
+    } catch (error) {
       // TODO Handle Error
-      console.log('Signup error', e);
-      return callback({ status: 500, message: 'An error occurred' }, null);
+      return callback({ status: 500, message: 'An error occurred', error }, null);
     }
   }
 
@@ -33,15 +31,14 @@ class Auth {
         if (passwordsMatch) {
           const { id, firstName, lastName } = foundUser;
           const token = await generateToken({ id, firstName, lastName }, secret);
-          return callback(null, { id, firstName, lastName, email, token });
+          return callback(null, { user: { id, firstName, lastName, email }, token });
         }
         return callback({ status: 400, message: 'Incorrect password' }, null);
       }
       return callback({ status: 404, message: 'User not found' }, null);
-    } catch (e) {
+    } catch (error) {
       // TODO: Handle Error
-      console.log('Signin error', e);
-      return callback({ status: 500, message: 'An error occurred' }, null);
+      return callback({ status: 500, message: 'An error occurred', error }, null);
     }
   }
 
