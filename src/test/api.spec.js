@@ -15,7 +15,8 @@ describe('/api', () => {
       request(app).post('/api/v1/auth/signup').send(user)
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body).to.have.property('user').that.is.an('object').that.includes.all.keys('id', 'email', 'token');
+          expect(res.body).to.have.property('user').that.is.an('object').that.includes.all.keys('id', 'email');
+          expect(res.body).to.haveOwnProperty('token');
           done();
         });
     });
@@ -24,8 +25,9 @@ describe('/api', () => {
       request(app).post('/api/v1/auth/signin').send({ email: user.email, password: user.password })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('user').that.is.an('object').that.includes.all.keys('id', 'token');
-          headers.authorization = res.body.user.token;
+          expect(res.body).to.have.property('user').that.is.an('object').that.includes.all.keys('id', 'email');
+          expect(res.body).to.haveOwnProperty('token');
+          headers.authorization = `Bearer ${res.body.token}`;
           done();
         });
     });
