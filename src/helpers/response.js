@@ -11,3 +11,11 @@ export function unauthorized(res, message = 'Unauthorized') {
 export function notfound(res, message = 'Not found') {
   return send(res, 404, { success: false, message });
 }
+
+export function success(res, message, data) {
+  return send(res, 200, { success: true, message, ...data });
+}
+
+export function created(res, message, data) {
+  return send(res, 201, { success: true, message, ...data });
+}
