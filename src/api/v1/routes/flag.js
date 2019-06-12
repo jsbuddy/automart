@@ -5,6 +5,7 @@ import { flagSchema } from '../../../lib/schemas';
 
 const router = express.Router();
 
+router.get('/', FlagController.getAll);
 router.post('/', expressJoi(flagSchema), FlagController.create);
 
 export default router;
