@@ -5,7 +5,7 @@ export function generateToken(payload, secret) {
   return new Promise((resolve, reject) => {
     jwt.sign(payload, secret, (err, token) => {
       if (err) reject(err);
-      resolve(`BEARER ${token}`);
+      resolve(`${token}`);
     });
   });
 }
