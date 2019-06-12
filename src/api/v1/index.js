@@ -7,6 +7,7 @@ import { authorize } from '../../middlewares/auth';
 
 const router = Router();
 
+router.get('/', (req, res) => res.send('Welcome to Automart API, visit the API documentation (https://automartt.herokuapp.com/docs) to view all endpoints'));
 router.use('/auth', auth);
 router.use('/car', authorize, car);
 router.use('/order', authorize, order);
