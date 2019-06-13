@@ -1,7 +1,7 @@
 import OrderModel from '../../../models/order';
 import CarModel from '../../../models/car';
 import { handleCreate } from '../../../helpers/callback';
-import { notfound, unauthorized, success } from '../../../helpers/response';
+import { notfound, success, notallowed } from '../../../helpers/response';
 
 const Order = {
   create: (req, res) => {
@@ -14,7 +14,7 @@ const Order = {
     let data = req.body;
     let order = OrderModel.findOne(id);
     if (!order) return notfound(res, 'Order not found');
-    if (order.status !== 'pending') return unauthorized(res);
+    if (order.status !== 'pending') return notallowed(res);
     if (data.price) {
       const oldPriceOffered = order.priceOffered;
       const { price, ...newData } = data;
