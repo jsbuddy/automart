@@ -31,10 +31,11 @@ Run all tests with `npm test`
 
 
 ## Built with
-- [Node](https://nodejs.org)/[Express](https://expressjs.com)
+- [HTML](https://www.w3.org/html/) / [CSS](https://www.w3.org/Style/CSS/Overview.en.html) / [JS](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [Node](https://nodejs.org) / [Express](https://expressjs.com)
 - [Cloudinary](https://cloudinary.com) - Media hosting service
 - [Babel](https://babeljs.io) - Transpile Javascript into a backwards compatible version
-- Mocha, Chai & Supertest - Frameworks used for unit testing
+- [Mocha](https://mochajs.org/), [Chai](https://www.chaijs.com) & [Supertest](https://www.npmjs.com/package/supertest) - Frameworks used for unit testing
 
 
 ## Project Management
@@ -46,7 +47,9 @@ Automart is deployed to [Heroku](https://heroku.com). Use this link https://auto
 
 
 ## Documentation
-You can find Automart's API documentation here https://automartt.herokuapp.com/docs
+You can find Automart's API documentation in the following links 
+- Swagger - https://automartt.herokuapp.com/docs
+- Postman - https://documenter.getpostman.com/view/2332557/S1ZudBGA
 
 
 ## Authors
