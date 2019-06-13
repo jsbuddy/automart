@@ -8,6 +8,10 @@ export function unauthorized(res, message = 'Unauthorized') {
   return send(res, 401, { success: false, message });
 }
 
+export function notallowed(res, message = 'Not allowed') {
+  return send(res, 405, { success: false, message });
+}
+
 export function notfound(res, message = 'Not found') {
   return send(res, 404, { success: false, message });
 }
