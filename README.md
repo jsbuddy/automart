@@ -3,7 +3,7 @@
 Auto Mart is an online market place for automobiles of diverse makes, model or body type. With Auto Mart, users can sell their cars or buy from trusted dealerships or private sellers.
 
 
-## Getting started
+### Getting started
 #### Prerequisites
 Node.js is required to run this project, confirm NodeJS and NPM installation by running
 ```
@@ -30,7 +30,7 @@ npm start
 Run all tests with `npm test`
 
 
-## Built with
+### Built with
 - [HTML](https://www.w3.org/html/) / [CSS](https://www.w3.org/Style/CSS/Overview.en.html) / [JS](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [Node](https://nodejs.org) / [Express](https://expressjs.com)
 - [Cloudinary](https://cloudinary.com) - Media hosting service
@@ -38,19 +38,19 @@ Run all tests with `npm test`
 - [Mocha](https://mochajs.org/), [Chai](https://www.chaijs.com) & [Supertest](https://www.npmjs.com/package/supertest) - Frameworks used for unit testing
 
 
-## Project Management
+### Project Management
 Automart is currently being managed with [Pivotal Tracker](https://pivotaltracker.com/) to encourage a practical agile software development process. Stories for this project can be found here https://www.pivotaltracker.com/n/projects/2346830
 
 
-## Deployment
+### Deployment
 Automart is deployed to [Heroku](https://heroku.com). Use this link https://automartt.herokuapp.com to view project
 
 
-## Documentation
+### Documentation
 You can find Automart's API documentation in the following links 
 - Swagger - https://automartt.herokuapp.com/docs
 - Postman - https://documenter.getpostman.com/view/2332557/S1ZudBGA
 
 
-## Authors
+### Authors
 - [Jude Francis](https://judecodes.netlify.com)
