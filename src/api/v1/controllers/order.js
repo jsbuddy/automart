@@ -1,7 +1,7 @@
 import OrderModel from '../../../models/order';
 import CarModel from '../../../models/car';
 import { handleCreate } from '../../../helpers/callback';
-import { notfound, success, notallowed } from '../../../helpers/response';
+import { notallowed, notfound, success, unauthorized } from '../../../helpers/response';
 
 const Order = {
   create: async (req, res) => {
@@ -22,6 +22,12 @@ const Order = {
     }
     order = await OrderModel.update(id, data);
     success(res, null, { order });
+  },
+  delete: async (req, res) => {
+    if (!req.user.isAdmin) return unauthorized(res);
+    const { id } = req.params;
+    await OrderModel.delete(id);
+    return success(res, 'Car deleted successfully', { success: true });
   },
 };
 
