@@ -4,8 +4,8 @@ import { success } from '../../../helpers/response';
 
 const Flag = {
   create: (req, res) => handleCreate(FlagModel, { ...req.body, creator: req.user.id }, res, 'flag'),
-  getAll: (req, res) => {
-    const flags = FlagModel.findAll();
+  getAll: async (req, res) => {
+    const flags = await FlagModel.findAll();
     return success(res, null, { flags });
   },
 };
