@@ -1,5 +1,9 @@
 import Base from './base';
 
-class Car extends Base {}
+class Car extends Base {
+  static model() {
+    return 'cars';
+  }
+}
 
-export default new Car();
+export default Car;

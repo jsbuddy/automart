@@ -9,7 +9,7 @@ export async function authorize(req, res, next) {
     const token = req.headers.authorization.split(' ')[1];
     if (!token) return unauthorized(res, 'No authorization token provided, login to get an authorization token');
     const payload = await verifyToken(token, secret);
-    const user = AuthModel.findById(payload.id);
+    const user = await AuthModel.findById(payload.id);
     if (!user) return unauthorized('Invalid Token');
     req.user = user;
     next();

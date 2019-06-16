@@ -4,15 +4,15 @@ import { handleCreate } from '../../../helpers/callback';
 import { notfound, success, notallowed } from '../../../helpers/response';
 
 const Order = {
-  create: (req, res) => {
-    const car = CarModel.findOne(req.body.carId);
+  create: async (req, res) => {
+    const car = await CarModel.findOne(req.body.carId);
     if (!car) return notfound(res, 'Car not found');
-    handleCreate(OrderModel, { ...req.body, buyer: req.user.id }, res, 'order');
+    await handleCreate(OrderModel, { ...req.body, buyer: req.user.id }, res, 'order');
   },
-  update: (req, res) => {
+  update: async (req, res) => {
     const { id } = req.params;
     let data = req.body;
-    let order = OrderModel.findOne(id);
+    let order = await OrderModel.findOne(id);
     if (!order) return notfound(res, 'Order not found');
     if (order.status !== 'pending') return notallowed(res);
     if (data.price) {
@@ -20,7 +20,7 @@ const Order = {
       const { price, ...newData } = data;
       data = { ...newData, oldPriceOffered, priceOffered: price };
     }
-    order = OrderModel.update(id, data);
+    order = await OrderModel.update(id, data);
     success(res, null, { order });
   },
 };
