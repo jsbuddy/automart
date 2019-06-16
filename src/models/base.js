@@ -35,7 +35,6 @@ class Base {
   static async update(id, data) {
     const keys = Object.keys(data).sort((a, b) => a > b ? 1 : -1);
     const update = keys.map(key => `"${key}" = ${(typeof data[key] === 'string') ? `'${data[key]}'` : data[key]}`).join(', ');
-    console.log(`UPDATE ${this.model()} SET ${update} WHERE id = $1 RETURNING *`);
     const { rows } = await db.query(`UPDATE ${this.model()} SET ${update} WHERE id = $1 RETURNING *`, [id]);
     return rows[0];
   }
