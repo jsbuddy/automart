@@ -1,8 +1,9 @@
 import { Pool } from 'pg';
+import dotenv from 'dotenv';
 
-const pool = new Pool({
-  connectionString: 'postgres://uvfgvozzyuqjxe:0ac78705e75f3256c1cd0431e54e30ce2e7234f21e5595e12175c3b207154124@ec2-75-101-147-226.compute-1.amazonaws.com:5432/d4djeuf1hf9gpl?ssl=true',
-});
+dotenv.config();
+// const connectionString = 'postgres://uvfgvozzyuqjxe:0ac78705e75f3256c1cd0431e54e30ce2e7234f21e5595e12175c3b207154124@ec2-75-101-147-226.compute-1.amazonaws.com:5432/d4djeuf1hf9gpl?ssl=true';
+const pool = new Pool();
 
 (async () => {
   const client = await pool.connect();
