@@ -7,10 +7,20 @@ const { expect, assert } = require('chai');
 describe('/api', () => {
   const api = '/api/v1';
   const headers = { authorization: null };
-  let carId = null;
+  let carId;
+  let userId;
+  let flagId;
+  let orderId;
 
   describe('/auth', () => {
-    const user = { email: 'jd@gmail.com', firstName: 'John', lastName: 'Doe', password: 'p@ssw0rd', address: 'NY' };
+    const user = {
+      email: 'test@test.com',
+      firstName: 'Test',
+      lastName: 'Test',
+      password: 'testing',
+      address: 'NG',
+      isAdmin: true,
+    };
 
     it('should invalidate fields against schema', (done) => {
       request(app).post(`${api}/auth/signup`).send({ john: 'doe' })
@@ -64,6 +74,7 @@ describe('/api', () => {
           expect(res.body).to.have.property('user').that.is.an('object').that.includes.all.keys('id', 'email');
           expect(res.body).to.haveOwnProperty('token');
           headers.authorization = `Bearer ${res.body.token}`;
+          userId = res.body.user.id;
           done();
         });
     });
@@ -219,33 +230,9 @@ describe('/api', () => {
           done();
         });
     });
-
-    it('should delete a specific car ad', (done) => {
-      request(app).delete(`${api}/car/${carId}`).set(headers)
-        .end((err, res) => {
-          expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('success').that.equals(true);
-          done();
-        });
-    });
-
-    it('should create a new car ad', (done) => {
-      request(app).post(`${api}/car`)
-        .send({
-          manufacturer: 'Toyota', model: 'X1', state: 'new', bodyType: 'car', price: 1000,
-        }).set(headers)
-        .end((err, res) => {
-          expect(res.status).to.equal(201);
-          expect(res.body).to.have.property('car').that.is.an('object').that.includes.all.keys('id', 'manufacturer', 'model');
-          carId = res.body.car.id;
-          done();
-        });
-    });
   });
 
   describe('/order', () => {
-    let orderId;
-
     it('should create new order', (done) => {
       request(app).post(`${api}/order`).send({ carId, price: 1100, priceOffered: 950 }).set(headers)
         .end((err, res) => {
@@ -307,6 +294,7 @@ describe('/api', () => {
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body).to.have.property('flag').that.is.an('object').that.includes.all.keys('id', 'reason', 'description');
+          flagId = res.body.flag.id;
           done();
         });
     });
@@ -316,6 +304,44 @@ describe('/api', () => {
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.property('flags').that.is.an('array');
+          done();
+        });
+    });
+  });
+
+  describe('Cleanup', () => {
+    it('should delete a specific flag', (done) => {
+      request(app).delete(`${api}/flag/${flagId}`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('success').that.equals(true);
+          done();
+        });
+    });
+
+    it('should delete a specific order', (done) => {
+      request(app).delete(`${api}/order/${orderId}`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('success').that.equals(true);
+          done();
+        });
+    });
+
+    it('should delete a specific car ad', (done) => {
+      request(app).delete(`${api}/car/${carId}`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('success').that.equals(true);
+          done();
+        });
+    });
+
+    it('should delete a user', (done) => {
+      request(app).delete(`${api}/auth/user/${userId}`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('success').that.equals(true);
           done();
         });
     });

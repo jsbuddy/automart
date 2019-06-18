@@ -3,18 +3,14 @@ import { comparePassword, generateToken, hashPassword } from '../helpers/auth';
 import db from '../db';
 
 class Auth {
-  constructor() {
-    this.users = [];
-  }
-
   static async signup(user, callback) {
     try {
-      const { firstName, lastName, email, address } = user;
+      const { firstName, lastName, email, address, isAdmin = false } = user;
       const password = await hashPassword(user.password);
       const { rows } = await db.query(`
-        INSERT INTO users ("firstName", "lastName", "email", "password", "address") 
-        VALUES ($1, $2, $3, $4, $5) RETURNING "id", "firstName", "lastName", "email", "address"
-      `, [firstName, lastName, email, password, address]);
+        INSERT INTO users ("firstName", "lastName", "email", "password", "address", "isAdmin") 
+        VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id", "firstName", "lastName", "email", "address", "isAdmin"
+      `, [firstName, lastName, email, password, address, isAdmin]);
       const newUser = rows[0];
       const token = await generateToken({ ...newUser }, secret);
       return callback(null, {
@@ -44,13 +40,17 @@ class Auth {
   }
 
   static async findById(id) {
-    const { rows } = await db.query('SELECT "id", "firstName", "lastName", "email" from users WHERE id = $1', [id]);
+    const { rows } = await db.query('SELECT "id", "firstName", "lastName", "email", "isAdmin" from users WHERE id = $1', [id]);
     return rows[0];
   }
 
   static async findByEmail(email) {
-    const { rows } = await db.query('SELECT "id", "firstName", "lastName", "email", "password" from users WHERE email = $1', [email]);
+    const { rows } = await db.query('SELECT "id", "firstName", "lastName", "email", "password", "isAdmin" from users WHERE email = $1', [email]);
     return rows[0];
+  }
+
+  static async deleteUser(id) {
+    await db.query('DELETE FROM users WHERE id = $1', [id]);
   }
 }
 

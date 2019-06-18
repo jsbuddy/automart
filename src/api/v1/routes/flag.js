@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.get('/', FlagController.getAll);
 router.post('/', expressJoi(flagSchema), FlagController.create);
+router.delete('/:id', FlagController.delete);
 
 export default router;
