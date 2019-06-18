@@ -1,7 +1,7 @@
 import OrderModel from '../../../models/order';
 import CarModel from '../../../models/car';
 import { handleCreate } from '../../../helpers/callback';
-import { notallowed, notfound, success, unauthorized } from '../../../helpers/response';
+import { notallowed, notfound, success } from '../../../helpers/response';
 
 const Order = {
   create: async (req, res) => {
@@ -24,7 +24,6 @@ const Order = {
     success(res, null, { order });
   },
   delete: async (req, res) => {
-    if (!req.user.isAdmin) return unauthorized(res);
     const { id } = req.params;
     await OrderModel.delete(id);
     return success(res, 'Car deleted successfully', { success: true });

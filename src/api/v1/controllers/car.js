@@ -52,7 +52,7 @@ const Car = {
     const { id } = req.params;
     const car = await CarModel.findOne(id);
     if (!car) return notfound(res, 'Car not found');
-    if (car.owner !== req.user.id || !req.user.isAdmin) return unauthorized(res);
+    if (car.owner !== req.user.id) return unauthorized(res);
     await CarModel.delete(id);
     car.images.forEach(image => uploader.destroy(image.public_id));
     return success(res, 'Car deleted successfully', { success: true });

@@ -1,6 +1,6 @@
 import FlagModel from '../../../models/flag';
 import { handleCreate } from '../../../helpers/callback';
-import { success, unauthorized } from '../../../helpers/response';
+import { success } from '../../../helpers/response';
 
 const Flag = {
   create: (req, res) => handleCreate(FlagModel, { ...req.body, creator: req.user.id }, res, 'flag'),
@@ -9,7 +9,6 @@ const Flag = {
     return success(res, null, { flags });
   },
   delete: async (req, res) => {
-    if (!req.user.isAdmin) return unauthorized(res);
     const { id } = req.params;
     await FlagModel.delete(id);
     return success(res, 'Flag deleted successfully', { success: true });

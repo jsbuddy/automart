@@ -17,3 +17,8 @@ export async function authorize(req, res, next) {
     unauthorized(res, 'Invalid token');
   }
 }
+
+export function admin(req, res, next) {
+  if (!req.user.isAdmin) return unauthorized(res);
+  next();
+}
