@@ -3,19 +3,15 @@ import db from '../db';
 
 class Base {
   static async create(data) {
-    try {
-      const keys = Object.keys(data).sort((a, b) => a > b ? 1 : -1);
-      const values = keys.map(key => data[key]);
-      const fields = keys.map(s => `"${s}"`).join(', ');
-      const $s = keys.map((s, i) => `$${i + 1}`).join(', ');
-      const { rows } = await db.query(`
+    const keys = Object.keys(data).sort((a, b) => a > b ? 1 : -1);
+    const values = keys.map(key => data[key]);
+    const fields = keys.map(s => `"${s}"`).join(', ');
+    const $s = keys.map((s, i) => `$${i + 1}`).join(', ');
+    const { rows } = await db.query(`
       INSERT INTO ${this.model()} (${fields})
       VALUES (${$s}) RETURNING "id", ${fields}
     `, [...values]);
-      return rows[0];
-    } catch (err) {
-      console.dir(err);
-    }
+    return rows[0];
   }
 
   static async findAll() {
