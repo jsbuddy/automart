@@ -1,6 +1,6 @@
 import OrderModel from '../../../models/order';
 import CarModel from '../../../models/car';
-import { handleCreate } from '../../../helpers/callback';
+import { handleCreate, handleDelete } from '../../../helpers/callback';
 import { notallowed, notfound, success } from '../../../helpers/response';
 
 const Order = {
@@ -23,11 +23,7 @@ const Order = {
     order = await OrderModel.update(id, data);
     success(res, null, { order });
   },
-  delete: async (req, res) => {
-    const { id } = req.params;
-    await OrderModel.delete(id);
-    return success(res, 'Car deleted successfully', { success: true });
-  },
+  delete: (req, res) => handleDelete(req, res, OrderModel, 'Order'),
 };
 
 export default Order;
