@@ -2,6 +2,7 @@ import CarModel from '../../../models/car';
 import { dataUri } from '../../../middlewares/multer';
 import { uploader } from '../../../config/cloudinary';
 import { created, notfound, success, unauthorized } from '../../../helpers/response';
+import { handleGetOne, getAllBy } from '../../../helpers/callback';
 
 function applyFilters(cars, { status, state, manufacturer, bodyType, minPrice, maxPrice }) {
   let filtered = cars;
@@ -30,12 +31,7 @@ const Car = {
     }
   },
 
-  getOne: async (req, res) => {
-    const { id } = req.params;
-    const car = await CarModel.findOne(id);
-    if (!car) return notfound(res, 'Car not found');
-    return success(res, undefined, { car });
-  },
+  getOne: async (req, res) => handleGetOne(req, res, CarModel, 'car'),
 
   getAll: async (req, res) => {
     let cars = await CarModel.findAll();
@@ -43,11 +39,7 @@ const Car = {
     success(res, undefined, { cars });
   },
 
-  getAllByOwner: async (req, res) => {
-    const { id } = req.params;
-    const cars = await CarModel.findAllByOwner(id);
-    success(res, undefined, { cars });
-  },
+  getAllByOwner: async (req, res) => getAllBy(req, res, CarModel, 'findAllByOwner', 'cars'),
 
   update: async (req, res) => {
     const { id } = req.params;

@@ -1,6 +1,6 @@
 import OrderModel from '../../../models/order';
 import CarModel from '../../../models/car';
-import { handleCreate, handleDelete } from '../../../helpers/callback';
+import { handleCreate, handleDelete, handleGetOne, getAllBy } from '../../../helpers/callback';
 import { notallowed, notfound, success } from '../../../helpers/response';
 
 const Order = {
@@ -10,23 +10,14 @@ const Order = {
     await handleCreate(OrderModel, { ...req.body, buyer: req.user.id }, res, 'order');
   },
 
-  getOne: async (req, res) => {
-    const { id } = req.params;
-    const order = await OrderModel.findOne(id);
-    if (!order) return notfound(res, 'Order not found');
-    return success(res, undefined, { order });
-  },
+  getOne: async (req, res) => handleGetOne(req, res, OrderModel, 'order'),
 
   getAll: async (req, res) => {
     const orders = await OrderModel.findAll();
     success(res, undefined, { orders });
   },
 
-  getAllByBuyer: async (req, res) => {
-    const { id } = req.params;
-    const orders = await OrderModel.findAllByBuyer(id);
-    success(res, undefined, { orders });
-  },
+  getAllByBuyer: async (req, res) => getAllBy(req, res, OrderModel, 'findAllByBuyer', 'orders'),
 
   update: async (req, res) => {
     const { id } = req.params;
