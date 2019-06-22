@@ -1,5 +1,3 @@
-// This function was created based on a refactoring to remove duplicate codes found by codeclimate
-
 function send(res, code, data) {
   return res.status(code).json(data);
 }
