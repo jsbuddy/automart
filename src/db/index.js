@@ -26,6 +26,9 @@ const pool = new Pool({ connectionString: env.DATABASE_URL });
           IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'tflagreason') THEN
             CREATE TYPE TFLagReason AS ENUM ('pricing', 'weird demands');
           END IF;
+          IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'tuser') THEN
+            CREATE TYPE TUser AS ("id" uuid, "firstName" text, "lastName" text, "email" text, "address" text);
+          END IF;
       END
       $$;
     `);
