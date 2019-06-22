@@ -1,4 +1,4 @@
-import { secret } from '../config/auth';
+import env from '../config/env';
 import { comparePassword, generateToken, hashPassword } from '../helpers/auth';
 import db from '../db';
 
@@ -12,7 +12,7 @@ class Auth {
         VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id", "firstName", "lastName", "email", "address", "isAdmin"
       `, [firstName, lastName, email, password, address, isAdmin]);
       const newUser = rows[0];
-      const token = await generateToken({ ...newUser }, secret);
+      const token = await generateToken({ ...newUser }, env.SECRET);
       return callback(null, {
         user: newUser,
         message: 'User created successfully',
@@ -32,7 +32,7 @@ class Auth {
       const passwordsMatch = await comparePassword(password, foundUser.password);
       if (!passwordsMatch) return callback({ status: 400, message: 'Incorrect password' }, null);
       const { id, firstName, lastName } = foundUser;
-      const token = await generateToken({ id, firstName, lastName }, secret);
+      const token = await generateToken({ id, firstName, lastName }, env.SECRET);
       return callback(null, { user: { id, firstName, lastName, email }, token });
     } catch (err) {
       return callback({ status: 500, message: 'An error occurred', err }, null);
