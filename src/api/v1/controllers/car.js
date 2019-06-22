@@ -5,8 +5,8 @@ import { created, notfound, success, unauthorized } from '../../../helpers/respo
 import { handleGetOne, getAllBy } from '../../../helpers/callback';
 
 function applyFilters(cars, queries) {
-  const { status, state, manufacturer, bodyType } = queries;
-  const { minPrice, maxPrice } = queries;
+  const { status, state, manufacturer } = queries;
+  const { minPrice, maxPrice, bodyType } = queries;
   let filtered = cars;
   if (status) filtered = filtered.filter(car => car.status === status);
   if (state) filtered = filtered.filter(car => car.state === state);
