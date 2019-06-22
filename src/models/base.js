@@ -1,4 +1,3 @@
-// import uuid from 'uuid';
 import db from '../db';
 
 class Base {
