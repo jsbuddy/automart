@@ -2,10 +2,6 @@ import Base from './base';
 import db from '../db';
 
 class Car extends Base {
-  static model() {
-    return 'cars';
-  }
-
   static async findOne(id) {
     const { rows } = await db.query(`
       SELECT cars.*, row_to_json(row(users."id", users."firstName", users."lastName", users."email", users."address")::TUser) as "owner" 
@@ -22,12 +18,16 @@ class Car extends Base {
     return rows;
   }
 
-  static async findAllByOwner(owner) {
+  static async findAllByUser(owner) {
     const { rows } = await db.query(`
       SELECT cars.*, row_to_json(row(users."id", users."firstName", users."lastName", users."email", users."address")::TUser) as "owner" 
       FROM ${this.model()} INNER JOIN users ON cars.owner = $1;
     `, [owner]);
     return rows;
+  }
+
+  static model() {
+    return 'cars';
   }
 }
 

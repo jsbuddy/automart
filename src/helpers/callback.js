@@ -17,8 +17,8 @@ export async function handleGetOne(req, res, Model, field) {
   return success(res, undefined, { [field]: data });
 }
 
-export async function getAllBy(req, res, Model, method, field) {
+export async function getAllBy(req, res, Model, field) {
   const { id } = req.params;
-  const data = await Model[method](id);
+  const data = await Model.findAllByUser(id);
   success(res, undefined, { [field]: data });
 }

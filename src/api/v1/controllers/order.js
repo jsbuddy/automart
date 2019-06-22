@@ -17,7 +17,7 @@ const Order = {
     success(res, undefined, { orders });
   },
 
-  getAllByBuyer: async (req, res) => getAllBy(req, res, OrderModel, 'findAllByBuyer', 'orders'),
+  getAllByBuyer: async (req, res) => getAllBy(req, res, OrderModel, 'orders'),
 
   update: async (req, res) => {
     const { id } = req.params;

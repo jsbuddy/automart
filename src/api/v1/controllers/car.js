@@ -4,7 +4,9 @@ import { uploader } from '../../../config/cloudinary';
 import { created, notfound, success, unauthorized } from '../../../helpers/response';
 import { handleGetOne, getAllBy } from '../../../helpers/callback';
 
-function applyFilters(cars, { status, state, manufacturer, bodyType, minPrice, maxPrice }) {
+function applyFilters(cars, queries) {
+  const { status, state, manufacturer, bodyType } = queries;
+  const { minPrice, maxPrice } = queries;
   let filtered = cars;
   if (status) filtered = filtered.filter(car => car.status === status);
   if (state) filtered = filtered.filter(car => car.state === state);
@@ -39,7 +41,7 @@ const Car = {
     success(res, undefined, { cars });
   },
 
-  getAllByOwner: async (req, res) => getAllBy(req, res, CarModel, 'findAllByOwner', 'cars'),
+  getAllByOwner: async (req, res) => getAllBy(req, res, CarModel, 'cars'),
 
   update: async (req, res) => {
     const { id } = req.params;

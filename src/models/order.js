@@ -2,10 +2,6 @@ import Base from './base';
 import db from '../db';
 
 class Order extends Base {
-  static model() {
-    return 'orders';
-  }
-
   static async findOne(id) {
     const { rows } = await db.query(`
       SELECT orders.*, row_to_json(row(users."id", users."firstName", users."lastName", users."email", users."address")::TUser) as "buyer" 
@@ -22,7 +18,11 @@ class Order extends Base {
     return rows;
   }
 
-  static async findAllByBuyer(buyer) {
+  static model() {
+    return 'orders';
+  }
+
+  static async findAllByUser(buyer) {
     const { rows } = await db.query(`
       SELECT orders.*, row_to_json(row(users."id", users."firstName", users."lastName", users."email", users."address")::TUser) as "buyer" 
       FROM ${this.model()} INNER JOIN users ON orders.buyer = $1;
