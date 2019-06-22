@@ -136,6 +136,15 @@ describe('/api', () => {
         });
     });
 
+    it('should return all cars for a specific owner', (done) => {
+      request(app).get(`${api}/car/owner/${userId}`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('cars').that.is.an('array');
+          done();
+        });
+    });
+
     it('should not be able to find car with specified id', (done) => {
       request(app).get(`${api}/car/99c92791-ef23-4cc4-8e71-ca81b109d3eb`).set(headers)
         .end((err, res) => {
@@ -239,6 +248,33 @@ describe('/api', () => {
           expect(res.status).to.equal(201);
           expect(res.body).to.have.property('order').that.is.an('object').that.includes.all.keys('id', 'buyer', 'carId', 'price', 'priceOffered');
           orderId = res.body.order.id;
+          done();
+        });
+    });
+
+    it('should return all order', (done) => {
+      request(app).get(`${api}/order`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('orders').that.is.an('array');
+          done();
+        });
+    });
+
+    it('should return single order', (done) => {
+      request(app).get(`${api}/order/${orderId}`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('order').that.is.an('object').that.includes.all.keys('id', 'buyer', 'carId', 'price', 'priceOffered');
+          done();
+        });
+    });
+
+    it('should return all order for a specific buyer', (done) => {
+      request(app).get(`${api}/order/buyer/${userId}`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('orders').that.is.an('array');
           done();
         });
     });
