@@ -9,6 +9,25 @@ const Order = {
     if (!car) return notfound(res, 'Car not found');
     await handleCreate(OrderModel, { ...req.body, buyer: req.user.id }, res, 'order');
   },
+
+  getOne: async (req, res) => {
+    const { id } = req.params;
+    const order = await OrderModel.findOne(id);
+    if (!order) return notfound(res, 'Order not found');
+    return success(res, undefined, { order });
+  },
+
+  getAll: async (req, res) => {
+    const orders = await OrderModel.findAll();
+    success(res, undefined, { orders });
+  },
+
+  getAllByBuyer: async (req, res) => {
+    const { id } = req.params;
+    const orders = await OrderModel.findAllByBuyer(id);
+    success(res, undefined, { orders });
+  },
+
   update: async (req, res) => {
     const { id } = req.params;
     let data = req.body;
@@ -23,6 +42,7 @@ const Order = {
     order = await OrderModel.update(id, data);
     success(res, null, { order });
   },
+
   delete: (req, res) => handleDelete(req, res, OrderModel, 'Order'),
 };
 

@@ -3,6 +3,20 @@ import { dataUri } from '../../../middlewares/multer';
 import { uploader } from '../../../config/cloudinary';
 import { created, notfound, success, unauthorized } from '../../../helpers/response';
 
+function applyFilters(cars, { status, state, manufacturer, bodyType, minPrice, maxPrice }) {
+  let filtered = cars;
+  if (status) filtered = filtered.filter(car => car.status === status);
+  if (state) filtered = filtered.filter(car => car.state === state);
+  if (bodyType) filtered = filtered.filter(car => car.bodyType === bodyType);
+  if (minPrice) filtered = filtered.filter(car => car.price >= minPrice);
+  if (maxPrice) filtered = filtered.filter(car => car.price <= maxPrice);
+  if (manufacturer) {
+    const manufacturerRegex = new RegExp(manufacturer, 'gi');
+    filtered = filtered.filter(car => car.manufacturer.search(manufacturerRegex) !== -1);
+  }
+  return filtered;
+}
+
 const Car = {
   create: async (req, res, next) => {
     try {
@@ -20,22 +34,19 @@ const Car = {
     const { id } = req.params;
     const car = await CarModel.findOne(id);
     if (!car) return notfound(res, 'Car not found');
-    return success(res, null, { car });
+    return success(res, undefined, { car });
   },
 
   getAll: async (req, res) => {
-    const { status, state, manufacturer, bodyType, minPrice, maxPrice } = req.query;
     let cars = await CarModel.findAll();
-    if (status) cars = cars.filter(car => car.status === status);
-    if (state) cars = cars.filter(car => car.state === state);
-    if (bodyType) cars = cars.filter(car => car.bodyType === bodyType);
-    if (minPrice) cars = cars.filter(car => car.price >= minPrice);
-    if (maxPrice) cars = cars.filter(car => car.price <= maxPrice);
-    if (manufacturer) {
-      const manufacturerRegex = new RegExp(manufacturer, 'gi');
-      cars = cars.filter(car => car.manufacturer.search(manufacturerRegex) !== -1);
-    }
-    success(res, null, { cars });
+    cars = applyFilters(cars, req.query);
+    success(res, undefined, { cars });
+  },
+
+  getAllByOwner: async (req, res) => {
+    const { id } = req.params;
+    const cars = await CarModel.findAllByOwner(id);
+    success(res, undefined, { cars });
   },
 
   update: async (req, res) => {
@@ -43,16 +54,15 @@ const Car = {
     const data = req.body;
     let car = await CarModel.findOne(id);
     if (!car) return notfound(res, 'Car not found');
-    if (car.owner !== req.user.id) return unauthorized(res);
+    if (car.owner.id !== req.user.id) return unauthorized(res);
     car = await CarModel.update(id, data);
-    return success(res, null, { car });
+    return success(res, undefined, { car });
   },
 
   delete: async (req, res) => {
     const { id } = req.params;
     const car = await CarModel.findOne(id);
     if (!car) return notfound(res, 'Car not found');
-    if (car.owner !== req.user.id) return unauthorized(res);
     await CarModel.delete(id);
     car.images.forEach(image => uploader.destroy(image.public_id));
     return success(res, 'Car deleted successfully', { success: true });
