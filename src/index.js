@@ -12,9 +12,9 @@ const dev = app.get('env') !== 'production';
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+app.use(cors({ origin: '*' }));
 if (dev) {
   app.use(morgan('dev'));
-  app.use(cors({ origin: '*' }));
 } else {
   app.use(morgan('common'));
 }
