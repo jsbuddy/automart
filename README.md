@@ -47,7 +47,6 @@ Automart is deployed to [Heroku](https://heroku.com). Use this link https://auto
 
 
 ### Documentation
-You can find Automart's API documentation in the following links 
 - Swagger - https://automartt.herokuapp.com/docs
 - Postman - https://documenter.getpostman.com/view/2332557/S1ZudBGA
 
