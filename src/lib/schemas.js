@@ -54,9 +54,15 @@ export const carPatchSchema = {
 export const orderSchema = {
   body: {
     carId: Joi.string().trim().required(),
-    price: Joi.number().required(),
     priceOffered: Joi.number().required(),
     status: Joi.string().valid('pending', 'accepted', 'rejected').default('pending'),
+  },
+};
+
+export const orderPatchSchema = {
+  body: {
+    price: Joi.number(),
+    status: Joi.string().valid('pending', 'accepted', 'rejected'),
   },
 };
 
