@@ -5,8 +5,7 @@ import { created, notfound, success, unauthorized } from '../../../helpers/respo
 import { handleGetOne, getAllBy } from '../../../helpers/callback';
 
 function applyFilters(cars, queries) {
-  const { status, state, manufacturer } = queries;
-  const { minPrice, maxPrice, bodyType } = queries;
+  const { status, state, manufacturer, minPrice, maxPrice, bodyType } = queries;
   let filtered = cars;
   if (status) filtered = filtered.filter(car => car.status === status);
   if (state) filtered = filtered.filter(car => car.state === state);
@@ -49,7 +48,8 @@ const Car = {
     let car = await CarModel.findOne(id);
     if (!car) return notfound(res, 'Car not found');
     if (car.owner.id !== req.user.id) return unauthorized(res);
-    car = await CarModel.update(id, data);
+    await CarModel.update(id, data);
+    car = await CarModel.findOne(id);
     return success(res, undefined, { car });
   },
 
