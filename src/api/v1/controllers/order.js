@@ -1,6 +1,6 @@
 import OrderModel from '../../../models/order';
 import CarModel from '../../../models/car';
-import { handleCreate, handleDelete, handleGetOne, getAllBy } from '../../../helpers/callback';
+import { getAllBy, handleCreate, handleDelete, handleGetOne } from '../../../helpers/callback';
 import { notallowed, notfound, success } from '../../../helpers/response';
 
 const Order = {
@@ -31,7 +31,7 @@ const Order = {
     let order = await OrderModel.findOne(id);
     const car = await CarModel.findOne(order.carId);
     if (!order) return notfound(res, 'Order not found');
-    if (order.status !== 'pending' && car.owner.id !== req.user.id) return notallowed(res);
+    if (!(order.status === 'pending' && car.owner.id === req.user.id)) return notallowed(res);
     if (data.price) {
       const oldPriceOffered = order.priceOffered;
       const { price, ...newData } = data;

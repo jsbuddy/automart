@@ -243,7 +243,7 @@ describe('/api', () => {
 
   describe('/order', () => {
     it('should create new order', (done) => {
-      request(app).post(`${api}/order`).send({ carId, price: 1100, priceOffered: 950 }).set(headers)
+      request(app).post(`${api}/order`).send({ carId, priceOffered: 950 }).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(201);
           expect(res.body).to.have.property('order').that.is.an('object').that.includes.all.keys('id', 'buyer', 'carId', 'price', 'priceOffered');
@@ -280,8 +280,9 @@ describe('/api', () => {
     });
 
     it('should not be able to find order with specified id', (done) => {
-      request(app).patch(`${api}/order/99c92791-ef23-4cc4-8e71-ca81b109d3eb`).set(headers)
+      request(app).get(`${api}/order/99c92791-ef23-4cc4-8e71-ca81b109d3eb`).set(headers)
         .end((err, res) => {
+          console.log(res.body);
           expect(res.status).to.equal(404);
           expect(res.body).to.not.have.property('order');
           done();
