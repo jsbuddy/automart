@@ -56,7 +56,7 @@ const pool = new Pool({ connectionString: env.DATABASE_URL });
             "bodyType" TCarBody NOT NULL,
             "images" JSON [] NOT NULL,
             "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY ("owner") REFERENCES users("id")
+            FOREIGN KEY ("owner") REFERENCES users("id") ON DELETE CASCADE
           );
         `);
     await client.query(`
@@ -69,8 +69,8 @@ const pool = new Pool({ connectionString: env.DATABASE_URL });
             "priceOffered" REAL NOT NULL,
             "oldPriceOffered" REAL,
             "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY ("buyer") REFERENCES users("id"),
-            FOREIGN KEY ("carId") REFERENCES cars("id")
+            FOREIGN KEY ("buyer") REFERENCES users("id") ON DELETE CASCADE,
+            FOREIGN KEY ("carId") REFERENCES cars("id") ON DELETE CASCADE
           );
         `);
     await client.query(`
@@ -81,8 +81,8 @@ const pool = new Pool({ connectionString: env.DATABASE_URL });
             "reason" TFLagReason NOT NULL,
             "description" TEXT NOT NULL,
             "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-            FOREIGN KEY ("creator") REFERENCES users("id"),
-            FOREIGN KEY ("carId") REFERENCES cars("id")
+            FOREIGN KEY ("creator") REFERENCES users("id") ON DELETE CASCADE,
+            FOREIGN KEY ("carId") REFERENCES cars("id") ON DELETE CASCADE
           );
         `);
     await client.query('COMMIT');
