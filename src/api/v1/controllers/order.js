@@ -1,13 +1,13 @@
 import OrderModel from '../../../models/order';
 import CarModel from '../../../models/car';
-import { handleCreate, handleDelete, handleGetOne, getAllBy } from '../../../helpers/callback';
+import { getAllBy, handleCreate, handleDelete, handleGetOne } from '../../../helpers/callback';
 import { notallowed, notfound, success } from '../../../helpers/response';
 
 const Order = {
   create: async (req, res) => {
     const car = await CarModel.findOne(req.body.carId);
     if (!car) return notfound(res, 'Car not found');
-    await handleCreate(OrderModel, { ...req.body, buyer: req.user.id }, res, 'order');
+    await handleCreate(OrderModel, { ...req.body, buyer: req.user.id, price: car.price }, res, 'order');
   },
 
   getOne: async (req, res) => handleGetOne(req, res, OrderModel, 'order'),
@@ -19,18 +19,26 @@ const Order = {
 
   getAllByBuyer: async (req, res) => getAllBy(req, res, OrderModel, 'orders'),
 
+  getAllByCar: async (req, res) => {
+    const { id } = req.params;
+    const orders = await OrderModel.findAllByCar(id);
+    success(res, undefined, { orders });
+  },
+
   update: async (req, res) => {
     const { id } = req.params;
     let data = req.body;
     let order = await OrderModel.findOne(id);
+    const car = await CarModel.findOne(order.carId);
     if (!order) return notfound(res, 'Order not found');
-    if (order.status !== 'pending') return notallowed(res);
+    if (!(order.status === 'pending' && car.owner.id === req.user.id)) return notallowed(res);
     if (data.price) {
       const oldPriceOffered = order.priceOffered;
       const { price, ...newData } = data;
       data = { ...newData, oldPriceOffered, priceOffered: price };
     }
-    order = await OrderModel.update(id, data);
+    await OrderModel.update(id, data);
+    order = await OrderModel.findOne(id);
     success(res, null, { order });
   },
 

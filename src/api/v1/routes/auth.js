@@ -8,6 +8,7 @@ const router = Router();
 
 router.post('/signup', expressJoi(userSignupSchema), AuthController.signup);
 router.post('/signin', expressJoi(userSigninSchema), AuthController.signin);
+router.get('/user', authorize, AuthController.getUser);
 router.delete('/user/:id', authorize, admin, AuthController.deleteUser);
 
 export default router;
