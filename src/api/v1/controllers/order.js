@@ -7,7 +7,6 @@ const Order = {
   create: async (req, res) => {
     const car = await CarModel.findOne(req.body.carId);
     if (!car) return notfound(res, 'Car not found');
-    if (car.owner.id === req.user.id) return notallowed(res, 'You can\'t make a purchase on your car');
     await handleCreate(OrderModel, { ...req.body, buyer: req.user.id, price: car.price }, res, 'order');
   },
 
