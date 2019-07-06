@@ -1,4 +1,4 @@
-import { success, notfound } from './response';
+import { notfound, success } from './response';
 
 export async function handleCreate(Model, data, res, field) {
   res.status(201).json({ success: true, [field]: await Model.create(data) });
@@ -18,7 +18,7 @@ export async function handleGetOne(req, res, Model, field) {
 }
 
 export async function getAllBy(req, res, Model, field) {
-  const { id } = req.params;
+  const id = req.params.id || req.user.id;
   const data = await Model.findAllByUser(id);
   success(res, undefined, { [field]: data });
 }
