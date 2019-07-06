@@ -29,8 +29,8 @@ const Order = {
     const { id } = req.params;
     let data = req.body;
     let order = await OrderModel.findOne(id);
-    const car = await CarModel.findOne(order.carId);
     if (!order) return notfound(res, 'Order not found');
+    const car = await CarModel.findOne(order.carId);
     if (!(order.status === 'pending' && car.owner.id === req.user.id)) return notallowed(res);
     if (data.price) {
       const oldPriceOffered = order.priceOffered;
