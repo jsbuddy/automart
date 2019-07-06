@@ -79,6 +79,15 @@ describe('/api', () => {
         });
     });
 
+    it('should return a user', (done) => {
+      request(app).get(`${api}/auth/user`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('user').that.is.an('object').that.includes.all.keys('id', 'email');
+          done();
+        });
+    });
+
     it('should not authorize user due to absence of authorization header', (done) => {
       request(app).get(`${api}/car`)
         .end((err, res) => {
@@ -252,6 +261,16 @@ describe('/api', () => {
         });
     });
 
+    it('should not be able to create order due to unknown carId', (done) => {
+      request(app).post(`${api}/order/99c92791-ef23-4cc4-8e71-ca81b109d3eb`)
+        .send({ carId, priceOffered: 950 }).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('success').that.equals(false);
+          done();
+        });
+    });
+
     it('should return all order', (done) => {
       request(app).get(`${api}/order`).set(headers)
         .end((err, res) => {
@@ -270,8 +289,8 @@ describe('/api', () => {
         });
     });
 
-    it('should return all order for a specific buyer', (done) => {
-      request(app).get(`${api}/order/buyer/${userId}`).set(headers)
+    it('should return all order for a specific car', (done) => {
+      request(app).get(`${api}/order/car/${carId}`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.property('orders').that.is.an('array');
@@ -285,6 +304,16 @@ describe('/api', () => {
           console.log(res.body);
           expect(res.status).to.equal(404);
           expect(res.body).to.not.have.property('order');
+          done();
+        });
+    });
+
+    it('should not be able to update order with specified id', (done) => {
+      request(app).patch(`${api}/order/99c92791-ef23-4cc4-8e71-ca81b109d3eb`).set(headers)
+        .end((err, res) => {
+          console.log(res.body);
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('success').that.equals(false);
           done();
         });
     });
