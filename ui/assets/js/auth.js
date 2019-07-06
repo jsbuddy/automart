@@ -1,35 +1,39 @@
-const base = 'https://automartt.herokuapp.com/api/v1';
+// const api = 'http://localhost:2999/api/v1';
+const api = 'https://automartt.herokuapp.com/api/v1';
 
 const Auth = {
   user: null,
   async signup(data) {
-    return await (await fetch(`${base}/auth/signup`, {
+    return await (await fetch(`${api}/auth/signup`, {
       method: 'POST', body: JSON.stringify(data),
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     })).json();
   },
   async login(data) {
-    return await (await fetch(`${base}/auth/signin`, {
+    return await (await fetch(`${api}/auth/signin`, {
       method: 'POST', body: JSON.stringify(data),
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     })).json();
   },
   async verify(admin) {
     const token = this.getToken();
-    if (!token) return this.redirect('/login.html');
+    if (!token) return this.redirect('/login');
     try {
-      const res = await (await fetch(`${base}/auth/user`, {
+      const res = await (await fetch(`${api}/auth/user`, {
         method: 'GET',
-        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': `Bearer: ${token}` },
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer: ${token}`
+        },
       })).json();
       if (res.success) {
         if (admin) !res.user.isAdmin && this.redirect('/');
         this.user = res.user;
         this.setup();
-      }
-      else this.redirect('/login.html');
+      } else this.redirect('/login');
     } catch (err) {
-      this.redirect('/login.html');
+      this.redirect('/login');
     }
   },
   redirect(path) {
@@ -37,11 +41,12 @@ const Auth = {
   },
   logout() {
     localStorage.clear();
-    this.redirect('/login.html')
+    this.redirect('/login')
   },
   saveToken: token => localStorage.setItem('token', token),
   getToken: () => localStorage.getItem('token'),
   setup() {
+    document.documentElement.classList.add('dark');
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => populateMenu(this.user));
     } else {
@@ -59,8 +64,8 @@ function populateMenu(user) {
       </a>
       <div class="flex">
         <ul class="menu mr-2">
-            <li><a class="${path === 'dashboard' ? 'active' : ''}" href="/dashboard.html"><i class="fa fa-chart-bar mr-2"></i>Dashboard</a></li>
-            ${ user.isAdmin ? `<li><a class="${path === 'admin' ? 'active' : ''}" href="admin.html"><i class="fa fa-user mr-2"></i>Admin</a></li>` : ''}
+            <li><a class="${path === 'dashboard' ? 'active' : ''}" href="../../dashboard"><i class="fa fa-chart-bar mr-2"></i>Dashboard</a></li>
+            ${user.isAdmin ? `<li><a class="${path === 'admin' ? 'active' : ''}" href="../../admin"><i class="fa fa-user mr-2"></i>Admin</a></li>` : ''}
             <li class="dropdown" id="dropdown"><a href="#"><i class="fa fa-book mr-2"></i>API Docs</a>
                 <ul class="dropdown-menu">
                     <li><a href="/docs">Swagger</a></li>
@@ -69,7 +74,7 @@ function populateMenu(user) {
             </li>
             <li class="dropdown"><a href="#"><i class="fa fa-user-circle mr-2"></i>${user.firstName}<i class="fa fa-caret-down ml-2"></i></a>
                 <ul class="dropdown-menu">
-                    <li><a id="logout"><i class="fa fa-sign-out-alt mr-2"></i>Logout</a></li>
+                    <li><a href="#" id="logout"><i class="fa fa-sign-out-alt mr-2"></i>Logout</a></li>
                 </ul>
             </li>
         </ul>
