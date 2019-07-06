@@ -5,28 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Toyota Camry 2.4 XLE</title>
+    <title>Automart</title>
     <link rel="stylesheet" href="assets/css/elements.min.css">
     <link rel="stylesheet" href="assets/css/utils.min.css">
     <link rel="stylesheet" href="assets/css/layout.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
         integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <script src="assets/js/auth.js"></script>
+    <script>
+        Auth.verify();
+    </script>
 </head>
 
 <body class="nav-padding">
     <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                AUTO MART
-            </div>
-            <div class="flex">
-
-                <ul class="menu mr-2">
-                    <li><a href="index.html"><i class="fa fa-home mr-2"></i>Home</a></li>
-                    <li><a href="admin.html"><i class="fa fa-user mr-2"></i>Admin</a></li>
-                    <li><a href="dashboard.html"><i class="fa fa-chart-bar mr-2"></i>Dashboard</a></li>
-                    <li><a href="#"><i class="fa fa-sign-out-alt mr-2"></i>Logout</a></li>
-                </ul>
+        <div class="container" id="nav">
+            <div class="skeleton first">lorem.</div>
+            <div class="flex justify-end">
+                <div class="skeleton">Lorem ip.</div>
+                <div class="skeleton">Lorem ipsum.</div>
+                <div class="skeleton">Lorem.</div>
             </div>
         </div>
     </nav>
@@ -34,34 +32,26 @@
         <div class="container">
             <div class="flex justify-start">
                 <button class="btn primary outline sm" onclick="window.history.back()"><i
-                        class="fa fa-arrow-left mr-2"></i> Back</button>
+                        class="fa fa-arrow-left mr-2"></i> Back
+                </button>
             </div>
-            <div class="two-column single-car">
+            <div class="two-column single-car" id="car">
                 <div class="left">
-                    <div class="image">
-                        <img src="https://picsum.photos/id/1071/3000/1996" alt="">
+                    <div class="image skeleton dark fit-content">
                     </div>
                 </div>
                 <div class="right flex column align-start">
-                    <div class="chip blue mb-4">Used</div>
-                    <div class="seller flex justify-between mb-2">
-                        <div class="name"><i class="fa fa-user-circle"></i> abcxyz</div>
+                    <div class="chip blue mb-2 skeleton dark">Lo.</div>
+                    <div class="seller flex justify-between mb-2 skeleton dark">
+                        Lorem ipsum.
                     </div>
-                    <div class="title">Toyota Camry 2.4 XLE</div>
-                    <div class="subtitle">#230,000</div>
-                    <ul class="details-list">
-                        <li>Manufacturer: Toyota</li>
-                        <li>Model: Camry 2.4 XLE</li>
-                        <li>Body Type: Car</li>
-                        <li>Color: Black</li>
-                    </ul>
-                    <button class="btn lg primary mt-4 mb-4" id="orderModalTrigger">Purchase</button>
+                    <br><br><br><br>
+                    <div class="mb-2 skeleton dark">Lorem .</div>
+                    <div class="mb-2 skeleton dark">Lorem ipsum.</div>
+                    <div class="mb-1 skeleton dark">Lorem.</div>
 
-                    <div class="flex flex-1 align-end">
-                        <a id="reportModalTrigger">
-                            <i class="fa fa-exclamation-circle mr-2"></i>
-                            <span>Report as fraudulent</span>
-                        </a>
+                    <div class="flex flex-1 align-end modal-trigger" data-id="reportModal">
+                        <a class="skeleton dark">Lorem, ipsum.</a>
                     </div>
                 </div>
             </div>
@@ -75,13 +65,14 @@
                     Purchase Order
                     <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
                 </div>
-                <div class="form-group">
+                <div id="ordermessage" class="message red mt-4 d-none"></div>
+                <form id="orderform" class="form-group">
                     <label class="input-box">
-                        <input type="number" class="control" placeholder=" " name="price" value="123000">
+                        <input type="number" class="control" placeholder=" " name="price">
                         <span class="label-text">Price</span>
                     </label>
-                </div>
-                <button class="btn lg primary outline mt-2">Send Offer</button>
+                    <button type="submit" name="submit" class="btn lg primary outline mt-2">Send Offer</button>
+                </form>
             </div>
         </div>
     </div>
@@ -98,30 +89,136 @@
                     </div>
                     <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
                 </div>
-                <label class="input-box">
-                    <select class="control" name="reason">
-                        <option value="pricing">Pricing</option>
-                        <option value="wierdDemands">Wierd Demands</option>
-                    </select>
-                    <span class="label-text">Reason</span>
-                </label>
-                <div class="form-group">
+                <div id="reportmessage" class="message red mt-4 d-none"></div>
+                <form id="reportform" class="form-group">
+                    <label class="input-box">
+                        <select class="control" name="reason">
+                            <option value="pricing">Pricing</option>
+                            <option value="weird demands">Weird Demands</option>
+                        </select>
+                        <span class="label-text">Reason</span>
+                    </label>
                     <label class="input-box">
                         <textarea class="control" placeholder=" " name="description"></textarea>
                         <span class="label-text">Description</span>
                     </label>
-                </div>
-                <button class="btn lg red outline mt-2">Report</button>
+                    <button type="submit" name="submit" class="btn lg red outline mt-2">Report</button>
+                </form>
             </div>
         </div>
     </div>
 
+    <script src="assets/js/helpers.js"></script>
+    <script src="assets/js/api.js"></script>
+    <script src="assets/js/form.js"></script>
     <script src="assets/js/modal.js"></script>
+    <script src="assets/js/dropdown.js"></script>
     <script>
-        const orderModal = new ModalController(document.getElementById('orderModal'));
-        const reportModal = new ModalController(document.getElementById('reportModal'));
-        document.getElementById('orderModalTrigger').addEventListener('click', orderModal.show);
-        document.getElementById('reportModalTrigger').addEventListener('click', reportModal.show);
+        const id = getUrlParam("id");
+        const wrapper = document.getElementById('car');
+
+        async function init() {
+            const car = await Api.getCar(id);
+            document.title = `${car.manufacturer} ${car.model}`;
+            populate(car);
+        }
+
+        function populate(car) {
+            if (!car) {
+                wrapper.innerHTML = `
+                    <div class="empty flex column align-center text-center" style="grid-column: 1/5">
+                        <div class="icon"><i class="fa fa-car"></i></div>
+                        <div class="text">The car you're trying to find does not exist.</div>
+                    </div>
+                `;
+                return;
+            }
+            wrapper.innerHTML = `
+                <div class="left">
+                    <div class="image">
+                        <img src="${car.images[0] ? car.images[0].url : 'assets/images/placeholder.png'}" alt="">
+                    </div>
+                </div>
+                <div class="right flex column align-start">
+                    <div class="chip blue mb-4">${capitalize(car.state)}</div>
+                    <div class="seller flex justify-between mb-2">
+                        <div class="name flex align-center"><i class="fa fa-user-circle mr-1"></i>${car.owner.firstName} ${car.owner.lastName}</div>
+                    </div>
+                    <div class="title">${capitalize(car.manufacturer)} ${capitalize(car.model)}</div>
+                    <div class="subtitle">&#8358;${car.price.toLocaleString()}</div>
+                    <ul class="details-list">
+                        <li>Manufacturer: ${capitalize(car.manufacturer)}</li>
+                        <li>Model: ${capitalize(car.model)}</li>
+                        <li>Body Type: ${capitalize(car.bodyType)}</li>
+                    </ul>
+                    <button class="btn lg primary mt-4 mb-4 modal-trigger" data-id="orderModal">Purchase</button>
+
+                    <div class="flex flex-1 align-end modal-trigger" data-id="reportModal">
+                        <a class="link text-red">
+                            <i class="fa fa-exclamation-circle mr-2"></i>
+                            <span>Report as fraudulent</span>
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function getUrlParam(param) {
+            const url = new URL(window.location.href);
+            return url.searchParams.get(param);
+        }
+
+        init();
+    </script>
+    <script>
+        const orderform = document.getElementById('orderform');
+        const ordermessage = document.getElementById('ordermessage');
+        const reportform = document.getElementById('reportform');
+        const reportmessage = document.getElementById('reportmessage');
+
+        const order = new Form(orderform, ordermessage);
+        order.handle = async function (e) {
+            e.preventDefault();
+            this.hideMessage();
+            const price = [...e.target].find(el => el.name === 'price').value;
+            if (!price) return this.showMessage('Please enter a price', 'error');
+            this.disableForm();
+            const res = await Api.placeOrder(id, price);
+            if (res.success) {
+                this.showMessage('Offer sent!', 'success');
+                this.form.reset();
+            } else {
+                this.showMessage(res.message || 'An error occurred', 'error');
+            }
+            this.enableForm();
+        };
+
+        const report = new Form(reportform, reportmessage);
+        report.handle = async function (e) {
+            e.preventDefault();
+            this.hideMessage();
+            let err = false;
+            const report = [...e.target].reduce((obj, el) => {
+                if (el.name !== 'submit') {
+                    if (el.value.trim() === '') err = true;
+                    obj[el.name] = el.value;
+                }
+                return obj;
+            }, {});
+            if (err) return this.showMessage('All fields are required', 'error');
+            this.disableForm();
+            const res = await Api.report(id, report);
+            if (res.success) {
+                this.showMessage('Complaint sent successfully!', 'success');
+                this.form.reset();
+            } else {
+                this.showMessage(res.message || 'An error occurred', 'error');
+            }
+            this.enableForm();
+        };
+
+        orderform.addEventListener('submit', (e) => order.handle(e));
+        reportform.addEventListener('submit', (e) => report.handle(e))
     </script>
 </body>
 

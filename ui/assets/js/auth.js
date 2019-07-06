@@ -1,0 +1,79 @@
+const base = 'https://automartt.herokuapp.com/api/v1';
+
+const Auth = {
+  user: null,
+  async signup(data) {
+    return await (await fetch(`${base}/auth/signup`, {
+      method: 'POST', body: JSON.stringify(data),
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    })).json();
+  },
+  async login(data) {
+    return await (await fetch(`${base}/auth/signin`, {
+      method: 'POST', body: JSON.stringify(data),
+      headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+    })).json();
+  },
+  async verify(admin) {
+    const token = this.getToken();
+    if (!token) return this.redirect('/login.html');
+    try {
+      const res = await (await fetch(`${base}/auth/user`, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'Authorization': `Bearer: ${token}` },
+      })).json();
+      if (res.success) {
+        if (admin) !res.user.isAdmin && this.redirect('/');
+        this.user = res.user;
+        this.setup();
+      }
+      else this.redirect('/login.html');
+    } catch (err) {
+      this.redirect('/login.html');
+    }
+  },
+  redirect(path) {
+    window.location.pathname = path;
+  },
+  logout() {
+    localStorage.clear();
+    this.redirect('/login.html')
+  },
+  saveToken: token => localStorage.setItem('token', token),
+  getToken: () => localStorage.getItem('token'),
+  setup() {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => populateMenu(this.user));
+    } else {
+      populateMenu(this.user);
+    }
+  }
+};
+
+function populateMenu(user) {
+  const nav = document.getElementById('nav');
+  const path = location.pathname.replace(/\/|.html/gi, '');
+  nav.innerHTML = `
+      <a class="logo" href="/">
+        <i class="fa fa-truck-pickup"></i>
+      </a>
+      <div class="flex">
+        <ul class="menu mr-2">
+            <li><a class="${path === 'dashboard' ? 'active' : ''}" href="/dashboard.html"><i class="fa fa-chart-bar mr-2"></i>Dashboard</a></li>
+            ${ user.isAdmin ? `<li><a class="${path === 'admin' ? 'active' : ''}" href="admin.html"><i class="fa fa-user mr-2"></i>Admin</a></li>` : ''}
+            <li class="dropdown" id="dropdown"><a href="#"><i class="fa fa-book mr-2"></i>API Docs</a>
+                <ul class="dropdown-menu">
+                    <li><a href="/docs">Swagger</a></li>
+                    <li><a href="https://documenter.getpostman.com/view/2332557/S1ZudBGA">Postman</a></li>
+                </ul>
+            </li>
+            <li class="dropdown"><a href="#"><i class="fa fa-user-circle mr-2"></i>${user.firstName}<i class="fa fa-caret-down ml-2"></i></a>
+                <ul class="dropdown-menu">
+                    <li><a id="logout"><i class="fa fa-sign-out-alt mr-2"></i>Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+      </div>
+    `;
+  document.getElementById('logout').addEventListener('click', () => Auth.logout());
+}
