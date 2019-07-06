@@ -11,10 +11,10 @@ class ModalController {
     this.#addCloseTriggerEvent();
   };
 
-  preclose = () => {};
+  preClose = () => {};
 
   close = () => {
-    this.preclose();
+    this.preClose();
     this.#changeElClass('remove', 'show');
     this.#removeCloseTriggerEvent();
   };

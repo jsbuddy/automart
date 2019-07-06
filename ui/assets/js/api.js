@@ -8,7 +8,7 @@ const parseQueries = (queries) => {
 
 const Api = {
   async getCar(id) {
-    const res = await (await fetch(`${base}/car/${id}`, {
+    const res = await (await fetch(`${api}/car/${id}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })).json();
@@ -17,42 +17,42 @@ const Api = {
   async getCars(queries) {
     let q;
     if (queries) q = parseQueries(queries);
-    const res = await (await fetch(`${base}/car${q ? q : ''}`, {
+    const res = await (await fetch(`${api}/car${q ? q : ''}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })).json();
     return res.cars;
   },
   async getAllCars() {
-    const res = await (await fetch(`${base}/car`, {
+    const res = await (await fetch(`${api}/car`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })).json();
     return res.cars;
   },
   async getUserCars() {
-    const res = await (await fetch(`${base}/car/owner`, {
+    const res = await (await fetch(`${api}/car/owner`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })).json();
     return res.cars;
   },
   async getUserOrders() {
-    const res = await (await fetch(`${base}/order/buyer`, {
+    const res = await (await fetch(`${api}/order/buyer`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })).json();
     return res.orders;
   },
   async getCarOrders(id) {
-    const res = await (await fetch(`${base}/order/car/${id}`, {
+    const res = await (await fetch(`${api}/order/car/${id}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })).json();
     return res.orders;
   },
   async placeOrder(carId, priceOffered) {
-    return await (await fetch(`${base}/order`, {
+    return await (await fetch(`${api}/order`, {
       method: 'POST',
       body: JSON.stringify({ carId, priceOffered }),
       headers: {
@@ -63,7 +63,7 @@ const Api = {
     })).json();
   },
   async report(carId, report) {
-    return await (await fetch(`${base}/flag`, {
+    return await (await fetch(`${api}/flag`, {
       method: 'POST',
       body: JSON.stringify({ carId, ...report }),
       headers: {
@@ -74,7 +74,7 @@ const Api = {
     })).json();
   },
   async createAd(data) {
-    return await (await fetch(`${base}/car`, {
+    return await (await fetch(`${api}/car`, {
       method: 'POST',
       body: data,
       headers: {
@@ -83,7 +83,7 @@ const Api = {
     })).json();
   },
   async updateCarPrice(id, price) {
-    const res = await (await fetch(`${base}/car/${id}`, {
+    const res = await (await fetch(`${api}/car/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ price }),
       headers: {
@@ -95,7 +95,7 @@ const Api = {
     return res.car;
   },
   async updateOrderPrice(id, price) {
-    const res = await (await fetch(`${base}/order/${id}`, {
+    const res = await (await fetch(`${api}/order/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ price }),
       headers: {
@@ -107,7 +107,7 @@ const Api = {
     return res.order;
   },
   async updateOffer(id, update) {
-    const res = await (await fetch(`${base}/order/${id}`, {
+    const res = await (await fetch(`${api}/order/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(update),
       headers: {
@@ -119,14 +119,14 @@ const Api = {
     return res.order;
   },
   async getFlags() {
-    const res = await (await fetch(`${base}/flag`, {
+    const res = await (await fetch(`${api}/flag`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${Auth.getToken()}` }
     })).json();
     return res.flags;
   },
   async markAsSold(id) {
-    const res = await (await fetch(`${base}/car/${id}`, {
+    const res = await (await fetch(`${api}/car/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ status: 'sold' }),
       headers: {
@@ -138,7 +138,7 @@ const Api = {
     return res.car;
   },
   async deleteCar(id) {
-    const res = await (await fetch(`${base}/car/${id}`, {
+    const res = await (await fetch(`${api}/car/${id}`, {
       method: 'DELETE',
       headers: {
         Accept: 'application/json',

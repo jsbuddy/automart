@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
-    <link rel="stylesheet" href="assets/css/elements.min.css">
-    <link rel="stylesheet" href="assets/css/utils.min.css">
-    <link rel="stylesheet" href="assets/css/layout.min.css">
+    <link rel="stylesheet" href="../assets/css/elements.min.css">
+    <link rel="stylesheet" href="../assets/css/utils.min.css">
+    <link rel="stylesheet" href="../assets/css/layout.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
           integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 </head>
@@ -21,7 +21,7 @@
         </div>
         <div class="flex">
             <ul class="menu">
-                <li><a href="signup.html"><i class="fa fa-user-plus mr-2"></i>Sign up</a></li>
+                <li><a href="../signup"><i class="fa fa-user-plus mr-2"></i>Sign up</a></li>
             </ul>
         </div>
     </div>
@@ -31,18 +31,18 @@
         <div class="two-column">
             <div class="left">
                 <div class="image">
-                    <img src="assets/images/city-driver.svg" alt="">
+                    <img src="../assets/images/city-driver.svg" alt="">
                 </div>
             </div>
             <div class="right flex column align-start">
                 <div class="card">
                     <div class="card-body">
                         <div class="title">Login</div>
-                        <div class="subtitle">Login to your account or <a href="signup.html">Sign up here</a> if you
+                        <div class="subtitle">Login to your account or <a href="../signup">Sign up here</a> if you
                             don't have an account
                         </div>
-                        <div id="loginmessage" class="message red mt-4 d-none"></div>
-                        <form id="loginform" class="form-group">
+                        <div id="loginMessage" class="message red mt-4 d-none"></div>
+                        <form id="loginForm" class="form-group">
                             <label class="input-box">
                                 <input type="email" class="control" placeholder=" " name="email">
                                 <span class="label-text">Email address</span>
@@ -59,39 +59,9 @@
         </div>
     </div>
 </main>
-<script src="assets/js/auth.js"></script>
-<script src="assets/js/form.js"></script>
-<script>
-  const form = document.getElementById('loginform');
-  const message = document.getElementById('loginmessage');
-
-  const login = new Form(form, message);
-
-  login.handle = async function (e) {
-    e.preventDefault();
-    this.hideMessage();
-    let err = false;
-    const data = [...e.target].reduce((obj, el) => {
-      if (el.name !== 'submit') {
-        if (!el.value.trim()) err = true;
-        obj[el.name] = el.value;
-      }
-      return obj;
-    }, {});
-    if (err) return this.showMessage('All fields are required!', 'error');
-    this.disableForm();
-    const res = await Auth.login(data);
-    if (res.success) {
-      Auth.saveToken(res.token);
-      location.pathname = '/';
-    } else {
-      this.showMessage(res.message, 'error');
-      this.enableForm();
-    }
-  };
-
-  form.addEventListener('submit', (e) => login.handle(e));
-</script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/form.js"></script>
+<script src="./script.js"></script>
 </body>
 
 </html>
