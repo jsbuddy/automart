@@ -56,8 +56,11 @@ const Auth = {
 };
 
 function populateMenu(user) {
+  const doc = document.documentElement;
   const nav = document.getElementById('nav');
   const path = location.pathname.replace(/\/|.html/gi, '');
+  const theme = localStorage.getItem('theme') || '';
+  doc.className = theme;
   nav.innerHTML = `
       <a class="logo" href="/">
         <i class="fa fa-truck-pickup"></i>
@@ -74,6 +77,9 @@ function populateMenu(user) {
             </li>
             <li class="dropdown"><a href="#"><i class="fa fa-user-circle mr-2"></i>${user.firstName}<i class="fa fa-caret-down ml-2"></i></a>
                 <ul class="dropdown-menu">
+                    <li><a href="#" id="theme">
+                      ${themeBtnText(theme)}
+                    </li>
                     <li><a href="#" id="logout"><i class="fa fa-sign-out-alt mr-2"></i>Logout</a></li>
                 </ul>
             </li>
@@ -81,4 +87,9 @@ function populateMenu(user) {
       </div>
     `;
   document.getElementById('logout').addEventListener('click', () => Auth.logout());
+  document.getElementById('theme').addEventListener('click', function () {
+    doc.classList.toggle('dark');
+    localStorage.setItem('theme', doc.className);
+    this.innerHTML = themeBtnText(doc.className);
+  });
 }
