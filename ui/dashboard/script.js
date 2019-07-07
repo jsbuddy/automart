@@ -21,31 +21,23 @@ let offers = [];
 let current;
 
 const updateCar = new Form(updateCarForm, updateCarMessage);
-updateCar.handle = async function (e) {
-  e.preventDefault();
-  this.hideMessage();
-  const price = [...e.target].find(el => el.name === 'price').value;
+updateCar.handle = async function (done) {
+  const price = this.getFieldValue('price');
   if (!price.trim()) return this.showMessage('Please enter new price', 'error');
   this.disableForm();
   const car = await Api.updateCarPrice(current, price);
   updateCars(car);
-  this.showMessage('Price successfully updated', 'success');
-  this.enableForm();
-  this.form.reset();
+  done('Price successfully updated');
 };
 
 const updateOrder = new Form(updateOrderForm, updateOrderMessage);
-updateOrder.handle = async function (e) {
-  e.preventDefault();
-  this.hideMessage();
-  const price = [...e.target].find(el => el.name === 'price').value;
+updateOrder.handle = async function (done) {
+  const price = this.getFieldValue('price');
   if (!price.trim()) return this.showMessage('Please enter new price', 'error');
   this.disableForm();
   const order = await Api.updateOrderPrice(current, price);
   updateOrders(order);
-  this.showMessage('Price successfully updated', 'success');
-  this.enableForm();
-  this.form.reset();
+  done('Price successfully updated');
 };
 
 updateCarPriceModal.preClose = () => updateCar.hideMessage();
@@ -74,35 +66,25 @@ offersModal.preClose = () => {
 };
 
 const create = new Form(createForm, createMessage);
-create.handle = async function (e) {
-  e.preventDefault();
-  this.hideMessage();
-  let err = false;
-  const data = [...e.target].reduce((obj, el) => {
-    if (el.name !== 'submit' && el.name !== 'images') {
-      if (!el.value) err = true;
-      obj[el.name] = el.value;
-    }
-    return obj;
-  }, {});
-  const files = [...e.target].find(el => el.name === 'images').files;
-  if (err) return this.showMessage('All fields are required', 'error');
+create.handle = async function (done) {
+  const data = create.getValuesAsObject();
+  const files = [...create.form].find(el => el.name === 'file').files;
+  if (this.err) return this.showMessage('All fields are required', 'error');
   if (!files.length) return this.showMessage('At least one image is required', 'error');
   if (!validateFiles([...files])) return;
   const fd = new FormData();
-  [...files].forEach(file => fd.append("images", file))
+  [...files].forEach(file => fd.append("images", file));
   Object.keys(data).forEach(key => fd.append(key, data[key]));
   this.disableForm();
   const res = await Api.createAd(fd);
-  this.enableForm();
   if (res.success) {
-    this.showMessage(res.message, 'success');
-    this.form.reset();
     imagesWrapper.innerHTML = '';
     cars.push(res.car);
     populateCars(cars);
+    done(res.message);
   } else {
     this.showMessage(res.message || 'An error occurred, please try again', 'error');
+    this.enableForm();
   }
 };
 
@@ -114,7 +96,7 @@ function validateFiles(files) {
   const invalidSize = files.some(file => file.size / 1024 / 1024 > 1);
 
   if (invalidLength) {
-    create.showMessage('Maximum of 3 images exceeded.', 'error')
+    create.showMessage('Maximum of 3 images exceeded.', 'error');
     return false;
   }
   if (invalidType) {
@@ -122,7 +104,7 @@ function validateFiles(files) {
     return false;
   }
   if (invalidSize) {
-    create.showMessage('Files sized must not exceed 1MB', 'error')
+    create.showMessage('Files sized must not exceed 1MB', 'error');
     return false;
   }
   return true;
@@ -132,7 +114,7 @@ async function handleImages(files) {
   imagesWrapper.innerHTML = '';
   if (!this.validateFiles([...files])) return;
   const urls = await Promise.all([...files].map(file => toDataUrl(file)));
-  imagesWrapper.innerHTML = urls.map(url => `<img src="${url}"/>`).join('');
+  imagesWrapper.innerHTML = urls.map(url => `<img src="${url}" alt="Car"/>`).join('');
 }
 
 function toDataUrl(file) {
@@ -140,7 +122,7 @@ function toDataUrl(file) {
     const reader = new FileReader();
     reader.onload = (e) => {
       resolve(e.target.result);
-    }
+    };
     reader.readAsDataURL(file);
   })
 
@@ -174,7 +156,7 @@ function populateOrders(orders) {
             </div>
             <div class="actions flex justify-between">
                 <div>
-                    <a href="car.html?id=${order.car.id}" class="btn primary sm outline">View</a>
+                    <a href="../car/index.html?id=${order.car.id}" class="btn primary sm outline">View</a>
                     ${order.status === 'pending' ? `
                         <button class="btn primary sm outline" id="updateOrderPriceModalTrigger" data-id="${order.id}">
                             Update Price
@@ -252,11 +234,9 @@ function populateOffers(offers) {
                     ` : ''}
                 ${offer.status === 'accepted' ? `
                     <div class="chip green">Accepted</div>
-                    <button class="btn yellow sm outline ml-1 offer-respond" data-id="${offer.id}" data-status="pending">Undo</button>
                     ` : ''}
                 ${offer.status === 'rejected' ? `
                     <div class="chip red">Rejected</div>
-                    <button class="btn yellow sm outline ml-1 offer-respond" data-id="${offer.id}" data-status="pending">Undo</button>
                 ` : ''}
             </div>
         </div>
@@ -264,26 +244,17 @@ function populateOffers(offers) {
 }
 
 function updateCars(car) {
-  cars = cars.map(_car => {
-    if (_car.id === car.id) return car;
-    return _car;
-  });
+  cars = update(cars, car);
   populateCars(cars);
 }
 
 function updateOrders(order) {
-  orders = orders.map(_order => {
-    if (_order.id === order.id) return order;
-    return _order;
-  });
+  orders = update(orders, order);
   populateOrders(orders);
 }
 
 function updateOffers(offer) {
-  offers = offers.map(_offer => {
-    if (_offer.id === offer.id) return offer;
-    return _offer;
-  });
+  offers = update(offers, offer);
   populateOffers(offers);
 }
 
@@ -330,10 +301,10 @@ async function handleClick(e) {
   }
 }
 
-createForm.addEventListener('submit', (e) => create.handle(e));
-createForm.querySelector('input[name="images"]').addEventListener('change', (e) => handleImages(e.target.files));
-updateCarForm.addEventListener('submit', (e) => updateCar.handle(e));
-updateOrderForm.addEventListener('submit', (e) => updateOrder.handle(e));
+createForm.addEventListener('submit', (e) => create.submit(e));
+createForm.querySelector('input[name="file"]').addEventListener('change', (e) => handleImages(e.target.files));
+updateCarForm.addEventListener('submit', (e) => updateCar.submit(e));
+updateOrderForm.addEventListener('submit', (e) => updateOrder.submit(e));
 
 window.addEventListener('click', handleClick);
 

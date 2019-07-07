@@ -6,12 +6,6 @@ const orderMessage = document.getElementById('orderMessage');
 const reportForm = document.getElementById('reportForm');
 const reportMessage = document.getElementById('reportMessage');
 
-async function init() {
-  const car = await Api.getCar(id);
-  document.title = `${car.manufacturer} ${car.model}`;
-  populate(car);
-}
-
 function populate(car) {
   if (!car) {
     carWrapper.innerHTML = `
@@ -57,48 +51,41 @@ function getUrlParam(param) {
   return url.searchParams.get(param);
 }
 
-init();
-
 const order = new Form(orderForm, orderMessage);
-order.handle = async function (e) {
-  e.preventDefault();
-  this.hideMessage();
-  const price = [...e.target].find(el => el.name === 'price').value;
+order.handle = async function (done) {
+  const price = this.getFieldValue('price');
   if (!price) return this.showMessage('Please enter a price', 'error');
   this.disableForm();
   const res = await Api.placeOrder(id, price);
   if (res.success) {
-    this.showMessage('Offer sent!', 'success');
-    this.form.reset();
+    done('Offer sent!');
   } else {
     this.showMessage(res.message || 'An error occurred', 'error');
+    this.enableForm();
   }
-  this.enableForm();
 };
 
 const report = new Form(reportForm, reportMessage);
-report.handle = async function (e) {
-  e.preventDefault();
-  this.hideMessage();
-  let err = false;
-  const report = [...e.target].reduce((obj, el) => {
-    if (el.name !== 'submit') {
-      if (el.value.trim() === '') err = true;
-      obj[el.name] = el.value;
-    }
-    return obj;
-  }, {});
-  if (err) return this.showMessage('All fields are required', 'error');
+report.handle = async function (done) {
+  const report = this.getValuesAsObject();
+  if (this.err) return this.showMessage('All fields are required', 'error');
   this.disableForm();
   const res = await Api.report(id, report);
   if (res.success) {
-    this.showMessage('Complaint sent successfully!', 'success');
-    this.form.reset();
+    done('Complaint sent successfully!');
   } else {
     this.showMessage(res.message || 'An error occurred', 'error');
+    this.enableForm();
   }
-  this.enableForm();
 };
 
-orderForm.addEventListener('submit', (e) => order.handle(e));
-reportForm.addEventListener('submit', (e) => report.handle(e))
+async function init() {
+  const car = await Api.getCar(id);
+  document.title = `${car.manufacturer} ${car.model}`;
+  populate(car);
+}
+
+init();
+
+orderForm.addEventListener('submit', e => order.submit(e));
+reportForm.addEventListener('submit', e => report.submit(e));

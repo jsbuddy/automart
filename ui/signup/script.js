@@ -3,18 +3,9 @@ const message = document.getElementById('signupMessage');
 
 const signup = new Form(form, message);
 
-signup.handle = async function handleSubmit(e) {
-  e.preventDefault();
-  this.hideMessage();
-  let err = false;
-  const data = [...e.target].reduce((obj, el) => {
-    if (el.name !== 'submit') {
-      if (!el.value.trim()) err = true;
-      obj[el.name] = el.value;
-    }
-    return obj;
-  }, {});
-  if (err) return this.showMessage('All fields are required!', 'error');
+signup.handle = async function handleSubmit() {
+  const data = this.getValuesAsObject();
+  if (this.err) return this.showMessage('All fields are required!', 'error');
   this.disableForm();
   const res = await Auth.signup(data);
   if (res.success) {
@@ -26,4 +17,4 @@ signup.handle = async function handleSubmit(e) {
   }
 };
 
-form.addEventListener('submit', (e) => signup.handle(e));
+form.addEventListener('submit', (e) => signup.submit(e));
