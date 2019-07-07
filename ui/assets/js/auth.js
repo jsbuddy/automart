@@ -16,7 +16,7 @@ const Auth = {
     })).json();
   },
   async verify(admin) {
-    if (this.getToken()) return this.redirect('/login');
+    if (!this.getToken()) return this.redirect('/login');
     try {
       const res = await (await fetch(`${api}/auth/user`, {
         method: 'GET',
