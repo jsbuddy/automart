@@ -1,5 +1,5 @@
-// const api = 'http://localhost:2999/api/v1';
-const api = 'https://automartt.herokuapp.com/api/v1';
+const api = 'http://localhost:2999/api/v1';
+// const api = 'https://automartt.herokuapp.com/api/v1';
 
 const Auth = {
   user: null,
@@ -16,15 +16,14 @@ const Auth = {
     })).json();
   },
   async verify(admin) {
-    const token = this.getToken();
-    if (!token) return this.redirect('/login');
+    if (this.getToken()) return this.redirect('/login');
     try {
       const res = await (await fetch(`${api}/auth/user`, {
         method: 'GET',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': `Bearer: ${token}`
+          'Authorization': `Bearer: ${this.getToken()}`
         },
       })).json();
       if (res.success) {

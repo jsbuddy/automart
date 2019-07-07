@@ -23,6 +23,10 @@ class Form {
     return [...this.form].find(el => el.name === name).value
   }
 
+  getField(name) {
+    return [...this.form].find(el => el.name === name);
+  }
+
   getValuesAsObject() {
     return [...this.form].reduce((obj, el) => {
       if (el.name !== 'submit' && el.name !== 'file') {

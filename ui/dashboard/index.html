@@ -10,235 +10,236 @@
     <link rel="stylesheet" href="../assets/css/utils.min.css">
     <link rel="stylesheet" href="../assets/css/layout.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-        integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/auth.js"></script>
     <script>
-        Auth.verify();
+      Auth.verify();
     </script>
 </head>
 
 <body class="nav-padding">
-    <nav class="navbar">
-        <div class="container" id="nav">
-            <div class="skeleton first">lorem.</div>
-            <div class="flex justify-end">
-                <div class="skeleton">Lorem ip.</div>
-                <div class="skeleton">Lorem ipsum.</div>
-                <div class="skeleton">Lorem.</div>
-            </div>
-        </div>
-    </nav>
-    <main>
-        <div class="container dashboard">
-            <div class="flex justify-between align-center mb-4">
-                <div class="tab-items">
-                    <div class="tab-item active">My Ads</div>
-                    <div class="tab-item">My Orders</div>
-                </div>
-                <button class="btn primary md modal-trigger" data-id="addModal"><i class="fa fa-plus-circle mr-2"></i>
-                    New Ad
-                </button>
-            </div>
-            <div class="tab-views">
-                <div class="tab-view active">
-                    <div class="dashboard-items" id="ads">
-                        <div class="dashboard-item">
-                            <div class="flex justify-between details">
-                                <div class="skeleton-children">
-                                    <div class="title">Lorem ipsum dolor sit amet.</div>
-                                    <div class="subtitle mt-2">Lorem.</div>
-                                </div>
-                                <div class="right skeleton-children">
-                                    <div>Lorem, ipsum.</div>
-                                </div>
-                            </div>
-                            <div class="actions flex justify-between skeleton-children">
-                                <div>Lorem, ipsum.</div>
-                                <div>Lorem, ipsum.</div>
-                            </div>
-                        </div>
-                        <div class="dashboard-item">
-                            <div class="flex justify-between details">
-                                <div class="skeleton-children">
-                                    <div class="title">Lorem ipsum dolor sit amet.</div>
-                                    <div class="subtitle mt-2">Lorem.</div>
-                                </div>
-                                <div class="right skeleton-children">
-                                    <div>Lorem, ipsum.</div>
-                                </div>
-                            </div>
-                            <div class="actions flex justify-between skeleton-children">
-                                <div>Lorem, ipsum.</div>
-                                <div>Lorem, ipsum.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-view">
-                    <div class="dashboard-items" id="orders">
-                        <div class="dashboard-item">
-                            <div class="flex justify-between details">
-                                <div class="skeleton-children">
-                                    <div class="title">Lorem ipsum dolor sit amet.</div>
-                                    <div class="subtitle mt-2">Lorem.</div>
-                                </div>
-                                <div class="right skeleton-children">
-                                    <div>Lorem, ipsum.</div>
-                                </div>
-                            </div>
-                            <div class="actions flex justify-between skeleton-children">
-                                <div>Lorem, ipsum.</div>
-                                <div>Lorem, ipsum.</div>
-                            </div>
-                        </div>
-                        <div class="dashboard-item">
-                            <div class="flex justify-between details">
-                                <div class="skeleton-children">
-                                    <div class="title">Lorem ipsum dolor sit amet.</div>
-                                    <div class="subtitle mt-2">Lorem.</div>
-                                </div>
-                                <div class="right skeleton-children">
-                                    <div>Lorem, ipsum.</div>
-                                </div>
-                            </div>
-                            <div class="actions flex justify-between skeleton-children">
-                                <div>Lorem, ipsum.</div>
-                                <div>Lorem, ipsum.</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <div class="modal-overlay" id="addModal">
-        <div class="card">
-            <div class="card-body">
-                <div class="title flex justify-between align-center mb-4">
-                    Post New Ad
-                    <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
-                </div>
-                <div id="createMessage" class="message red mt-4 d-none"></div>
-                <form id="createForm" class="form-group">
-                    <div class="file-drop-area mb-2">
-                        <span class="fake-btn">Choose images</span>
-                        <span class="file-msg">or drag and drop images here</span>
-                        <input class="file-input" type="file" multiple name="file" accept=".png, .jpg, .jpeg">
-                    </div>
-
-                    <div id="images" class="images-preview mb-4"></div>
-
-                    <label class="input-box">
-                        <input type="text" class="control" placeholder=" " name="manufacturer">
-                        <span class="label-text">Manufacturer</span>
-                    </label>
-                    <label class="input-box">
-                        <input type="text" class="control" placeholder=" " name="model">
-                        <span class="label-text">Model</span>
-                    </label>
-                    <label class="input-box">
-                        <input type="number" class="control" placeholder=" " name="price">
-                        <span class="label-text">Price</span>
-                    </label>
-                    <label class="input-box">
-                        <select class="control" name="state">
-                            <option value="used">Used</option>
-                            <option value="new">New</option>
-                        </select>
-                        <span class="label-text">State</span>
-                    </label>
-                    <label class="input-box">
-                        <select class="control" name="bodyType">
-                            <option value="car">Car</option>
-                            <option value="truck">Truck</option>
-                            <option value="van">Van</option>
-                        </select>
-                        <span class="label-text">Body Type</span>
-                    </label>
-                    <button type="submit" name="submit" class="btn lg primary outline mt-2">Post Ad</button>
-                </form>
-            </div>
+<nav class="navbar">
+    <div class="container" id="nav">
+        <div class="skeleton first">lorem.</div>
+        <div class="flex justify-end">
+            <div class="skeleton">Lorem ip.</div>
+            <div class="skeleton">Lorem ipsum.</div>
+            <div class="skeleton">Lorem.</div>
         </div>
     </div>
-
-    <div class="modal-overlay" id="updateCarPriceModal">
-        <div class="card">
-            <div class="card-body">
-                <div class="title flex justify-between align-center mb-4">
-                    Update Car Price
-                    <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
-                </div>
-                <div id="updateCarMessage" class="message red mt-4 d-none"></div>
-                <form id="updateCarForm" class="form-group">
-                    <label class="input-box">
-                        <input type="number" class="control" placeholder=" " name="price">
-                        <span class="label-text">Price</span>
-                    </label>
-                    <button type="submit" name="submit" class="btn lg primary outline mt-2">Update</button>
-                </form>
+</nav>
+<main>
+    <div class="container dashboard">
+        <div class="flex justify-between align-center mb-4">
+            <div class="tab-items">
+                <div class="tab-item active">My Ads</div>
+                <div class="tab-item">My Orders</div>
             </div>
+            <button class="btn primary md modal-trigger" data-id="addModal"><i class="fa fa-plus-circle mr-2"></i>
+                New Ad
+            </button>
         </div>
-    </div>
-
-    <div class="modal-overlay" id="updateOrderPriceModal">
-        <div class="card">
-            <div class="card-body">
-                <div class="title flex justify-between align-center mb-4">
-                    Update Order Price
-                    <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
-                </div>
-                <div id="updateOrderMessage" class="message red mt-4 d-none"></div>
-                <form id="updateOrderForm" class="form-group">
-                    <label class="input-box">
-                        <input type="number" class="control" placeholder=" " name="price">
-                        <span class="label-text">Price</span>
-                    </label>
-                    <button type="submit" name="submit" class="btn lg primary outline mt-2">Update</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal-overlay" id="offersModal">
-        <div class="card">
-            <div class="card-body">
-                <div class="title flex justify-between align-center mb-4">
-                    Offers
-                    <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
-                </div>
-                <div id="offers">
-                    <div class="align-center flex justify-between offer">
-                        <div class="skeleton-children">
-                            <div class="price">Lorem.</div>
-                            <div class="mt-1 name">Lorem, ipsum dolor.</div>
+        <div class="tab-views">
+            <div class="tab-view active">
+                <div class="dashboard-items" id="ads">
+                    <div class="dashboard-item">
+                        <div class="flex justify-between details">
+                            <div class="skeleton-children">
+                                <div class="title">Lorem ipsum dolor sit amet.</div>
+                                <div class="subtitle mt-2">Lorem.</div>
+                            </div>
+                            <div class="right skeleton-children">
+                                <div>Lorem, ipsum.</div>
+                            </div>
                         </div>
-                        <div class="flex skeleton-children">
-                            <div>Lorem.</div>
+                        <div class="actions flex justify-between skeleton-children">
+                            <div>Lorem, ipsum.</div>
+                            <div>Lorem, ipsum.</div>
                         </div>
                     </div>
-                    <div class="align-center flex justify-between offer">
-                        <div class="skeleton-children">
-                            <div class="price">Lorem.</div>
-                            <div class="mt-1 name">Lorem, ipsum dolor.</div>
+                    <div class="dashboard-item">
+                        <div class="flex justify-between details">
+                            <div class="skeleton-children">
+                                <div class="title">Lorem ipsum dolor sit amet.</div>
+                                <div class="subtitle mt-2">Lorem.</div>
+                            </div>
+                            <div class="right skeleton-children">
+                                <div>Lorem, ipsum.</div>
+                            </div>
                         </div>
-                        <div class="flex skeleton-children">
-                            <div>Lorem.</div>
+                        <div class="actions flex justify-between skeleton-children">
+                            <div>Lorem, ipsum.</div>
+                            <div>Lorem, ipsum.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-view">
+                <div class="dashboard-items" id="orders">
+                    <div class="dashboard-item">
+                        <div class="flex justify-between details">
+                            <div class="skeleton-children">
+                                <div class="title">Lorem ipsum dolor sit amet.</div>
+                                <div class="subtitle mt-2">Lorem.</div>
+                            </div>
+                            <div class="right skeleton-children">
+                                <div>Lorem, ipsum.</div>
+                            </div>
+                        </div>
+                        <div class="actions flex justify-between skeleton-children">
+                            <div>Lorem, ipsum.</div>
+                            <div>Lorem, ipsum.</div>
+                        </div>
+                    </div>
+                    <div class="dashboard-item">
+                        <div class="flex justify-between details">
+                            <div class="skeleton-children">
+                                <div class="title">Lorem ipsum dolor sit amet.</div>
+                                <div class="subtitle mt-2">Lorem.</div>
+                            </div>
+                            <div class="right skeleton-children">
+                                <div>Lorem, ipsum.</div>
+                            </div>
+                        </div>
+                        <div class="actions flex justify-between skeleton-children">
+                            <div>Lorem, ipsum.</div>
+                            <div>Lorem, ipsum.</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</main>
 
-    <script src="../assets/js/api.js"></script>
-    <script src="../assets/js/modal.js"></script>
-    <script src="../assets/js/tab.js"></script>
-    <script src="../assets/js/form.js"></script>
-    <script src="../assets/js/dropdown.js"></script>
-    <script src="../assets/js/helpers.js"></script>
-    <script src="./script.js"></script>
+<div class="modal-overlay" id="addModal">
+    <div class="card">
+        <div class="card-body">
+            <div class="title flex justify-between align-center mb-4">
+                Post New Ad
+                <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
+            </div>
+            <div id="createMessage" class="message red mt-4 d-none"></div>
+            <form id="createForm" class="form-group">
+                <div class="file-drop-area mb-2">
+                    <span class="fake-btn">Choose images</span>
+                    <span class="file-msg">or drag and drop images here</span>
+                    <input class="file-input" type="file" multiple name="file" accept=".png, .jpg, .jpeg">
+                </div>
+
+                <div id="images" class="images-preview mb-4"></div>
+
+                <label class="input-box">
+                    <input type="text" class="control" placeholder=" " name="manufacturer">
+                    <span class="label-text">Manufacturer</span>
+                </label>
+                <label class="input-box">
+                    <input type="text" class="control" placeholder=" " name="model">
+                    <span class="label-text">Model</span>
+                </label>
+                <label class="input-box">
+                    <input type="number" class="control" placeholder=" " name="price">
+                    <span class="label-text">Price</span>
+                </label>
+                <label class="input-box">
+                    <select class="control" name="state">
+                        <option value="used">Used</option>
+                        <option value="new">New</option>
+                    </select>
+                    <span class="label-text">State</span>
+                </label>
+                <label class="input-box">
+                    <select class="control" name="bodyType">
+                        <option value="car">Car</option>
+                        <option value="truck">Truck</option>
+                        <option value="van">Van</option>
+                    </select>
+                    <span class="label-text">Body Type</span>
+                </label>
+                <button type="submit" name="submit" class="btn lg primary outline mt-2">Post Ad</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="updateCarPriceModal">
+    <div class="card">
+        <div class="card-body">
+            <div class="title flex justify-between align-center mb-4">
+                Update Car Price
+                <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
+            </div>
+            <div id="updateCarMessage" class="message red mt-4 d-none"></div>
+            <form id="updateCarForm" class="form-group">
+                <label class="input-box">
+                    <input type="number" class="control" placeholder=" " name="price">
+                    <span class="label-text">Price</span>
+                </label>
+                <button type="submit" name="submit" class="btn lg primary outline mt-2">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="updateOrderPriceModal">
+    <div class="card">
+        <div class="card-body">
+            <div class="title flex justify-between align-center mb-4">
+                Update Order Price
+                <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
+            </div>
+            <div id="updateOrderMessage" class="message red mt-4 d-none"></div>
+            <form id="updateOrderForm" class="form-group">
+                <label class="input-box">
+                    <input type="number" class="control" placeholder=" " name="price">
+                    <span class="label-text">Price</span>
+                </label>
+                <button type="submit" name="submit" class="btn lg primary outline mt-2">Update</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="offersModal">
+    <div class="card">
+        <div class="card-body">
+            <div class="title flex justify-between align-center mb-4">
+                Offers
+                <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
+            </div>
+            <div id="offers">
+                <div class="align-center flex justify-between offer">
+                    <div class="skeleton-children">
+                        <div class="price">Lorem.</div>
+                        <div class="mt-1 name">Lorem, ipsum dolor.</div>
+                    </div>
+                    <div class="flex skeleton-children">
+                        <div>Lorem.</div>
+                    </div>
+                </div>
+                <div class="align-center flex justify-between offer">
+                    <div class="skeleton-children">
+                        <div class="price">Lorem.</div>
+                        <div class="mt-1 name">Lorem, ipsum dolor.</div>
+                    </div>
+                    <div class="flex skeleton-children">
+                        <div>Lorem.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/modal.js"></script>
+<script src="../assets/js/tab.js"></script>
+<script src="../assets/js/form.js"></script>
+<script src="../assets/js/dropdown.js"></script>
+<script src="../assets/js/helpers.js"></script>
+<script src="../assets/js/markup.js"></script>
+<script src="./script.js"></script>
 </body>
 
 </html>

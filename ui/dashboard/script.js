@@ -68,7 +68,7 @@ offersModal.preClose = () => {
 const create = new Form(createForm, createMessage);
 create.handle = async function (done) {
   const data = create.getValuesAsObject();
-  const files = [...create.form].find(el => el.name === 'file').files;
+  const files = this.getField('file').files;
   if (this.err) return this.showMessage('All fields are required', 'error');
   if (!files.length) return this.showMessage('At least one image is required', 'error');
   if (!validateFiles([...files])) return;
@@ -130,117 +130,27 @@ function toDataUrl(file) {
 
 function populateOrders(orders) {
   if (!orders.length) {
-    ordersWrapper.innerHTML = `
-        <div class="dashboard-item">
-            <div class="empty">
-                <div class="icon"><i class="fa fa-meh-blank"></i></div>
-                <div class="text">No purchases made yet</div>
-            </div>
-        </div>
-                `;
+    ordersWrapper.innerHTML = `<div class="dashboard-item">${Markup.empty('No purchases made yet')}</div>`;
     return;
   }
-  ordersWrapper.innerHTML = orders.map(order => `
-        <div class="dashboard-item">
-            <div class="flex justify-between details">
-                <div>
-                    <div class="title">${order.car.manufacturer} ${order.car.model} - ${order.car.state}</div>
-                    <div class="subtitle">Original Price: &#8358;${order.car.price.toLocaleString()}</div>
-                    <div class="subtitle">Price Offered: &#8358;${order.priceOffered.toLocaleString()}</div>
-                </div>
-                <div class="right">
-                    ${order.status === 'pending' ? `<div class="chip yellow">Pending</div>` : ''}
-                    ${order.status === 'accepted' ? `<div class="chip green">Accepted</div>` : ''}
-                    ${order.status === 'rejected' ? `<div class="chip red">Rejected</div>` : ''}
-                </div>
-            </div>
-            <div class="actions flex justify-between">
-                <div>
-                    <a href="../car/index.html?id=${order.car.id}" class="btn primary sm outline">View</a>
-                    ${order.status === 'pending' ? `
-                        <button class="btn primary sm outline" id="updateOrderPriceModalTrigger" data-id="${order.id}">
-                            Update Price
-                        </button>
-                    ` : ''}
-                </div>
-            </div>
-        </div>
-    `).join('');
+  ordersWrapper.innerHTML = orders.map(order => Markup.order(order)).join('');
 }
 
 function populateCars(cars) {
   if (!cars.length) {
-    adsWrapper.innerHTML = `
-            <div class="dashboard-item">
-                <div class="empty">
-                    <div class="icon"><i class="fa fa-meh-blank"></i></div>
-                    <div class="text">No ad created yet</div>
-                </div>
-            </div>
-        `;
+    adsWrapper.innerHTML = `<div class="dashboard-item">${Markup.empty('No ad created yet')}</div>`;
     return;
   }
 
-  adsWrapper.innerHTML = cars.map(car => `
-        <div class="dashboard-item">
-            <div class="details flex justify-between">
-                <div>
-                    <div class="title">${car.manufacturer} ${car.model} - ${car.state}</div>
-                    <div class="subtitle">&#8358;${car.price.toLocaleString()}</div>
-                </div>
-                <div class="right">
-                    ${car.status === 'sold' ? `<div class="chip green">Sold <i class="fa fa-check ml-2"></i></div>` : ''}
-                    ${car.status === 'available' ? `<button class="btn green outline sm" id="markAsSold" data-id="${car.id}">Mark as sold</button>` : ''}
-                </div>
-            </div>
-            <div class="actions flex justify-between">
-                <div class="buttons">
-                    <a href="../car/index.html?id=${car.id}" class="btn primary sm outline">View</a>
-                    <button class="btn primary sm outline flex-inline" id="offersModalTrigger" data-id="${car.id}">
-                        <i class="fas fa-star-half-alt mr-1"></i>
-                        Offers
-                    </button>
-                    ${car.status === 'available' ? `
-                        <button class="btn primary sm outline" id="updateCarPriceModalTrigger" data-id="${car.id}">
-                            Update Price
-                        </button>
-                        ` : ''}
-                </div>
-            </div>
-        </div>
-    `).join('');
+  adsWrapper.innerHTML = cars.map(car => Markup.car(car)).join('');
 }
 
 function populateOffers(offers) {
   if (!offers.length) {
-    offersWrapper.innerHTML = `
-            <div class="empty">
-                <div class="icon"><i class="fa fa-meh-blank"></i></div>
-                <div class="text">There are no offers for this vehicle yet</div>
-            </div>
-        `;
+    offersWrapper.innerHTML = Markup.empty('There are no offers for this vehicle yet');
     return;
   }
-  offersWrapper.innerHTML = offers.map(offer => `
-        <div class="offer flex justify-between align-center">
-            <div>
-                <div class="price">&#8358;${offer.priceOffered.toLocaleString()}</div>
-                <div class="name"><i class="fa fa-user-circle mr-2"></i> ${offer.buyer.firstName} ${offer.buyer.lastName}</div>
-            </div>
-            <div class="flex">
-                ${offer.status === 'pending' ? `
-                    <button class="btn sm primary outline offer-respond" data-id="${offer.id}" data-status="accepted">Accept</button>
-                    <button class="btn sm red outline ml-1 offer-respond" data-id="${offer.id}" data-status="rejected">Reject</button>
-                    ` : ''}
-                ${offer.status === 'accepted' ? `
-                    <div class="chip green">Accepted</div>
-                    ` : ''}
-                ${offer.status === 'rejected' ? `
-                    <div class="chip red">Rejected</div>
-                ` : ''}
-            </div>
-        </div>
-    `).join('')
+  offersWrapper.innerHTML = offers.map(offer => Markup.offer(offer)).join('');
 }
 
 function updateCars(car) {
