@@ -159,20 +159,8 @@
     `).join('');
         }
 
-        // filter.addEventListener('submit', async (e) => {
-        //     e.preventDefault();
-        //     const data = [...e.target].reduce((obj, el) => {
-        //         if (el.name !== 'submit') obj[el.name] = el.value;
-        //         return obj;
-        //     }, {});
-
-        //     cars = await Api.getCars(data);
-        //     populate(cars);
-        // });
-
         async function init() {
             cars.push(...await Api.getCars({ status: 'available' }));
-            populate(cars);
             const data = {
                 manufacturer: '',
                 minPrice: Math.min(...cars.map(car => car.price)),
@@ -181,7 +169,7 @@
                 state: ''
             };
             filter.prefill(data);
-            // console.log(data);
+            populate(cars);
         }
 
         init();
