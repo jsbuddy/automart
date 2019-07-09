@@ -1,6 +1,5 @@
 (function setTheme() {
-  const doc = document.documentElement;
-  doc.className = localStorage.getItem('theme') || '';
+  document.documentElement.className = localStorage.getItem('theme') || '';
 })();
 
 function themeBtnText(theme) {

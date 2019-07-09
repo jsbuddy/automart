@@ -1,5 +1,5 @@
-// const api = 'http://localhost:2999/api/v1';
-const api = 'https://automartt.herokuapp.com/api/v1';
+const api = 'http://localhost:2999/api/v1';
+// const api = 'https://automartt.herokuapp.com/api/v1';
 
 const Auth = {
   user: null,
@@ -55,40 +55,44 @@ const Auth = {
 };
 
 function populateMenu(user) {
-  const doc = document.documentElement;
   const nav = document.getElementById('nav');
   const path = location.pathname.replace(/\/|.html/gi, '');
   const theme = localStorage.getItem('theme') || '';
-  doc.className = theme;
-  nav.innerHTML = `
-      <a class="logo" href="/">
-        <i class="fa fa-truck-pickup"></i>
-      </a>
-      <div class="flex">
-        <ul class="menu mr-2">
-            <li><a class="${path === 'dashboard' ? 'active' : ''}" href="../../dashboard"><i class="fa fa-chart-bar mr-2"></i>Dashboard</a></li>
-            ${user.isAdmin ? `<li><a class="${path === 'admin' ? 'active' : ''}" href="../../admin"><i class="fa fa-user mr-2"></i>Admin</a></li>` : ''}
-            <li class="dropdown" id="dropdown"><a href="#"><i class="fa fa-book mr-2"></i>API Docs</a>
-                <ul class="dropdown-menu">
-                    <li><a href="/docs">Swagger</a></li>
-                    <li><a href="https://documenter.getpostman.com/view/2332557/S1ZudBGA">Postman</a></li>
-                </ul>
-            </li>
-            <li class="dropdown"><a href="#"><i class="fa fa-user-circle mr-2"></i>${user.firstName}<i class="fa fa-caret-down ml-2"></i></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#" id="theme">
-                      ${themeBtnText(theme)}
-                    </li>
-                    <li><a href="#" id="logout"><i class="fa fa-sign-out-alt mr-2"></i>Logout</a></li>
-                </ul>
-            </li>
-        </ul>
-      </div>
-    `;
+
+  nav.innerHTML = buildNav(user, path, theme);
+
   document.getElementById('logout').addEventListener('click', () => Auth.logout());
   document.getElementById('theme').addEventListener('click', function () {
-    doc.classList.toggle('dark');
+    document.documentElement.classList.toggle('dark');
     localStorage.setItem('theme', doc.className);
     this.innerHTML = themeBtnText(doc.className);
   });
+}
+
+function buildNav(user, path, theme) {
+  return `
+    <a class="logo" href="/">
+      <i class="fa fa-truck-pickup"></i>
+    </a>
+    <div class="flex">
+      <ul class="menu mr-2">
+          <li><a class="${path === 'dashboard' ? 'active' : ''}" href="../../dashboard"><i class="fa fa-chart-bar mr-2"></i>Dashboard</a></li>
+          ${user.isAdmin ? `<li><a class="${path === 'admin' ? 'active' : ''}" href="../../admin"><i class="fa fa-user mr-2"></i>Admin</a></li>` : ''}
+          <li class="dropdown" id="dropdown"><a href="#"><i class="fa fa-book mr-2"></i>API Docs</a>
+              <ul class="dropdown-menu">
+                  <li><a href="/docs">Swagger</a></li>
+                  <li><a href="https://documenter.getpostman.com/view/2332557/S1ZudBGA">Postman</a></li>
+              </ul>
+          </li>
+          <li class="dropdown"><a href="#"><i class="fa fa-user-circle mr-2"></i>${user.firstName}<i class="fa fa-caret-down ml-2"></i></a>
+              <ul class="dropdown-menu">
+                  <li><a href="#" id="theme">
+                    ${themeBtnText(theme)}
+                  </li>
+                  <li><a href="#" id="logout"><i class="fa fa-sign-out-alt mr-2"></i>Logout</a></li>
+              </ul>
+          </li>
+      </ul>
+    </div>
+  `
 }
