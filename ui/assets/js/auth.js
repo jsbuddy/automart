@@ -1,5 +1,5 @@
-const api = 'http://localhost:2999/api/v1';
-// const api = 'https://automartt.herokuapp.com/api/v1';
+// const api = 'http://localhost:2999/api/v1';
+const api = 'https://automartt.herokuapp.com/api/v1';
 
 const Auth = {
   user: null,
