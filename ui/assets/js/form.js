@@ -12,10 +12,10 @@ class Form {
   submit(e) {
     e.preventDefault();
     this.hideMessage();
-    this.handle(message => {
+    this.handle((message, noreset) => {
       message && this.showMessage(message, 'success');
       this.enableForm();
-      this.form.reset();
+      !noreset && this.form.reset();
     });
   }
 
@@ -52,12 +52,14 @@ class Form {
   }
 
   showMessage(message, _class) {
+    if (!this.message) return;
     this.message.textContent = message;
     this.message.className = `message mt-2 ${_class}`;
     this.message.style.display = 'block';
   }
 
   hideMessage() {
+    if (!this.message) return;
     this.message.textContent = '';
     this.message.style.display = 'none';
   }
