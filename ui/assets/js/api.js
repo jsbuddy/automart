@@ -6,6 +6,10 @@ const parseQueries = (queries) => {
   }, '');
 };
 
+const sortCars = cars => {
+  return cars.sort((a, b) => (new Date(a.createdAt) < new Date(b.createdAt)) ? 1 : -1);
+};
+
 async function send(path, options, json) {
   const headers = json ? { Accept: 'application/json', 'Content-Type': 'application/json', } : {};
   return await (await fetch(path, {
@@ -26,7 +30,7 @@ const Api = {
     let q;
     if (queries) q = parseQueries(queries);
     const res = await send(`${api}/car${q ? q : ''}`, { method: 'GET' });
-    return res.cars;
+    return sortCars(res.cars);
   },
   async getAllCars() {
     const res = await send(`${api}/car`, { method: 'GET' });
@@ -34,7 +38,7 @@ const Api = {
   },
   async getUserCars() {
     const res = await send(`${api}/car/owner`, { method: 'GET' });
-    return res.cars;
+    return sortCars(res.cars);
   },
   async getUserOrders() {
     const res = await send(`${api}/order/buyer`, { method: 'GET' });
