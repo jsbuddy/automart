@@ -17,6 +17,9 @@ function populate(car) {
     return;
   }
   carWrapper.innerHTML = Markup.singleCar(car);
+  const s = new Siema({ selector: '.siema' });
+  document.querySelector('.s-button.next').addEventListener('click', (e) => s.next());
+  document.querySelector('.s-button.prev').addEventListener('click', (e) => s.prev());
 }
 
 function getUrlParam(param) {
