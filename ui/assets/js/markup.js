@@ -14,7 +14,7 @@ const Markup = {
         <div class="actions flex justify-between">
             <div class="buttons">
                 <a href="../car/index.html?id=${car.id}" class="btn primary sm outline">View</a>
-                <button class="btn primary sm outline flex-inline" id="offersModalTrigger" data-id="${car.id}">
+                <button class="btn primary sm outline" id="offersModalTrigger" data-id="${car.id}">
                     <i class="fas fa-star-half-alt mr-1"></i>
                     Offers
                 </button>
@@ -132,8 +132,18 @@ const Markup = {
   `,
   singleCar: car => `
     <div class="left">
-        <div class="image">
-            <img src="${car.images[0] ? car.images[0].url : 'assets/images/placeholder.png'}" alt="">
+        <div class="carousel">
+            <div class="image siema">
+                ${
+                    car.images.map((image) => `
+                        <div>
+                            <img src="${image.url || 'assets/images/placeholder.png'}" alt="">
+                        </div>
+                    `).join('')
+                }
+            </div>
+            <div class="s-button prev"><i class="fa fa-chevron-left"></i></div>
+            <div class="s-button next"><i class="fa fa-chevron-right"></i></div>
         </div>
     </div>
     <div class="right flex column align-start">

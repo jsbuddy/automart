@@ -45,7 +45,6 @@ const Auth = {
   saveToken: token => localStorage.setItem('token', token),
   getToken: () => localStorage.getItem('token'),
   setup() {
-    document.documentElement.classList.add('dark');
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => populateMenu(this.user));
     } else {
@@ -63,7 +62,8 @@ function populateMenu(user) {
 
   document.getElementById('logout').addEventListener('click', () => Auth.logout());
   document.getElementById('theme').addEventListener('click', function () {
-    document.documentElement.classList.toggle('dark');
+    const doc = document.documentElement;
+    doc.classList.toggle('dark');
     localStorage.setItem('theme', doc.className);
     this.innerHTML = themeBtnText(doc.className);
   });

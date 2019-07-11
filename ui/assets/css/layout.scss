@@ -263,7 +263,6 @@ p {
         display: block;
         align-items: flex-start;
         padding: 1rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
     }
     .action {
@@ -478,7 +477,8 @@ p {
       margin-top: 15px;
     }
     .actions {
-      .buttons > *:last-child {
+      .buttons > * {
+        display: inline-flex;
         margin-top: 10px;
       }
     }
@@ -571,17 +571,53 @@ main {
   .details-list {
     color: var(--text-color-a);
   }
-  .image {
-    img {
-      max-height: 300px;
-      object-fit: cover;
-      object-position: center;
-    }
-  }
 }
 
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+.carousel {
+  max-width: 550px;
+  position: relative;
+  .siema {
+    width: 100% !important;
+    height: 100% !important;
+    min-height: initial !important;
+    border-radius: 4px;
+    overflow: hidden;
+
+    img {
+      height: 100% !important;
+      object-fit: cover;
+      object-position: center;
+      max-width: 550px;
+      min-height: 300px;
+    }
+  }
+  .s-button {
+    border: 0;
+    width: 80px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: absolute;
+    cursor: pointer;
+    color: #fff;
+    top: 0;
+    &.next {
+      right: 0;
+      background: linear-gradient(to left, rgba(0, 0, 0, 0.3), transparent);
+      justify-content: flex-end;
+      padding-right: 1rem;
+    }
+    &.prev {
+      left: 0;
+      justify-content: flex-start;
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
+      padding-left: 1rem;
+    }
   }
 }
