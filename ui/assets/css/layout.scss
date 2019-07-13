@@ -41,6 +41,7 @@
   box-sizing: border-box;
   outline: none;
   vertical-align: middle;
+
   &::before,
   &::after {
     box-sizing: border-box;
@@ -50,7 +51,7 @@
 html {
   font-size: 14px;
   font-family: "Work sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
-    "Open Sans", "Helvetica Neue", sans-serif;
+  "Open Sans", "Helvetica Neue", sans-serif;
 }
 
 body {
@@ -79,6 +80,10 @@ a.link:hover {
 img {
   width: 100%;
   display: block;
+  &.cover {
+    object-fit: cover;
+    object-position: center;
+  }
 }
 
 p {
@@ -234,6 +239,7 @@ p {
     &.first {
       margin: 0;
     }
+
     margin-left: 15px;
   }
 
@@ -275,6 +281,7 @@ p {
       &.first {
         margin: 40px 0 0;
       }
+
       margin: 15px 0 0;
     }
   }
@@ -405,6 +412,7 @@ p {
     img {
       max-height: 300px;
     }
+
     @media (max-width: 700px) {
       width: 100%;
     }
@@ -505,12 +513,15 @@ p {
 
 main {
   padding: 2rem 0;
+
   &.home {
     padding: 0.4rem 0;
+
     .container {
       padding-top: 6rem;
       padding-bottom: 2rem;
     }
+
     @media (max-width: 700px) {
       .container {
         padding-top: 0;
@@ -550,12 +561,14 @@ main {
 
 .images-preview {
   display: flex;
+
   img {
     width: 50px;
     height: 50px;
     object-fit: cover;
     object-position: center;
     border-radius: 4px;
+
     &:not(:first-child) {
       margin-left: 10px;
     }
@@ -566,6 +579,7 @@ main {
   .title {
     color: var(--text-color);
   }
+
   .seller,
   .subtitle,
   .details-list {
@@ -582,6 +596,7 @@ main {
 .carousel {
   max-width: 550px;
   position: relative;
+
   .siema {
     width: 100% !important;
     height: 100% !important;
@@ -597,6 +612,7 @@ main {
       min-height: 300px;
     }
   }
+
   .s-button {
     border: 0;
     width: 80px;
@@ -607,12 +623,14 @@ main {
     cursor: pointer;
     color: #fff;
     top: 0;
+
     &.next {
       right: 0;
       background: linear-gradient(to left, rgba(0, 0, 0, 0.3), transparent);
       justify-content: flex-end;
       padding-right: 1rem;
     }
+
     &.prev {
       left: 0;
       justify-content: flex-start;
