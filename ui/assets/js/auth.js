@@ -1,5 +1,5 @@
 const Auth = {
-  api: 'http://localhost:2999/api/v1',
+  api: 'https://automartt.herokuapp.com/api/v1',
   user: null,
   origin: window.location.origin,
   path: window.location.pathname.replace(/\/|.html/gi, ''),
