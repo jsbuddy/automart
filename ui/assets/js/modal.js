@@ -11,7 +11,8 @@ class ModalController {
     this.#addCloseTriggerEvent();
   };
 
-  preClose = () => {};
+  preClose = () => {
+  };
 
   close = () => {
     this.preClose();
