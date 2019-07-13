@@ -31,12 +31,12 @@ app.get('/ui', (req, res) => res.sendFile(path.resolve(__dirname, 'build', '../u
 app.all('*', (req, res) => res.status(404).json({ success: false, error: 'Unknown resource endpoint' }));
 
 app.use((err, req, res, next) => {
+  console.log({ err });
   if (err.isBoom) {
     return res.status(err.output.statusCode).json({
       status: err.output.statusCode, error: err.data[0].message,
     });
   }
-  console.log({ err });
   return next(err);
 });
 
