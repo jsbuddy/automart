@@ -1,42 +1,33 @@
-// const api = 'http://localhost:2999/api/v1';
-const api = 'https://automartt.herokuapp.com/api/v1';
-
 const Auth = {
+  api: 'http://localhost:2999/api/v1',
   user: null,
-  async signup(data) {
-    return await (await fetch(`${api}/auth/signup`, {
-      method: 'POST', body: JSON.stringify(data),
+  origin: window.location.origin,
+  path: window.location.pathname.replace(/\/|.html/gi, ''),
+  async signup(user) {
+    return await (await fetch(`${this.api}/auth/signup`, {
+      method: 'POST', body: JSON.stringify(user),
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     })).json();
   },
-  async login(data) {
-    return await (await fetch(`${api}/auth/signin`, {
-      method: 'POST', body: JSON.stringify(data),
+  async login(user) {
+    return await (await fetch(`${this.api}/auth/signin`, {
+      method: 'POST', body: JSON.stringify(user),
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     })).json();
   },
-  async verify(admin) {
-    if (!this.getToken()) return this.redirect('/login');
-    try {
-      const res = await (await fetch(`${api}/auth/user`, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer: ${this.getToken()}`
-        },
-      })).json();
-      if (res.success) {
-        if (admin) !res.user.isAdmin && this.redirect('/');
-        this.user = res.user;
-        this.setup();
-      } else this.redirect('/login');
-    } catch (err) {
-      this.redirect('/login');
-    }
+  async getUser() {
+    const { success, data } = await (await fetch(`${Auth.api}/auth/user`, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer: ${this.getToken()}`
+      },
+    })).json();
+    return { success, data: transformData(data) };
   },
   redirect(path) {
-    window.location.pathname = path;
+    window.location.href = `${this.origin}${path}`;
   },
   logout() {
     localStorage.clear();
@@ -44,21 +35,21 @@ const Auth = {
   },
   saveToken: token => localStorage.setItem('token', token),
   getToken: () => localStorage.getItem('token'),
-  setup() {
+  init() {
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => populateMenu(this.user));
+      document.addEventListener('DOMContentLoaded', () => setup(this.user));
     } else {
-      populateMenu(this.user);
+      setup(this.user);
     }
   }
 };
 
-function populateMenu(user) {
+function setup(user) {
   const nav = document.getElementById('nav');
-  const path = location.pathname.replace(/\/|.html/gi, '');
+  if (!nav) return;
   const theme = localStorage.getItem('theme') || '';
 
-  nav.innerHTML = buildNav(user, path, theme);
+  nav.innerHTML = buildNav(user, Auth.path, theme);
 
   document.getElementById('logout').addEventListener('click', () => Auth.logout());
   document.getElementById('theme').addEventListener('click', function () {
@@ -67,6 +58,13 @@ function populateMenu(user) {
     localStorage.setItem('theme', doc.className);
     this.innerHTML = themeBtnText(doc.className);
   });
+
+  window.addEventListener('click', function (e) {
+    const target = e.target;
+    if (target.dataset && target.dataset.href) {
+      Auth.redirect(target.dataset.href);
+    }
+  })
 }
 
 function buildNav(user, path, theme) {
@@ -96,3 +94,22 @@ function buildNav(user, path, theme) {
     </div>
   `
 }
+
+(async function () {
+  if (Auth.path.match(/login|signup/gi)) {
+    if (!Auth.getToken()) return;
+    else return Auth.redirect('/');
+  }
+  if (!Auth.getToken()) return Auth.redirect('/login');
+  try {
+    const res = await Auth.getUser();
+    if ((Auth.path.match(/login|signup/gi)) && !res.success) return;
+    if (res.success) {
+      if (Auth.path === 'admin') !res.data.isAdmin && Auth.redirect('/');
+      Auth.user = transformData(res.data);
+      Auth.init();
+    } else Auth.redirect('/login');
+  } catch (err) {
+    Auth.redirect('/login');
+  }
+})();

@@ -5,9 +5,7 @@ class Form {
     this.err = false;
   }
 
-  handle(e) {
-    //..
-  }
+  // handle(e) { //.. }
 
   submit(e) {
     e.preventDefault();
@@ -64,7 +62,7 @@ class Form {
     this.message.style.display = 'none';
   }
 
-  prefill(data) {
+  preFill(data) {
     [...this.form].forEach(el => {
       el.value = data[el.name];
     });
