@@ -1,7 +1,7 @@
 const Auth = {
   api: 'https://automartt.herokuapp.com/api/v1',
   user: null,
-  origin: location.pathname.startsWith('/automart/ui') ? `${location.origin}/automart/ui` : location.origin,
+  origin: location.pathname.startsWith('/automart') ? `${location.origin}/automart` : location.origin,
   path: window.location.pathname.replace(/\/|.html/gi, ''),
   async signup(user) {
     return await (await fetch(`${this.api}/auth/signup`, {
