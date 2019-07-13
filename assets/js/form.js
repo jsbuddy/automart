@@ -5,11 +5,14 @@ class Form {
     this.err = false;
   }
 
-  // handle(e) { //.. }
+  handle(e) {
+    //..
+  }
 
   submit(e) {
     e.preventDefault();
     this.hideMessage();
+    this.err = false;
     this.handle((message, noreset) => {
       message && this.showMessage(message, 'success');
       this.enableForm();

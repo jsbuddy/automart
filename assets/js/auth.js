@@ -58,13 +58,6 @@ function setup(user) {
     localStorage.setItem('theme', doc.className);
     this.innerHTML = themeBtnText(doc.className);
   });
-
-  window.addEventListener('click', function (e) {
-    const target = e.target;
-    if (target.dataset && target.dataset.href) {
-      Auth.redirect(target.dataset.href);
-    }
-  })
 }
 
 function buildNav(user, path, theme) {
