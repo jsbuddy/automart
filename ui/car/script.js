@@ -17,9 +17,13 @@ function populate(car) {
     return;
   }
   carWrapper.innerHTML = Markup.singleCar(car);
-  const s = new Siema({ selector: '.siema' });
-  document.querySelector('.s-button.next').addEventListener('click', (e) => s.next());
-  document.querySelector('.s-button.prev').addEventListener('click', (e) => s.prev());
+  if (document.querySelector('.siema')) {
+    const s = new Siema({ selector: '.siema' });
+    if (document.querySelector('.s-button')) {
+      document.querySelector('.s-button.next').addEventListener('click', () => s.next());
+      document.querySelector('.s-button.prev').addEventListener('click', () => s.prev());
+    }
+  }
 }
 
 function getUrlParam(param) {
