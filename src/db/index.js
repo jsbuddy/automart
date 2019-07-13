@@ -41,7 +41,7 @@ const pool = new Pool({ connectionString: env.DATABASE_URL });
             "address" TEXT NOT NULL,
             "password" VARCHAR(255) NOT NULL,
             "isAdmin" BOOLEAN DEFAULT FALSE,
-            "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+            "createdOn" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
           );
         `);
     await client.query(`
@@ -55,7 +55,7 @@ const pool = new Pool({ connectionString: env.DATABASE_URL });
             "model" VARCHAR(255) NOT NULL,
             "bodyType" TCarBody NOT NULL,
             "images" JSON [] NOT NULL,
-            "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            "createdOn" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY ("owner") REFERENCES users("id") ON DELETE CASCADE
           );
         `);
@@ -68,7 +68,8 @@ const pool = new Pool({ connectionString: env.DATABASE_URL });
             "price" REAL NOT NULL,
             "priceOffered" REAL NOT NULL,
             "oldPriceOffered" REAL,
-            "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            "newPriceOffered" REAL,
+            "createdOn" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY ("buyer") REFERENCES users("id") ON DELETE CASCADE,
             FOREIGN KEY ("carId") REFERENCES cars("id") ON DELETE CASCADE
           );
@@ -80,7 +81,7 @@ const pool = new Pool({ connectionString: env.DATABASE_URL });
             "carId" UUID NOT NULL,
             "reason" TFLagReason NOT NULL,
             "description" TEXT NOT NULL,
-            "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            "createdOn" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY ("creator") REFERENCES users("id") ON DELETE CASCADE,
             FOREIGN KEY ("carId") REFERENCES cars("id") ON DELETE CASCADE
           );
