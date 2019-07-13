@@ -7,96 +7,97 @@ const parseQueries = (queries) => {
 };
 
 const sortCars = cars => {
-  return cars.sort((a, b) => (new Date(a.createdAt) < new Date(b.createdAt)) ? 1 : -1);
+  return cars.sort((a, b) => (new Date(a.createdOn) < new Date(b.createdOn)) ? 1 : -1);
 };
 
 async function send(path, options, json) {
   const headers = json ? { Accept: 'application/json', 'Content-Type': 'application/json', } : {};
-  return await (await fetch(path, {
+  const { success, message, data } = await (await fetch(path, {
     ...options,
     headers: {
       Authorization: `Bearer ${Auth.getToken()}`,
       ...headers
     }
   })).json();
+  return { success, message, data: data ? transformData(data) : data };
 }
 
 const Api = {
   async getCar(id) {
-    const res = await send(`${api}/car/${id}`, { method: 'GET' });
-    return res.car;
+    const res = await send(`${Auth.api}/car/${id}`, { method: 'GET' });
+    return res.data;
   },
   async getCars(queries) {
     let q;
     if (queries) q = parseQueries(queries);
-    const res = await send(`${api}/car${q ? q : ''}`, { method: 'GET' });
-    return sortCars(res.cars);
+    const res = await send(`${Auth.api}/car${q ? q : ''}`, { method: 'GET' });
+    return sortCars(res.data);
   },
   async getAllCars() {
-    const res = await send(`${api}/car`, { method: 'GET' });
-    return res.cars;
+    const res = await send(`${Auth.api}/car`, { method: 'GET' });
+    return res.data;
   },
   async getUserCars() {
-    const res = await send(`${api}/car/owner`, { method: 'GET' });
-    return sortCars(res.cars);
+    const res = await send(`${Auth.api}/car/owner`, { method: 'GET' });
+    return sortCars(res.data);
   },
   async getUserOrders() {
-    const res = await send(`${api}/order/buyer`, { method: 'GET' });
-    return res.orders;
+    const res = await send(`${Auth.api}/order/buyer`, { method: 'GET' });
+    return res.data;
   },
   async getCarOrders(id) {
-    const res = await send(`${api}/order/car/${id}`, { method: 'GET' });
-    return res.orders;
+    const res = await send(`${Auth.api}/order/car/${id}`, { method: 'GET' });
+    return res.data;
   },
-  async placeOrder(carId, priceOffered) {
-    return await send(`${api}/order`, {
+  async placeOrder(carId, price) {
+    return await send(`${Auth.api}/order`, {
       method: 'POST',
-      body: JSON.stringify({ carId, priceOffered })
+      body: JSON.stringify({ carId, price })
     }, true);
   },
   async report(carId, report) {
-    return await send(`${api}/flag`, {
+    return await send(`${Auth.api}/flag`, {
       method: 'POST',
       body: JSON.stringify({ carId, ...report }),
     }, true);
   },
   async createAd(data) {
-    return await send(`${api}/car`, { method: 'POST', body: data, });
+    return await send(`${Auth.api}/car`, { method: 'POST', body: data });
   },
   async updateCarPrice(id, price) {
-    const res = await send(`${api}/car/${id}`, {
+    const res = await send(`${Auth.api}/car/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ price })
     }, true);
-    return res.car;
+    return res.data;
   },
   async updateOrderPrice(id, price) {
-    const res = await send(`${api}/order/${id}`, {
+    const res = await send(`${Auth.api}/order/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ price })
     }, true);
-    return res.order;
+    return res.data;
   },
   async updateOffer(id, update) {
-    const res = await send(`${api}/order/${id}`, {
+    const res = await send(`${Auth.api}/order/${id}`, {
       method: 'PATCH',
       body: JSON.stringify(update),
     }, true);
-    return res.order;
+    return res.data;
   },
   async getFlags() {
-    const res = await send(`${api}/flag`, { method: 'GET', });
-    return res.flags;
+    const res = await send(`${Auth.api}/flag`, { method: 'GET', });
+    return res.data;
   },
   async markAsSold(id) {
-    const res = await send(`${api}/car/${id}`, {
+    const res = await send(`${Auth.api}/car/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ status: 'sold' })
     }, true);
-    return res.car;
+    return res.data;
   },
   async deleteCar(id) {
-    const res = await send(`${api}/car/${id}`, {
+    const res = await send(`${Auth.api}/car/${id}`, {
       method: 'DELETE',
     }, true);
     return res.success;
