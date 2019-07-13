@@ -14,6 +14,8 @@ router.get('/owner/:id', CarsController.getAllByOwner);
 router.get('/:id', CarsController.getOne);
 router.post('/', cloudinaryConfig, multerUpload, expressJoi(carPostSchema), CarsController.create);
 router.patch('/:id', expressJoi(carPatchSchema), CarsController.update);
+router.patch('/:id/price', expressJoi(carPatchSchema), CarsController.update);
+router.patch('/:id/status', expressJoi(carPatchSchema), CarsController.update);
 router.delete('/:id', cloudinaryConfig, admin, CarsController.delete);
 
 export default router;
