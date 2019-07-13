@@ -7,22 +7,24 @@ const Order = {
   create: async (req, res) => {
     const car = await CarModel.findOne(req.body.carId);
     if (!car) return notfound(res, 'Car not found');
-    await handleCreate(OrderModel, { ...req.body, buyer: req.user.id, price: car.price }, res, 'order');
+    await handleCreate(OrderModel, {
+      ...req.body, priceOffered: req.body.price, buyer: req.user.id, price: car.price,
+    }, res);
   },
 
-  getOne: async (req, res) => handleGetOne(req, res, OrderModel, 'order'),
+  getOne: async (req, res) => handleGetOne(req, res, OrderModel),
 
   getAll: async (req, res) => {
     const orders = await OrderModel.findAll();
-    success(res, undefined, { orders });
+    success(res, undefined, orders);
   },
 
-  getAllByBuyer: async (req, res) => getAllBy(req, res, OrderModel, 'orders'),
+  getAllByBuyer: async (req, res) => getAllBy(req, res, OrderModel),
 
   getAllByCar: async (req, res) => {
     const { id } = req.params;
     const orders = await OrderModel.findAllByCar(id);
-    success(res, undefined, { orders });
+    success(res, undefined, orders);
   },
 
   update: async (req, res) => {
@@ -35,14 +37,14 @@ const Order = {
     if (data.price) {
       const oldPriceOffered = order.priceOffered;
       const { price, ...newData } = data;
-      data = { ...newData, oldPriceOffered, priceOffered: price };
+      data = { ...newData, oldPriceOffered, priceOffered: price, newPriceOffered: price };
     }
     await OrderModel.update(id, data);
     order = await OrderModel.findOne(id);
-    success(res, null, { order });
+    success(res, undefined, order);
   },
 
-  delete: (req, res) => handleDelete(req, res, OrderModel, 'Order'),
+  delete: (req, res) => handleDelete(req, res, OrderModel),
 };
 
 export default Order;

@@ -12,9 +12,9 @@ class Auth {
         VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id", "firstName", "lastName", "email", "address", "isAdmin"
       `, [firstName, lastName, email, password, address, isAdmin]);
       const newUser = rows[0];
-      const token = await generateToken({ ...newUser }, env.SECRET);
+      const token = await generateToken(newUser, env.SECRET);
       return callback(null, {
-        user: newUser,
+        ...newUser,
         message: 'User created successfully',
         token,
       });
@@ -33,7 +33,7 @@ class Auth {
       if (!passwordsMatch) return callback({ status: 400, message: 'Incorrect password' }, null);
       const { id, firstName, lastName } = foundUser;
       const token = await generateToken({ id, firstName, lastName }, env.SECRET);
-      return callback(null, { user: { id, firstName, lastName, email }, token });
+      return callback(null, { id, firstName, lastName, email, token });
     } catch (err) {
       return callback({ status: 500, message: 'An error occurred', err }, null);
     }
