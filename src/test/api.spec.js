@@ -34,8 +34,8 @@ describe('/api', () => {
       request(app).post(`${api}/auth/signup`).send(user)
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body).to.have.property('user').that.is.an('object').that.includes.all.keys('id', 'email');
-          expect(res.body).to.haveOwnProperty('token');
+          expect(res.body).to.have.property('data').that.is.an('object').that.includes.all.keys('id', 'email');
+          expect(res.body.data).to.haveOwnProperty('token');
           done();
         });
     });
@@ -50,7 +50,7 @@ describe('/api', () => {
     });
 
     it('should not find user with specified email address', (done) => {
-      request(app).post(`${api}/auth/signin`).send({ email: 'unknowemail@gmail.com', password: 'unknowkpassword' })
+      request(app).post(`${api}/auth/signin`).send({ email: 'unknowemail@gmail.com', password: 'unknownPassword' })
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body).to.have.property('success').that.equals(false);
@@ -71,10 +71,10 @@ describe('/api', () => {
       request(app).post(`${api}/auth/signin`).send({ email: user.email, password: user.password })
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('user').that.is.an('object').that.includes.all.keys('id', 'email');
-          expect(res.body).to.haveOwnProperty('token');
-          headers.authorization = `Bearer ${res.body.token}`;
-          userId = res.body.user.id;
+          expect(res.body).to.have.property('data').that.is.an('object').that.includes.all.keys('id', 'email');
+          expect(res.body.data).to.haveOwnProperty('token');
+          headers.authorization = `Bearer ${res.body.data.token}`;
+          userId = res.body.data.id;
           done();
         });
     });
@@ -83,7 +83,7 @@ describe('/api', () => {
       request(app).get(`${api}/auth/user`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('user').that.is.an('object').that.includes.all.keys('id', 'email');
+          expect(res.body).to.have.property('data').that.is.an('object').that.includes.all.keys('id', 'email');
           done();
         });
     });
@@ -118,7 +118,7 @@ describe('/api', () => {
       request(app).get(`${api}/car`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('cars').that.is.an('array');
+          expect(res.body).to.have.property('data').that.is.an('array');
           done();
         });
     });
@@ -130,8 +130,8 @@ describe('/api', () => {
         }).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body).to.have.property('car').that.is.an('object').that.includes.all.keys('id', 'manufacturer', 'model');
-          carId = res.body.car.id;
+          expect(res.body).to.have.property('data').that.is.an('object').that.includes.all.keys('id', 'manufacturer', 'model');
+          carId = res.body.data.id;
           done();
         });
     });
@@ -140,7 +140,7 @@ describe('/api', () => {
       request(app).get(`${api}/car/${carId}`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('car').that.is.an('object').that.includes.all.keys('id', 'manufacturer', 'model');
+          expect(res.body).to.have.property('data').that.is.an('object').that.includes.all.keys('id', 'manufacturer', 'model');
           done();
         });
     });
@@ -149,7 +149,7 @@ describe('/api', () => {
       request(app).get(`${api}/car/owner/${userId}`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('cars').that.is.an('array');
+          expect(res.body).to.have.property('data').that.is.an('array');
           done();
         });
     });
@@ -158,18 +158,17 @@ describe('/api', () => {
       request(app).get(`${api}/car/99c92791-ef23-4cc4-8e71-ca81b109d3eb`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(404);
-          expect(res.body).to.not.have.property('car');
+          expect(res.body).to.have.property('success').that.equals(false);
           done();
         });
     });
-
 
     it('should return all unsold cars', (done) => {
       request(app).get(`${api}/car?status=available`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('cars').that.is.an('array');
-          assert(res.body.cars.every(car => car.status === 'available'), 'All cars must have a status of available');
+          expect(res.body).to.have.property('data').that.is.an('array');
+          assert(res.body.data.every(car => car.status === 'available'), 'All cars must have a status of available');
           done();
         });
     });
@@ -178,8 +177,8 @@ describe('/api', () => {
       request(app).get(`${api}/car?status=available&state=new`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('cars').that.is.an('array');
-          assert(res.body.cars.every(car => car.status === 'available' && car.state === 'new'), 'All cars must have status of available and state of new');
+          expect(res.body).to.have.property('data').that.is.an('array');
+          assert(res.body.data.every(car => car.status === 'available' && car.state === 'new'), 'All cars must have status of available and state of new');
           done();
         });
     });
@@ -188,8 +187,8 @@ describe('/api', () => {
       request(app).get(`${api}/car?status=available&state=used`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('cars').that.is.an('array');
-          assert(res.body.cars.every(car => car.status === 'available' && car.state === 'used'), 'All cars must have status of available and state of used');
+          expect(res.body).to.have.property('data').that.is.an('array');
+          assert(res.body.data.every(car => car.status === 'available' && car.state === 'used'), 'All cars must have status of available and state of used');
           done();
         });
     });
@@ -198,8 +197,8 @@ describe('/api', () => {
       request(app).get(`${api}/car?status=available&manufacturer=toyota`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('cars').that.is.an('array');
-          assert(res.body.cars.every(car => car.status === 'available' && car.manufacturer.match(/toyota/gi)), 'All cars must have status of available and match specified manufacturer');
+          expect(res.body).to.have.property('data').that.is.an('array');
+          assert(res.body.data.every(car => car.status === 'available' && car.manufacturer.match(/toyota/gi)), 'All cars must have status of available and match specified manufacturer');
           done();
         });
     });
@@ -208,8 +207,8 @@ describe('/api', () => {
       request(app).get(`${api}/car?bodyType=car`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('cars').that.is.an('array');
-          assert.isTrue(res.body.cars.every(car => car.bodyType === 'car'), 'All cars must have bodyType of car');
+          expect(res.body).to.have.property('data').that.is.an('array');
+          assert.isTrue(res.body.data.every(car => car.body_type === 'car'), 'All cars must have bodyType of car');
           done();
         });
     });
@@ -220,8 +219,8 @@ describe('/api', () => {
       request(app).get(`${api}/car?status=available&minPrice=${minPrice}&maxPrice=${maxPrice}`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('cars').that.is.an('array');
-          assert.isTrue(res.body.cars.every(car => (car.status === 'available' && car.price >= minPrice && car.price <= maxPrice)),
+          expect(res.body).to.have.property('data').that.is.an('array');
+          assert.isTrue(res.body.data.every(car => (car.status === 'available' && car.price >= minPrice && car.price <= maxPrice)),
             'All cars must be available and within the specified price range');
           done();
         });
@@ -231,8 +230,18 @@ describe('/api', () => {
       request(app).patch(`${api}/car/${carId}`).send({ status: 'sold' }).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('car');
-          expect(res.body.car).to.haveOwnProperty('status').that.equals('sold');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.haveOwnProperty('status').that.equals('sold');
+          done();
+        });
+    });
+
+    it('should mark a posted car ad as sold', (done) => {
+      request(app).patch(`${api}/car/${carId}/status`).send({ status: 'sold' }).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.haveOwnProperty('status').that.equals('sold');
           done();
         });
     });
@@ -243,8 +252,20 @@ describe('/api', () => {
       request(app).patch(`${api}/car/${carId}`).send({ price }).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('car');
-          expect(res.body.car).to.haveOwnProperty('price').that.equals(price);
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.haveOwnProperty('price').that.equals(price);
+          done();
+        });
+    });
+
+    it('should update the price of a car', (done) => {
+      const price = 120.45;
+
+      request(app).patch(`${api}/car/${carId}/price`).send({ price }).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.haveOwnProperty('price').that.equals(price);
           done();
         });
     });
@@ -252,11 +273,11 @@ describe('/api', () => {
 
   describe('/order', () => {
     it('should create new order', (done) => {
-      request(app).post(`${api}/order`).send({ carId, priceOffered: 950 }).set(headers)
+      request(app).post(`${api}/order`).send({ carId, price: 950 }).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body).to.have.property('order').that.is.an('object').that.includes.all.keys('id', 'buyer', 'carId', 'price', 'priceOffered');
-          orderId = res.body.order.id;
+          expect(res.body).to.have.property('data').that.is.an('object').that.includes.all.keys('id', 'buyer', 'car_id');
+          orderId = res.body.data.id;
           done();
         });
     });
@@ -275,7 +296,7 @@ describe('/api', () => {
       request(app).get(`${api}/order`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('orders').that.is.an('array');
+          expect(res.body).to.have.property('data').that.is.an('array');
           done();
         });
     });
@@ -284,7 +305,7 @@ describe('/api', () => {
       request(app).get(`${api}/order/${orderId}`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('order').that.is.an('object').that.includes.all.keys('id', 'buyer', 'carId', 'price', 'priceOffered');
+          expect(res.body).to.have.property('data').that.is.an('object').that.includes.all.keys('id', 'buyer', 'car_id');
           done();
         });
     });
@@ -293,7 +314,7 @@ describe('/api', () => {
       request(app).get(`${api}/order/car/${carId}`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('orders').that.is.an('array');
+          expect(res.body).to.have.property('data').that.is.an('array');
           done();
         });
     });
@@ -301,9 +322,8 @@ describe('/api', () => {
     it('should not be able to find order with specified id', (done) => {
       request(app).get(`${api}/order/99c92791-ef23-4cc4-8e71-ca81b109d3eb`).set(headers)
         .end((err, res) => {
-          console.log(res.body);
           expect(res.status).to.equal(404);
-          expect(res.body).to.not.have.property('order');
+          expect(res.body).to.have.property('success').that.equals(false);
           done();
         });
     });
@@ -311,7 +331,6 @@ describe('/api', () => {
     it('should not be able to update order with specified id', (done) => {
       request(app).patch(`${api}/order/99c92791-ef23-4cc4-8e71-ca81b109d3eb`).set(headers)
         .end((err, res) => {
-          console.log(res.body);
           expect(res.status).to.equal(404);
           expect(res.body).to.have.property('success').that.equals(false);
           done();
@@ -324,10 +343,22 @@ describe('/api', () => {
       request(app).patch(`${api}/order/${orderId}`).send({ price }).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('order');
-          expect(res.body.order).to.have.property('status').that.equals('pending');
-          expect(res.body.order).to.haveOwnProperty('oldPriceOffered');
-          expect(res.body.order).to.haveOwnProperty('priceOffered').that.equals(price);
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.have.property('status').that.equals('pending');
+          expect(res.body.data).to.haveOwnProperty('price_offered').that.equals(price);
+          done();
+        });
+    });
+
+    it('should update the price of a purchase order (only when order.status === \'pending\')', (done) => {
+      const price = 1000;
+
+      request(app).patch(`${api}/order/${orderId}/price`).send({ price }).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.have.property('status').that.equals('pending');
+          expect(res.body.data).to.haveOwnProperty('price_offered').that.equals(price);
           done();
         });
     });
@@ -336,8 +367,8 @@ describe('/api', () => {
       request(app).patch(`${api}/order/${orderId}`).send({ status: 'accepted' }).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('order');
-          expect(res.body.order).to.have.property('status').that.equals('accepted');
+          expect(res.body).to.have.property('data');
+          expect(res.body.data).to.have.property('status').that.equals('accepted');
           done();
         });
     });
@@ -359,8 +390,8 @@ describe('/api', () => {
       request(app).post(`${api}/flag`).send(flag).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(201);
-          expect(res.body).to.have.property('flag').that.is.an('object').that.includes.all.keys('id', 'reason', 'description');
-          flagId = res.body.flag.id;
+          expect(res.body).to.have.property('data').that.is.an('object').that.includes.all.keys('id', 'reason', 'description');
+          flagId = res.body.data.id;
           done();
         });
     });
@@ -369,7 +400,7 @@ describe('/api', () => {
       request(app).get(`${api}/flag`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
-          expect(res.body).to.have.property('flags').that.is.an('array');
+          expect(res.body).to.have.property('data').that.is.an('array');
           done();
         });
     });
