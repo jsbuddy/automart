@@ -1,40 +1,51 @@
 // UTILS
 .flex {
   display: flex;
+
   &.column {
     flex-direction: column;
   }
+
   &.justify {
     &-between {
       justify-content: space-between;
     }
+
     &-around {
       justify-content: space-around;
     }
+
     &-end {
       justify-content: flex-end;
     }
+
     &-start {
       justify-content: flex-start;
     }
+
     &-center {
       justify-content: center;
     }
   }
+
   &.align {
     &-center {
       align-items: center;
     }
+
     &-start {
       align-items: flex-start;
     }
+
     &-end {
       align-items: flex-end;
     }
   }
+
   &-1 {
     flex: 1;
   }
+
   &-inline {
     display: inline-flex;
   }
@@ -44,12 +55,15 @@
   &-1 {
     margin-right: 5px !important;
   }
+
   &-2 {
     margin-right: 10px !important;
   }
+
   &-3 {
     margin-right: 15px !important;
   }
+
   &-4 {
     margin-right: 20px !important;
   }
@@ -59,12 +73,15 @@
   &-1 {
     margin-left: 5px !important;
   }
+
   &-2 {
     margin-left: 10px !important;
   }
+
   &-3 {
     margin-left: 15px !important;
   }
+
   &-4 {
     margin-left: 20px !important;
   }
@@ -74,18 +91,23 @@
   &-1 {
     margin-top: 5px !important;
   }
+
   &-2 {
     margin-top: 10px !important;
   }
+
   &-3 {
     margin-top: 15px !important;
   }
+
   &-4 {
     margin-top: 20px !important;
   }
+
   &-5 {
     margin-top: 30px !important;
   }
+
   &-6 {
     margin-top: 40px !important;
   }
@@ -95,24 +117,31 @@
   &-1 {
     margin-bottom: 5px;
   }
+
   &-2 {
     margin-bottom: 10px;
   }
+
   &-3 {
     margin-bottom: 15px;
   }
+
   &-4 {
     margin-bottom: 20px;
   }
+
   &-5 {
     margin-bottom: 30px;
   }
+
   &-6 {
     margin-bottom: 40px;
   }
+
   &-10 {
     margin-bottom: 100px;
   }
+
   &-20 {
     margin-bottom: 200px;
   }
@@ -129,30 +158,39 @@
   &-primary {
     color: var(--color-primary);
   }
+
   &-success {
     color: var(--color-green) !important;
   }
+
   &-red {
     color: var(--color-red) !important;
   }
+
   &-grey {
     color: #999;
   }
+
   &-bold {
     font-weight: bold;
   }
+
   &-center {
     text-align: center !important;
   }
+
   &-left {
     text-align: left !important;
   }
+
   &-right {
     text-align: right !important;
   }
+
   &-large {
     font-size: 3rem;
   }
+
   &-sm {
     font-size: 0.86rem;
   }
@@ -162,6 +200,7 @@
   position: sticky;
   top: 0;
   z-index: 10;
+
   &-10 {
     position: sticky;
     top: 10px;
@@ -173,12 +212,15 @@
   &-flex {
     display: flex;
   }
+
   &-block {
     display: block;
   }
+
   &-inline {
     display: inline;
   }
+
   &-none {
     display: none;
   }
