@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Automart</title>
+    <link href="../assets/css/elements.min.css" rel="stylesheet">
+    <link href="../assets/css/utils.min.css" rel="stylesheet">
+    <link href="../assets/css/layout.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" rel="stylesheet">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/auth.js"></script>
+</head>
+
+<body class="nav-padding">
+<nav class="navbar">
+    <div class="container" id="nav">
+        <div class="skeleton first">lorem.</div>
+        <div class="flex justify-end">
+            <div class="skeleton">Lorem ip.</div>
+            <div class="skeleton">Lorem ipsum.</div>
+            <div class="skeleton">Lorem.</div>
+        </div>
+    </div>
+</nav>
+<main>
+    <div class="container">
+        <div class="flex justify-start">
+            <button class="btn primary outline sm" onclick="window.history.back()"><i
+                    class="fa fa-arrow-left mr-2"></i> Back
+            </button>
+        </div>
+        <div class="two-column single-car" id="car">
+            <div class="left">
+                <div class="image skeleton dark fit-content">
+                </div>
+            </div>
+            <div class="right flex column align-start">
+                <div class="chip blue mb-2 skeleton dark">Lo.</div>
+                <div class="seller flex justify-between mb-2 skeleton dark">
+                    Lorem ipsum.
+                </div>
+                <br><br><br><br>
+                <div class="mb-2 skeleton dark">Lorem .</div>
+                <div class="mb-2 skeleton dark">Lorem ipsum.</div>
+                <div class="mb-1 skeleton dark">Lorem.</div>
+
+                <div class="flex flex-1 align-end modal-trigger" data-id="reportModal">
+                    <a class="skeleton dark">Lorem, ipsum.</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<div class="modal-overlay" id="orderModal">
+    <div class="card">
+        <div class="card-body">
+            <div class="title flex justify-between align-center mb-4">
+                Purchase Order
+                <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="message red mt-4 d-none" id="orderMessage"></div>
+            <form class="form-group" id="orderForm">
+                <label class="input-box">
+                    <input class="control" name="price" placeholder=" " type="number">
+                    <span class="label-text">Price</span>
+                </label>
+                <button class="btn lg primary outline mt-2" name="submit" type="submit">Send Offer</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="reportModal">
+    <div class="card">
+        <div class="card-body">
+            <div class="flex justify-between align-center mb-4">
+                <div>
+                    <div class="title">
+                        Report as fraudulent
+                    </div>
+                    <div class="subtitle">Report this car as fraudulent</div>
+                </div>
+                <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
+            </div>
+            <div class="message red mt-4 d-none" id="reportMessage"></div>
+            <form class="form-group" id="reportForm">
+                <label class="input-box">
+                    <select class="control" name="reason">
+                        <option value="pricing">Pricing</option>
+                        <option value="weird demands">Weird Demands</option>
+                    </select>
+                    <span class="label-text">Reason</span>
+                </label>
+                <label class="input-box">
+                    <textarea class="control" name="description" placeholder=" "></textarea>
+                    <span class="label-text">Description</span>
+                </label>
+                <button class="btn lg red outline mt-2" name="submit" type="submit">Report</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="../assets/js/api.js"></script>
+<script src="../assets/js/form.js"></script>
+<script src="../assets/js/modal.js"></script>
+<script src="../assets/js/dropdown.js"></script>
+<script src="../assets/js/markup.js"></script>
+<script src="../assets/js/siema.min.js"></script>
+<script src="./script.js"></script>
+</body>
+
+</html>

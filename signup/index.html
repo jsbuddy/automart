@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="../assets/css/elements.min.css">
+    <link rel="stylesheet" href="../assets/css/utils.min.css">
+    <link rel="stylesheet" href="../assets/css/layout.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/auth.js"></script>
+</head>
+
+<body class="nav-padding">
+<nav class="navbar">
+    <div class="container">
+        <div class="logo">
+            AUTO MART
+        </div>
+        <div class="flex">
+            <ul class="menu">
+                <li><a href="../login"><i class="fa fa-sign-in-alt mr-2"></i>Login</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<main>
+    <div class="container">
+        <div class="two-column single-car">
+            <div class="left">
+                <div class="image">
+                    <img src="../assets/images/vehicle-sale.svg" alt="">
+                </div>
+            </div>
+            <div class="right flex column align-start">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="title">Sign up</div>
+                        <div class="subtitle">Create a free account or <a href="../login">Login here</a> if you
+                            already have an account
+                        </div>
+                        <div id="signupMessage" class="message red mt-4 d-none"></div>
+                        <form id="signupForm" class="form-group">
+                            <label class="input-box">
+                                <input type="text" class="control" placeholder=" " name="firstName">
+                                <span class="label-text">First Name</span>
+                            </label>
+                            <label class="input-box">
+                                <input type="text" class="control" placeholder=" " name="lastName">
+                                <span class="label-text">Last Name</span>
+                            </label>
+                            <label class="input-box">
+                                <input type="email" class="control" placeholder=" " name="email">
+                                <span class="label-text">Email address</span>
+                            </label>
+                            <label class="input-box">
+                                <input type="password" class="control" placeholder=" " name="password">
+                                <span class="label-text">Password</span>
+                            </label>
+                            <label class="input-box">
+                                <textarea class="control" placeholder=" " name="address"></textarea>
+                                <span class="label-text">Address</span>
+                            </label>
+                            <button type="submit" name="submit" class="btn lg primary mt-2">Sign up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="../assets/js/form.js"></script>
+<script src="./script.js"></script>
+</body>
+
+</html>

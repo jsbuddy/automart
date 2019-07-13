@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Auto Mart</title>
+    <link href="./assets/css/elements.min.css" rel="stylesheet">
+    <link href="./assets/css/utils.min.css" rel="stylesheet">
+    <link href="./assets/css/layout.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" rel="stylesheet">
+    <script src="./assets/js/theme.js"></script>
+    <script src="./assets/js/utils.js"></script>
+    <script src="./assets/js/auth.js"></script>
+</head>
+
+<body>
+<header class="header">
+    <nav class="navbar blend">
+        <div class="container" id="nav">
+            <div class="skeleton first">lorem.</div>
+            <div class="flex justify-end">
+                <div class="skeleton">Lorem ip.</div>
+                <div class="skeleton">Lorem ipsum.</div>
+                <div class="skeleton">Lorem.</div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="flex column">
+            <h1 class="title">Best Deals</h1>
+            <p class="subtitle">Browse top deals from around the globe</p>
+        </div>
+    </div>
+</header>
+<main class="home">
+    <div class="container">
+        <div class="filter card mb-5 sticky-10">
+            <form class="card-body flex align-center justify-between" id="filterForm">
+                <div class="title mr-5">Filter:</div>
+                <label class="input-box ml-4">
+                    <input class="control" name="minPrice" placeholder=" " type="number">
+                    <span class="label-text">Min Price</span>
+                </label>
+                <label class="input-box">
+                    <input class="control" name="maxPrice" placeholder=" " type="number">
+                    <span class="label-text">Max Price</span>
+                </label>
+                <label class="input-box">
+                    <input class="control" name="manufacturer" placeholder=" "/>
+                    <span class="label-text">Manufacturer</span>
+                </label>
+                <label class="input-box">
+                    <select class="control" name="state">
+                        <option value="">All</option>
+                        <option value="used">Used</option>
+                        <option value="new">New</option>
+                    </select>
+                    <span class="label-text">State</span>
+                </label>
+                <label class="input-box">
+                    <select class="control" name="bodyType">
+                        <option value="">All</option>
+                        <option value="car">Car</option>
+                        <option value="truck">Truck</option>
+                    </select>
+                    <span class="label-text">Body type</span>
+                </label>
+                <button class="btn primary outline sm" name="submit" type="submit">Apply filter</button>
+            </form>
+        </div>
+        <div class="ad-cards" id="ads">
+            <a class="ad-card">
+                <div class="image skeleton fit-content"></div>
+                <div class="body skeleton-children">
+                    <div class="seller flex justify-between skeleton-children mb-2">
+                        <div>a</div>
+                        <div>Lorem.</div>
+                    </div>
+                    <div>Lorem ipsum dolor.</div>
+                    <div class="mt-2">Lorem, ipsum.</div>
+                </div>
+            </a>
+            <a class="ad-card">
+                <div class="image skeleton fit-content"></div>
+                <div class="body skeleton-children">
+                    <div class="seller flex justify-between skeleton-children mb-2">
+                        <div>a</div>
+                        <div>Lorem.</div>
+                    </div>
+                    <div>Lorem ipsum dolor.</div>
+                    <div class="mt-2">Lorem, ipsum.</div>
+                </div>
+            </a>
+            <a class="ad-card">
+                <div class="image skeleton fit-content"></div>
+                <div class="body skeleton-children">
+                    <div class="seller flex justify-between skeleton-children mb-2">
+                        <div>a</div>
+                        <div>Lorem.</div>
+                    </div>
+                    <div>Lorem ipsum dolor.</div>
+                    <div class="mt-2">Lorem, ipsum.</div>
+                </div>
+            </a>
+        </div>
+    </div>
+</main>
+
+<script src="./assets/js/api.js"></script>
+<script src="./assets/js/dropdown.js"></script>
+<script src="./assets/js/form.js"></script>
+<script>
+  const ads = document.getElementById('ads');
+  const filterForm = document.getElementById('filterForm');
+  let cars = [];
+
+  const filter = new Form(filterForm);
+  filter.handle = async function (done) {
+    let data = this.getValuesAsObject();
+    data = Object.keys(data).reduce((obj, key) => {
+      if (data[key]) obj[key] = data[key];
+      return obj;
+    }, {});
+    this.disableForm();
+    cars = await Api.getCars(data);
+    populate(cars);
+    done('', true);
+  };
+
+  function populate(cars) {
+    if (!cars.length) {
+      ads.innerHTML = `
+        <div class="empty flex column align-center text-center" style="grid-column: 1/5">
+            <div class="icon"><i class="fa fa-meh-blank"></i></div>
+            <div class="text">We couldn't find any ads, please check back later.</div>
+        </div>
+       `;
+      return;
+    }
+    ads.innerHTML = cars.map(car => `
+        <a href="./car/index.html?id=${car.id}" class="ad-card">
+            <div class="image">
+                <img src="${car.images[0] ? car.images[0].url : './assets/images/placeholder.png'}" alt="">
+            </div>
+            <div class="body">
+                <div class="seller flex justify-between mb-2">
+                    <div class="chip blue">${capitalize(car.state)}</div>
+                    <div class="price">&#8358;${car.price.toLocaleString()}</div>
+                </div>
+                <div class="title">${capitalize(car.manufacturer)} ${car.model}</div>
+                <div class="subtitle">${capitalize(car.bodyType)}</div>
+            </div>
+        </a>
+    `).join('');
+  }
+
+  async function init() {
+    cars.push(...await Api.getCars({ status: 'available' }));
+    const data = {
+      manufacturer: '',
+      minPrice: Math.min(...cars.map(car => car.price)),
+      maxPrice: Math.max(...cars.map(car => car.price)),
+      bodyType: '',
+      state: ''
+    };
+    filter.preFill(data);
+    populate(cars);
+  }
+
+  init();
+
+  filterForm.addEventListener('submit', (e) => filter.submit(e))
+</script>
+</body>
+
+</html>
