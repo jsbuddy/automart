@@ -73,13 +73,13 @@ create.handle = async function (done) {
   if (!files.length) return this.showMessage('At least one image is required', 'error');
   if (!validateFiles([...files])) return;
   const fd = new FormData();
-  [...files].forEach(file => fd.append("images", file));
+  [...files].forEach(file => fd.append("images", file || ''));
   Object.keys(data).forEach(key => fd.append(key, data[key]));
   this.disableForm();
   const res = await Api.createAd(fd);
   if (res.success) {
     imagesWrapper.innerHTML = '';
-    cars.push(res.car);
+    cars.push(res.data);
     populateCars(cars);
     done(res.message);
   } else {
@@ -168,7 +168,7 @@ function updateOffers(offer) {
   populateOffers(offers);
 }
 
-async function getOffers(id) {
+async function loadOffers(id) {
   offers = await Api.getCarOrders(id);
   populateOffers(offers);
 }
@@ -195,7 +195,7 @@ async function handleClick(e) {
   }
   if (e.target.id === 'offersModalTrigger') {
     offersModal.show();
-    getOffers(e.target.dataset.id);
+    loadOffers(e.target.dataset.id);
   }
   if (e.target.id === 'markAsSold') {
     e.target.disabled = true;
