@@ -9,7 +9,8 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "dev": "nodemon --ignore ui/ --exec babel-node src/index.js",
     "build": "babel src --out-dir build",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "deploy": "gh-pages -d ui"
   },
   "repository": {
     "type": "git",
@@ -20,7 +21,7 @@
   "bugs": {
     "url": "https://github.com/jsbuddy/automart/issues"
   },
-  "homepage": "https://github.com/jsbuddy/automart#readme",
+  "homepage": "https://jsbuddy.github.io/automart",
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.5",
@@ -46,6 +47,7 @@
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "express-joi-validator": "^2.0.1",
+    "gh-pages": "^2.0.1",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
