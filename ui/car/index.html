@@ -3,20 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Automart</title>
-    <link rel="stylesheet" href="../assets/css/elements.min.css">
-    <link rel="stylesheet" href="../assets/css/utils.min.css">
-    <link rel="stylesheet" href="../assets/css/layout.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link href="../assets/css/elements.min.css" rel="stylesheet">
+    <link href="../assets/css/utils.min.css" rel="stylesheet">
+    <link href="../assets/css/layout.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" rel="stylesheet">
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/utils.js"></script>
     <script src="../assets/js/auth.js"></script>
-    <script>
-      Auth.verify();
-    </script>
 </head>
 
 <body class="nav-padding">
@@ -67,13 +64,13 @@
                 Purchase Order
                 <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
             </div>
-            <div id="orderMessage" class="message red mt-4 d-none"></div>
-            <form id="orderForm" class="form-group">
+            <div class="message red mt-4 d-none" id="orderMessage"></div>
+            <form class="form-group" id="orderForm">
                 <label class="input-box">
-                    <input type="number" class="control" placeholder=" " name="price">
+                    <input class="control" name="price" placeholder=" " type="number">
                     <span class="label-text">Price</span>
                 </label>
-                <button type="submit" name="submit" class="btn lg primary outline mt-2">Send Offer</button>
+                <button class="btn lg primary outline mt-2" name="submit" type="submit">Send Offer</button>
             </form>
         </div>
     </div>
@@ -91,8 +88,8 @@
                 </div>
                 <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
             </div>
-            <div id="reportMessage" class="message red mt-4 d-none"></div>
-            <form id="reportForm" class="form-group">
+            <div class="message red mt-4 d-none" id="reportMessage"></div>
+            <form class="form-group" id="reportForm">
                 <label class="input-box">
                     <select class="control" name="reason">
                         <option value="pricing">Pricing</option>
@@ -101,10 +98,10 @@
                     <span class="label-text">Reason</span>
                 </label>
                 <label class="input-box">
-                    <textarea class="control" placeholder=" " name="description"></textarea>
+                    <textarea class="control" name="description" placeholder=" "></textarea>
                     <span class="label-text">Description</span>
                 </label>
-                <button type="submit" name="submit" class="btn lg red outline mt-2">Report</button>
+                <button class="btn lg red outline mt-2" name="submit" type="submit">Report</button>
             </form>
         </div>
     </div>

@@ -3,20 +3,17 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="../assets/css/elements.min.css">
-    <link rel="stylesheet" href="../assets/css/utils.min.css">
-    <link rel="stylesheet" href="../assets/css/layout.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
-          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <link href="../assets/css/elements.min.css" rel="stylesheet">
+    <link href="../assets/css/utils.min.css" rel="stylesheet">
+    <link href="../assets/css/layout.min.css" rel="stylesheet">
+    <link crossorigin="anonymous" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" rel="stylesheet">
     <script src="../assets/js/theme.js"></script>
     <script src="../assets/js/utils.js"></script>
     <script src="../assets/js/auth.js"></script>
-    <script>
-      Auth.verify();
-    </script>
 </head>
 
 <body class="nav-padding">
@@ -121,26 +118,26 @@
                 Post New Ad
                 <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
             </div>
-            <div id="createMessage" class="message red mt-4 d-none"></div>
-            <form id="createForm" class="form-group">
+            <div class="message red mt-4 d-none" id="createMessage"></div>
+            <form class="form-group" id="createForm">
                 <div class="file-drop-area mb-2">
                     <span class="fake-btn">Choose images</span>
                     <span class="file-msg">or drag and drop images here</span>
-                    <input class="file-input" type="file" multiple name="file" accept=".png, .jpg, .jpeg">
+                    <input accept=".png, .jpg, .jpeg" class="file-input" multiple name="file" type="file">
                 </div>
 
-                <div id="images" class="images-preview mb-4"></div>
+                <div class="images-preview mb-4" id="images"></div>
 
                 <label class="input-box">
-                    <input type="text" class="control" placeholder=" " name="manufacturer">
+                    <input class="control" name="manufacturer" placeholder=" " type="text">
                     <span class="label-text">Manufacturer</span>
                 </label>
                 <label class="input-box">
-                    <input type="text" class="control" placeholder=" " name="model">
+                    <input class="control" name="model" placeholder=" " type="text">
                     <span class="label-text">Model</span>
                 </label>
                 <label class="input-box">
-                    <input type="number" class="control" placeholder=" " name="price">
+                    <input class="control" name="price" placeholder=" " type="number">
                     <span class="label-text">Price</span>
                 </label>
                 <label class="input-box">
@@ -158,7 +155,7 @@
                     </select>
                     <span class="label-text">Body Type</span>
                 </label>
-                <button type="submit" name="submit" class="btn lg primary outline mt-2">Post Ad</button>
+                <button class="btn lg primary outline mt-2" name="submit" type="submit">Post Ad</button>
             </form>
         </div>
     </div>
@@ -171,13 +168,13 @@
                 Update Car Price
                 <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
             </div>
-            <div id="updateCarMessage" class="message red mt-4 d-none"></div>
-            <form id="updateCarForm" class="form-group">
+            <div class="message red mt-4 d-none" id="updateCarMessage"></div>
+            <form class="form-group" id="updateCarForm">
                 <label class="input-box">
-                    <input type="number" class="control" placeholder=" " name="price">
+                    <input class="control" name="price" placeholder=" " type="number">
                     <span class="label-text">Price</span>
                 </label>
-                <button type="submit" name="submit" class="btn lg primary outline mt-2">Update</button>
+                <button class="btn lg primary outline mt-2" name="submit" type="submit">Update</button>
             </form>
         </div>
     </div>
@@ -190,13 +187,13 @@
                 Update Order Price
                 <button class="btn btn-icon red trigger-close"><i class="fa fa-times"></i></button>
             </div>
-            <div id="updateOrderMessage" class="message red mt-4 d-none"></div>
-            <form id="updateOrderForm" class="form-group">
+            <div class="message red mt-4 d-none" id="updateOrderMessage"></div>
+            <form class="form-group" id="updateOrderForm">
                 <label class="input-box">
-                    <input type="number" class="control" placeholder=" " name="price">
+                    <input class="control" name="price" placeholder=" " type="number">
                     <span class="label-text">Price</span>
                 </label>
-                <button type="submit" name="submit" class="btn lg primary outline mt-2">Update</button>
+                <button class="btn lg primary outline mt-2" name="submit" type="submit">Update</button>
             </form>
         </div>
     </div>
