@@ -8,6 +8,12 @@ export const userSignupSchema = {
     password: Joi.string().required(),
     address: Joi.string().trim().required(),
     isAdmin: Joi.bool().default(false),
+    street: Joi.string().trim(),
+    city: Joi.string().trim(),
+    state: Joi.string().trim(),
+    country: Joi.string().trim(),
+    phone: Joi.string().trim(),
+    zip: Joi.string().trim(),
   },
 };
 
