@@ -28,14 +28,19 @@ app.use('/api', api);
 app.use(express.static(path.resolve(__dirname, '../ui')));
 app.get('/ui', (req, res) => res.sendFile(path.resolve(__dirname, 'build', '../ui/index.html')));
 
-app.all('*', (req, res) => res.status(404).json({ success: false, message: 'Unknown resource endpoint' }));
+app.all('*', (req, res) => res.status(404).json({ success: false, error: 'Unknown resource endpoint' }));
 
 app.use((err, req, res, next) => {
   if (err.isBoom) {
-    return res.status(err.output.statusCode).json(err.data[0].message);
+    return res.status(err.output.statusCode).json({
+      status: err.output.statusCode, error: err.data[0].message,
+    });
   }
+  console.log({ err });
   return next(err);
 });
+
+app.use((err, req, res) => res.status(500).json({ status: 500, error: err }));
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
