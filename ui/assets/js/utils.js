@@ -14,3 +14,22 @@ function update(array, data) {
     return item;
   });
 }
+
+function transformData(data) {
+  const is = (type, obj) => {
+    const _class = Object.prototype.toString.call(obj).slice(8, -1);
+    return obj !== undefined && obj !== null && _class === type;
+  };
+
+  const snakeToCamel = string => string.replace(/(_\w)/g, m => m[1].toUpperCase());
+
+  const convert = obj => Object.keys(obj).reduce((result, key) => {
+    if (is('Object', obj[key])) result[snakeToCamel(key)] = convert(obj[key]);
+    else result[snakeToCamel(key)] = obj[key];
+    return result;
+  }, {});
+
+  if (is('Array', data)) data = data.map(item => convert(item));
+  else data = convert(data);
+  return data;
+}
