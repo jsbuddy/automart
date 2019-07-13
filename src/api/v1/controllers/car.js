@@ -25,22 +25,22 @@ const Car = {
       const uploads = (req.files || []).map(file => uploader.upload(dataUri(file).content));
       const images = await Promise.all(uploads);
       const car = await CarModel.create({ ...req.body, owner: req.user.id, images });
-      return created(res, 'Ad created successfully', { car });
+      return created(res, 'Ad created successfully', car);
     } catch (error) {
       // TODO: Handle Error
       return next(error);
     }
   },
 
-  getOne: async (req, res) => handleGetOne(req, res, CarModel, 'car'),
+  getOne: async (req, res) => handleGetOne(req, res, CarModel),
 
   getAll: async (req, res) => {
     let cars = await CarModel.findAll();
     cars = applyFilters(cars, req.query);
-    success(res, undefined, { cars });
+    success(res, undefined, cars);
   },
 
-  getAllByOwner: async (req, res) => getAllBy(req, res, CarModel, 'cars'),
+  getAllByOwner: async (req, res) => getAllBy(req, res, CarModel),
 
   update: async (req, res) => {
     const { id } = req.params;
@@ -50,7 +50,7 @@ const Car = {
     if (car.owner.id !== req.user.id) return unauthorized(res);
     await CarModel.update(id, data);
     car = await CarModel.findOne(id);
-    return success(res, undefined, { car });
+    return success(res, undefined, car);
   },
 
   delete: async (req, res) => {
@@ -59,7 +59,7 @@ const Car = {
     if (!car) return notfound(res, 'Car not found');
     await CarModel.delete(id);
     car.images.forEach(image => uploader.destroy(image.public_id));
-    return success(res, 'Car deleted successfully', { success: true });
+    return success(res, 'Car deleted successfully');
   },
 };
 

@@ -8,7 +8,7 @@ class Base {
     const $s = keys.map((s, i) => `$${i + 1}`).join(', ');
     return (await db.query(`
       INSERT INTO ${this.model()} (${fields})
-      VALUES (${$s}) RETURNING "id", ${fields}
+      VALUES (${$s}) RETURNING *
     `, [...values])).rows[0];
   }
 
