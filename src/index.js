@@ -4,6 +4,7 @@ import cors from 'cors';
 import path from 'path';
 import api from './api';
 import swagger from './docs/swagger';
+import { transform } from './middlewares';
 
 const app = express();
 const port = process.env.PORT || 2999;
@@ -19,11 +20,13 @@ if (dev) {
   app.use(morgan('common'));
 }
 
+app.use(transform);
+
 app.use('/docs', swagger);
 app.use('/api', api);
 
 app.use(express.static(path.resolve(__dirname, '../ui')));
-app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'build', '../ui/index.html')));
+app.get('/ui', (req, res) => res.sendFile(path.resolve(__dirname, 'build', '../ui/index.html')));
 
 app.all('*', (req, res) => res.status(404).json({ success: false, message: 'Unknown resource endpoint' }));
 
@@ -36,4 +39,4 @@ app.use((err, req, res, next) => {
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
 
-module.exports = app;
+export default app;
