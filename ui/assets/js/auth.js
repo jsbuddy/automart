@@ -67,8 +67,8 @@ function buildNav(user, path, theme) {
     </a>
     <div class="flex">
       <ul class="menu mr-2">
-          <li><a class="${path === 'dashboard' ? 'active' : ''}" href="../../dashboard"><i class="fa fa-chart-bar mr-2"></i>Dashboard</a></li>
-          ${user.isAdmin ? `<li><a class="${path === 'admin' ? 'active' : ''}" href="../../admin"><i class="fa fa-user mr-2"></i>Admin</a></li>` : ''}
+          <li><a class="${path === 'dashboard' ? 'active' : ''}" href="${Auth.origin}/dashboard"><i class="fa fa-chart-bar mr-2"></i>Dashboard</a></li>
+          ${user.isAdmin ? `<li><a class="${path === 'admin' ? 'active' : ''}" href="${Auth.origin}/admin"><i class="fa fa-user mr-2"></i>Admin</a></li>` : ''}
           <li class="dropdown" id="dropdown"><a href="#"><i class="fa fa-book mr-2"></i>API Docs</a>
               <ul class="dropdown-menu">
                   <li><a href="/docs">Swagger</a></li>
