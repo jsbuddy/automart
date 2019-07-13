@@ -9,8 +9,8 @@ signup.handle = async function handleSubmit() {
   this.disableForm();
   const res = await Auth.signup(data);
   if (res.success) {
-    Auth.saveToken(res.token);
-    location.pathname = '/';
+    Auth.saveToken(res.data.token);
+    Auth.redirect('/')
   } else {
     this.showMessage(res.message, 'error');
     this.enableForm();
