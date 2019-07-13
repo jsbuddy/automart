@@ -1,7 +1,7 @@
-import { v2 } from 'cloudinary';
+import cl from 'cloudinary';
 import env from './env';
 
-const { uploader, config } = v2;
+const { uploader, config } = cl.v2;
 
 const cloudinaryConfig = (req, res, next) => {
   config({
