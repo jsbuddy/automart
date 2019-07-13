@@ -108,8 +108,10 @@ function buildNav(user, path, theme) {
       if (Auth.path === 'admin') !res.data.isAdmin && Auth.redirect('/');
       Auth.user = transformData(res.data);
       Auth.init();
-    } else Auth.redirect('/login');
+    } else {
+      Auth.logout();
+    }
   } catch (err) {
-    Auth.redirect('/login');
+    Auth.logout();
   }
 })();
