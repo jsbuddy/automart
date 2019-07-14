@@ -7,15 +7,15 @@ function send(res, code, payload) {
 }
 
 export function unauthorized(res, message = 'Unauthorized') {
-  return send(res, 401, { status: 401, success: false, message, error: message });
+  return send(res, 401, { status: 401, success: false, error: message });
 }
 
 export function notallowed(res, message = 'Not allowed') {
-  return send(res, 405, { status: 405, success: false, message, error: message });
+  return send(res, 405, { status: 405, success: false, error: message });
 }
 
 export function notfound(res, message = 'Not found') {
-  return send(res, 404, { status: 404, success: false, message, error: message });
+  return send(res, 404, { status: 404, success: false, error: message });
 }
 
 export function success(res, message, data) {

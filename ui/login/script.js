@@ -12,7 +12,7 @@ login.handle = async function () {
     Auth.saveToken(res.data.token);
     Auth.redirect('/');
   } else {
-    this.showMessage(res.message, 'error');
+    this.showMessage(res.error, 'error');
     this.enableForm();
   }
 };

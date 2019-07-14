@@ -83,7 +83,7 @@ create.handle = async function (done) {
     populateCars(cars);
     done(res.message);
   } else {
-    this.showMessage(res.message || 'An error occurred, please try again', 'error');
+    this.showMessage(res.error || 'An error occurred, please try again', 'error');
     this.enableForm();
   }
 };

@@ -40,7 +40,7 @@ order.handle = async function (done) {
   if (res.success) {
     done('Offer sent!');
   } else {
-    this.showMessage(res.message || 'An error occurred', 'error');
+    this.showMessage(res.error || 'An error occurred', 'error');
     this.enableForm();
   }
 };
@@ -54,7 +54,7 @@ report.handle = async function (done) {
   if (res.success) {
     done('Complaint sent successfully!');
   } else {
-    this.showMessage(res.message || 'An error occurred', 'error');
+    this.showMessage(res.error || 'An error occurred', 'error');
     this.enableForm();
   }
 };
