@@ -30,17 +30,17 @@ const Order = {
 
   update: async (req, res) => {
     const { id } = req.params;
-    let data = req.body;
+    const { status, price } = req.body;
     let order = await OrderModel.findOne(id);
     if (!order) return notfound(res, 'Order not found');
     const car = await CarModel.findOne(order.carId);
     if (!(order.status === 'pending' && car.owner.id === req.user.id)) return notallowed(res);
-    if (data.price) {
+    let update = { status };
+    if (price) {
       const oldPriceOffered = order.priceOffered;
-      const { price, ...newData } = data;
-      data = { ...newData, oldPriceOffered, priceOffered: price, newPriceOffered: price };
+      update = { oldPriceOffered, priceOffered: price, newPriceOffered: price };
     }
-    await OrderModel.update(id, data);
+    await OrderModel.update(id, update);
     order = await OrderModel.findOne(id);
     success(res, undefined, order);
   },

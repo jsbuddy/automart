@@ -47,11 +47,11 @@ const Car = {
 
   update: async (req, res) => {
     const { id } = req.params;
-    const data = req.body;
+    const { status, price } = req.body;
     let car = await CarModel.findOne(id);
     if (!car) return notfound(res, 'Car not found');
     if (car.owner.id !== req.user.id) return unauthorized(res);
-    await CarModel.update(id, data);
+    await CarModel.update(id, { status: status || car.status, price: price || car.price });
     car = await CarModel.findOne(id);
     return success(res, undefined, car);
   },
