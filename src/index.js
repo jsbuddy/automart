@@ -5,6 +5,7 @@ import path from 'path';
 import api from './api';
 import swagger from './docs/swagger';
 import { transform } from './middlewares';
+import debug from './lib/debug';
 
 const app = express();
 const port = process.env.PORT || 2999;
@@ -31,8 +32,8 @@ app.get('/ui', (req, res) => res.sendFile(path.resolve(__dirname, 'build', '../u
 app.all('*', (req, res) => res.status(404).json({ success: false, error: 'Unknown resource endpoint' }));
 
 app.use((err, req, res, next) => {
-  console.log({ err });
   if (err.isBoom) {
+    debug.error(err.data[0].message);
     return res.status(err.output.statusCode).json({
       status: err.output.statusCode, error: err.data[0].message,
     });
@@ -42,6 +43,6 @@ app.use((err, req, res, next) => {
 
 app.use((err, req, res) => res.status(500).json({ status: 500, error: err }));
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => debug.log(`Listening on port ${port}`));
 
 export default app;

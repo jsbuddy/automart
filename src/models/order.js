@@ -1,5 +1,6 @@
 import Base from './base';
 import db from '../db';
+import debug from '../lib/debug';
 
 class Order extends Base {
   static async findOne(id) {
@@ -12,7 +13,7 @@ class Order extends Base {
         WHERE orders.id = $1;
       `, [id])).rows[0];
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 
@@ -25,7 +26,7 @@ class Order extends Base {
         JOIN cars ON orders."carId" = cars.id
       `)).rows;
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 
@@ -43,7 +44,7 @@ class Order extends Base {
         WHERE orders.buyer = $1;
       `, [buyer])).rows;
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 
@@ -57,7 +58,7 @@ class Order extends Base {
         WHERE orders."carId" = $1;
       `, [id])).rows;
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 }

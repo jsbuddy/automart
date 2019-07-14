@@ -1,5 +1,6 @@
 import Base from './base';
 import db from '../db';
+import debug from '../lib/debug';
 
 class Car extends Base {
   static async findOne(id) {
@@ -10,7 +11,7 @@ class Car extends Base {
         WHERE cars.id = $1;
         `, [id])).rows[0];
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 
@@ -21,7 +22,7 @@ class Car extends Base {
         FROM ${this.model()} JOIN users ON cars.owner = users.id;
       `)).rows;
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 
@@ -33,7 +34,7 @@ class Car extends Base {
         WHERE users.id = $1;
       `, [owner])).rows;
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 

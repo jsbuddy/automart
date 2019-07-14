@@ -1,5 +1,6 @@
 import Base from './base';
 import db from '../db';
+import debug from '../lib/debug';
 
 class Flag extends Base {
   static model() {
@@ -15,7 +16,7 @@ class Flag extends Base {
         JOIN cars ON flags."carId" = cars.id;
       `)).rows;
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 }

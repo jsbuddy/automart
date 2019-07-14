@@ -3,6 +3,7 @@ import { dataUri } from '../../../middlewares/multer';
 import { uploader } from '../../../config/cloudinary';
 import { created, notfound, success, unauthorized } from '../../../helpers/response';
 import { getAllBy, handleGetOne } from '../../../helpers/callback';
+import debug from '../../../lib/debug';
 
 function applyFilters(cars, queries) {
   const { status, state, manufacturer, minPrice, maxPrice, bodyType } = queries;
@@ -20,7 +21,7 @@ function applyFilters(cars, queries) {
 }
 
 const Car = {
-  create: async (req, res, next) => {
+  create: async (req, res) => {
     try {
       const { manufacturer, model, bodyType, price, state } = req.body;
       const uploads = (req.files || []).map(file => uploader.upload(dataUri(file).content));
@@ -30,39 +31,50 @@ const Car = {
       });
       return created(res, 'Ad created successfully', car);
     } catch (error) {
-      // TODO: Handle Error
-      return next(error);
+      debug.log(error);
     }
   },
 
   getOne: async (req, res) => handleGetOne(req, res, CarModel),
 
   getAll: async (req, res) => {
-    let cars = await CarModel.findAll();
-    cars = applyFilters(cars, req.query);
-    success(res, undefined, cars);
+    try {
+      let cars = await CarModel.findAll();
+      cars = applyFilters(cars, req.query);
+      success(res, undefined, cars);
+    } catch (error) {
+      debug.error(error);
+    }
   },
 
   getAllByOwner: async (req, res) => getAllBy(req, res, CarModel),
 
   update: async (req, res) => {
-    const { id } = req.params;
-    const { status, price } = req.body;
-    let car = await CarModel.findOne(id);
-    if (!car) return notfound(res, 'Car not found');
-    if (car.owner.id !== req.user.id) return unauthorized(res);
-    await CarModel.update(id, { status: status || car.status, price: price || car.price });
-    car = await CarModel.findOne(id);
-    return success(res, undefined, car);
+    try {
+      const { id } = req.params;
+      const { status, price } = req.body;
+      let car = await CarModel.findOne(id);
+      if (!car) return notfound(res, 'Car not found');
+      if (car.owner.id !== req.user.id) return unauthorized(res);
+      await CarModel.update(id, { status: status || car.status, price: price || car.price });
+      car = await CarModel.findOne(id);
+      return success(res, undefined, car);
+    } catch (error) {
+      debug.error(error);
+    }
   },
 
   delete: async (req, res) => {
-    const { id } = req.params;
-    const car = await CarModel.findOne(id);
-    if (!car) return notfound(res, 'Car not found');
-    await CarModel.delete(id);
-    car.images.forEach(image => uploader.destroy(image.public_id));
-    return success(res, undefined, 'Car deleted successfully');
+    try {
+      const { id } = req.params;
+      const car = await CarModel.findOne(id);
+      if (!car) return notfound(res, 'Car not found');
+      await CarModel.delete(id);
+      car.images.forEach(image => uploader.destroy(image.public_id));
+      return success(res, undefined, 'Car deleted successfully');
+    } catch (error) {
+      debug.error(error);
+    }
   },
 };
 

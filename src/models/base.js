@@ -1,4 +1,5 @@
 import db from '../db';
+import debug from '../lib/debug';
 
 class Base {
   static async create(data) {
@@ -12,7 +13,7 @@ class Base {
         VALUES (${$s}) RETURNING *
       `, [...values])).rows[0];
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 
@@ -22,7 +23,7 @@ class Base {
       const update = keys.map(key => `"${key}" = ${(typeof data[key] === 'string') ? `'${data[key]}'` : data[key]}`).join(', ');
       return (await db.query(`UPDATE ${this.model()} SET ${update} WHERE id = $1 RETURNING *`, [id])).rows[0];
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 
@@ -30,7 +31,7 @@ class Base {
     try {
       return db.query(`DELETE from ${this.model()} WHERE id = $1`, [id]);
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 }

@@ -1,6 +1,7 @@
 import env from '../config/env';
 import { comparePassword, generateToken, hashPassword } from '../helpers/auth';
 import db from '../db';
+import debug from '../lib/debug';
 
 class Auth {
   static async signup(user, callback) {
@@ -44,7 +45,7 @@ class Auth {
       const { rows } = await db.query('SELECT "id", "firstName", "lastName", "email", "isAdmin" from users WHERE id = $1', [id]);
       return rows[0];
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 
@@ -53,7 +54,7 @@ class Auth {
       const { rows } = await db.query('SELECT "id", "firstName", "lastName", "email", "password", "isAdmin" from users WHERE email = $1', [email]);
       return rows[0];
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 
@@ -61,7 +62,7 @@ class Auth {
     try {
       await db.query('DELETE FROM users WHERE id = $1', [id]);
     } catch (e) {
-      console.log('PSQL ERROR', e);
+      debug.error('Postgres Error', e);
     }
   }
 }
