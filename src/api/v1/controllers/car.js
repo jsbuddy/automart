@@ -62,7 +62,7 @@ const Car = {
     if (!car) return notfound(res, 'Car not found');
     await CarModel.delete(id);
     car.images.forEach(image => uploader.destroy(image.public_id));
-    return success(res, 'Car deleted successfully');
+    return success(res, undefined, 'Car deleted successfully');
   },
 };
 

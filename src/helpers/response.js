@@ -2,7 +2,7 @@ import { transformData } from './index';
 
 function send(res, code, payload) {
   // eslint-disable-next-line no-param-reassign
-  if (payload.data) payload.data = transformData(payload.data);
+  if (payload.data && typeof payload.data !== 'string') payload.data = transformData(payload.data);
   return res.status(code).json(payload);
 }
 
