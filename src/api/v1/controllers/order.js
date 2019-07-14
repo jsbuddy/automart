@@ -5,10 +5,11 @@ import { notallowed, notfound, success } from '../../../helpers/response';
 
 const Order = {
   create: async (req, res) => {
+    const { carId, price } = req.body;
     const car = await CarModel.findOne(req.body.carId);
     if (!car) return notfound(res, 'Car not found');
     await handleCreate(OrderModel, {
-      ...req.body, priceOffered: req.body.price, buyer: req.user.id, price: car.price,
+      carId, priceOffered: price, buyer: req.user.id, price: car.price,
     }, res);
   },
 

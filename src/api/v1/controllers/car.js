@@ -2,7 +2,7 @@ import CarModel from '../../../models/car';
 import { dataUri } from '../../../middlewares/multer';
 import { uploader } from '../../../config/cloudinary';
 import { created, notfound, success, unauthorized } from '../../../helpers/response';
-import { handleGetOne, getAllBy } from '../../../helpers/callback';
+import { getAllBy, handleGetOne } from '../../../helpers/callback';
 
 function applyFilters(cars, queries) {
   const { status, state, manufacturer, minPrice, maxPrice, bodyType } = queries;
@@ -22,9 +22,12 @@ function applyFilters(cars, queries) {
 const Car = {
   create: async (req, res, next) => {
     try {
+      const { manufacturer, model, bodyType, price, state } = req.body;
       const uploads = (req.files || []).map(file => uploader.upload(dataUri(file).content));
       const images = await Promise.all(uploads);
-      const car = await CarModel.create({ ...req.body, owner: req.user.id, images });
+      const car = await CarModel.create({
+        manufacturer, model, bodyType, price, state, owner: req.user.id, images,
+      });
       return created(res, 'Ad created successfully', car);
     } catch (error) {
       // TODO: Handle Error

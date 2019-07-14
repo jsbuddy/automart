@@ -1,20 +1,14 @@
 import Joi from '@hapi/joi';
 
 export const userSignupSchema = {
-  body: {
+  body: Joi.object({
     email: Joi.string().lowercase().trim().required(),
     firstName: Joi.string().trim().required(),
     lastName: Joi.string().trim().required(),
     password: Joi.string().required(),
     address: Joi.string().trim().required(),
     isAdmin: Joi.bool().default(false),
-    street: Joi.string().trim(),
-    city: Joi.string().trim(),
-    state: Joi.string().trim(),
-    country: Joi.string().trim(),
-    phone: Joi.string().trim(),
-    zip: Joi.string().trim(),
-  },
+  }).unknown(true),
 };
 
 export const userSigninSchema = {
@@ -36,14 +30,14 @@ export const carGetSchema = {
 };
 
 export const carPostSchema = {
-  body: {
+  body: Joi.object({
     state: Joi.string().valid('new', 'used').required(),
     price: Joi.number().required(),
     manufacturer: Joi.string().trim().required(),
     model: Joi.string().trim().required(),
     bodyType: Joi.string().valid('car', 'truck', 'trailer', 'van').required(),
     status: Joi.string().valid('available', 'sold').default('available'),
-  },
+  }).unknown(true),
 };
 
 export const carPatchSchema = {
