@@ -12,21 +12,21 @@ export const userSignupSchema = {
 };
 
 export const userSigninSchema = {
-  body: {
+  body: Joi.object({
     email: Joi.string().lowercase().trim().required(),
     password: Joi.string().required(),
-  },
+  }).unknown(true),
 };
 
 export const carGetSchema = {
-  query: {
+  query: Joi.object({
     status: Joi.string().trim(),
     state: Joi.string().trim(),
     bodyType: Joi.string().trim(),
     minPrice: Joi.string().trim(),
     maxPrice: Joi.string().trim(),
     manufacturer: Joi.string().trim(),
-  },
+  }).unknown(true),
 };
 
 export const carPostSchema = {
@@ -41,35 +41,36 @@ export const carPostSchema = {
 };
 
 export const carPatchSchema = {
-  body: {
+  body: Joi.object({
     state: Joi.string().valid('new', 'used'),
     price: Joi.number(),
     manufacturer: Joi.string().trim(),
     model: Joi.string().trim(),
     bodyType: Joi.string().valid('car', 'truck', 'trailer', 'van'),
     status: Joi.string().valid('available', 'sold'),
-  },
+  }).unknown(true),
 };
 
 export const orderSchema = {
-  body: {
+  body: Joi.object({
     carId: Joi.string().trim().required(),
-    price: Joi.number().required(),
+    price: Joi.number(),
+    amount: Joi.number(),
     status: Joi.string().valid('pending', 'accepted', 'rejected').default('pending'),
-  },
+  }).unknown(true),
 };
 
 export const orderPatchSchema = {
-  body: {
+  body: Joi.object({
     price: Joi.number(),
     status: Joi.string().valid('pending', 'accepted', 'rejected'),
-  },
+  }).unknown(true),
 };
 
 export const flagSchema = {
-  body: {
+  body: Joi.object({
     carId: Joi.string().trim().required(),
     reason: Joi.string().valid('pricing', 'weird demands').required(),
     description: Joi.string().trim().required(),
-  },
+  }).unknown(true),
 };
