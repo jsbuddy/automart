@@ -40,17 +40,29 @@ class Auth {
   }
 
   static async findById(id) {
-    const { rows } = await db.query('SELECT "id", "firstName", "lastName", "email", "isAdmin" from users WHERE id = $1', [id]);
-    return rows[0];
+    try {
+      const { rows } = await db.query('SELECT "id", "firstName", "lastName", "email", "isAdmin" from users WHERE id = $1', [id]);
+      return rows[0];
+    } catch (e) {
+      console.log('PSQL ERROR', e);
+    }
   }
 
   static async findByEmail(email) {
-    const { rows } = await db.query('SELECT "id", "firstName", "lastName", "email", "password", "isAdmin" from users WHERE email = $1', [email]);
-    return rows[0];
+    try {
+      const { rows } = await db.query('SELECT "id", "firstName", "lastName", "email", "password", "isAdmin" from users WHERE email = $1', [email]);
+      return rows[0];
+    } catch (e) {
+      console.log('PSQL ERROR', e);
+    }
   }
 
   static async deleteUser(id) {
-    await db.query('DELETE FROM users WHERE id = $1', [id]);
+    try {
+      await db.query('DELETE FROM users WHERE id = $1', [id]);
+    } catch (e) {
+      console.log('PSQL ERROR', e);
+    }
   }
 }
 
