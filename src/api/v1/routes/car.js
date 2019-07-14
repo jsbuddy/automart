@@ -4,7 +4,7 @@ import CarsController from '../controllers/car';
 import { carPostSchema, carPatchSchema, carGetSchema } from '../../../lib/schemas';
 import { multerUpload } from '../../../middlewares/multer';
 import { cloudinaryConfig } from '../../../config/cloudinary';
-import { admin } from '../../../middlewares/auth';
+// import { admin } from '../../../middlewares/auth';
 
 const router = express.Router();
 
@@ -16,6 +16,6 @@ router.post('/', cloudinaryConfig, multerUpload, expressJoi(carPostSchema), Cars
 router.patch('/:id', expressJoi(carPatchSchema), CarsController.update);
 router.patch('/:id/price', expressJoi(carPatchSchema), CarsController.update);
 router.patch('/:id/status', expressJoi(carPatchSchema), CarsController.update);
-router.delete('/:id', cloudinaryConfig, admin, CarsController.delete);
+router.delete('/:id', cloudinaryConfig, CarsController.delete);
 
 export default router;
