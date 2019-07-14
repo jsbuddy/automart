@@ -62,7 +62,7 @@ function setup(user) {
 
 function buildNav(user, path, theme) {
   return `
-    <a class="logo" href="/">
+    <a class="logo" href="${Auth.origin}/">
       <i class="fa fa-truck-pickup"></i>
     </a>
     <div class="flex">

@@ -12,7 +12,7 @@ signup.handle = async function handleSubmit() {
     Auth.saveToken(res.data.token);
     Auth.redirect('/')
   } else {
-    this.showMessage(res.message, 'error');
+    this.showMessage(res.error, 'error');
     this.enableForm();
   }
 };
