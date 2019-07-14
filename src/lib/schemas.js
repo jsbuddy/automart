@@ -67,6 +67,12 @@ export const orderPatchSchema = {
   }).unknown(true),
 };
 
+export const orderPricePatchSchema = {
+  body: Joi.object({
+    price: Joi.number().required(),
+  }).unknown(true),
+};
+
 export const flagSchema = {
   body: Joi.object({
     carId: Joi.string().trim().required(),
