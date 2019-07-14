@@ -7,9 +7,9 @@
     "pretest": "eslint --ignore-path .eslintignore .",
     "test": "nyc mocha --exit --require @babel/register 'src/**/**spec.js'",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "dev": "nodemon --ignore ui/ --exec babel-node src/index.js",
+    "dev": "set DEBUG=log,error & nodemon --ignore ui/ --exec babel-node src/index.js",
     "build": "babel src --out-dir build",
-    "start": "node build/index.js",
+    "start": "set DEBUG=log,error & node build/index.js",
     "deploy": "gh-pages -d ui"
   },
   "repository": {
@@ -44,6 +44,7 @@
     "cloudinary": "^1.14.0",
     "cors": "^2.8.5",
     "datauri": "^2.0.0",
+    "debug": "^4.1.1",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
     "express-joi-validator": "^2.0.1",
