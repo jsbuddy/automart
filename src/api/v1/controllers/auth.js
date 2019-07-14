@@ -5,7 +5,7 @@ import { transformData } from '../../../helpers';
 function handle(err, data, res, status) {
   if (err) {
     return res.status(err.status).json({
-      status: err.status, success: false, message: err.message, error: err.message,
+      status: err.status, success: false, error: err.message,
     });
   }
   return res.status(status).json({ status, success: true, data: transformData(data) });

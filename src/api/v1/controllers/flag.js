@@ -5,7 +5,7 @@ import { success } from '../../../helpers/response';
 const Flag = {
   create: (req, res) => {
     const { carId, reason, description } = req.body;
-    handleCreate(FlagModel, {
+    return handleCreate(FlagModel, {
       carId, reason, description, creator: req.user.id,
     }, res);
   },
