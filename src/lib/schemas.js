@@ -51,6 +51,18 @@ export const carPatchSchema = {
   }).unknown(true),
 };
 
+export const carPatchPriceSchema = {
+  body: Joi.object({
+    price: Joi.number().required(),
+  }).unknown(true),
+};
+
+export const carPatchStatusSchema = {
+  body: Joi.object({
+    status: Joi.string().valid('available', 'sold').required(),
+  }).unknown(true),
+};
+
 export const orderSchema = {
   body: Joi.object({
     carId: Joi.string().trim().required(),
