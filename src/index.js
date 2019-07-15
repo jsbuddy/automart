@@ -24,6 +24,10 @@ if (dev) {
 app.use(transform);
 
 app.use('/docs', swagger);
+app.use('/api', (req, res, next) => {
+  debug.log(req.body);
+  next();
+});
 app.use('/api', api);
 
 app.use(express.static(path.resolve(__dirname, '../ui')));
