@@ -29,8 +29,11 @@ const Auth = {
   redirect(path) {
     window.location.href = `${this.origin}${path}`;
   },
-  logout() {
+  clear() {
     localStorage.clear();
+  },
+  logout() {
+    this.clear();
     this.redirect('/login')
   },
   saveToken: token => localStorage.setItem('token', token),
@@ -96,7 +99,7 @@ function buildNav(user, path, theme) {
   if (!Auth.getToken()) return Auth.redirect('/login');
   try {
     const res = await Auth.getUser();
-    if ((Auth.path.match(/login|signup/gi)) && !res.success) return;
+    if ((Auth.path.match(/login|signup/gi)) && !res.success) return Auth.clear();
     if (res.success) {
       if (Auth.path === 'admin') !res.data.isAdmin && Auth.redirect('/');
       Auth.user = transformData(res.data);
