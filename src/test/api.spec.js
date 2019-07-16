@@ -358,7 +358,6 @@ describe('/api', () => {
     it('should return all order for a specific buyer', (done) => {
       request(app).get(`${api}/order/buyer/${userId}`).set(headers)
         .end((err, res) => {
-          console.log(res.body);
           expect(res.status).to.equal(200);
           expect(res.body).to.have.property('data').that.is.an('array');
           done();
