@@ -65,15 +65,14 @@ a {
 a.link {
   color: var(--color-primary);
   display: inline-flex;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   padding: 5px 0;
+  border-radius: 30px;
 }
 
 a.link:hover {
   background: rgba(0, 119, 255, 0.103);
-  border-left: 3px solid var(--color-yellow-dark);
   padding: 5px 12px;
 }
 
@@ -304,7 +303,9 @@ p {
   justify-content: center;
   align-items: center;
   position: relative;
-  background: url("https://picsum.photos/id/1071/3000/1996") no-repeat center;
+  background: url("https://images.pexels.com/photos/164634/pexels-photo-164634.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") no-repeat center;
+  background-size: cover;
+  
 
   .title {
     font-size: 1.7rem;
