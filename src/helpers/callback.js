@@ -1,3 +1,4 @@
+import AuthModel from '../models/auth';
 import { notfound, success } from './response';
 import { transformData } from '.';
 
@@ -22,6 +23,10 @@ export async function handleGetOne(req, res, Model) {
 
 export async function getAllBy(req, res, Model) {
   const id = req.params.id || req.user.id;
+  const user = await AuthModel.findById(id);
+  if (!user) return notfound(res, 'User not found');
+  console.log({ user });
   const data = await Model.findAllByUser(id);
+  if (!data) return notfound(res);
   success(res, undefined, data);
 }

@@ -24,6 +24,8 @@ const Order = {
 
   getAllByCar: async (req, res) => {
     const { id } = req.params;
+    const car = await CarModel.findOne(id);
+    if (!car) return notfound(res);
     const orders = await OrderModel.findAllByCar(id);
     success(res, undefined, orders);
   },
