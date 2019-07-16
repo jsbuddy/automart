@@ -1,11 +1,12 @@
 const Auth = {
   api: 'https://automartt.herokuapp.com/api/v1',
   user: null,
-  origin: location.pathname.startsWith('/automart') ? `${location.origin}/automart` : location.origin,
+  origin: window.location.pathname.startsWith('/automart') ? `${window.location.origin}/automart` : window.location.origin,
   path: window.location.pathname.replace(/\/|.html/gi, ''),
   async signup(user) {
     return await (await fetch(`${this.api}/auth/signup`, {
-      method: 'POST', body: JSON.stringify(user),
+      method: 'POST',
+      body: JSON.stringify(user),
       headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
     })).json();
   },
@@ -21,7 +22,7 @@ const Auth = {
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer: ${this.getToken()}`
+        'Authorization': `Bearer: ${this.getToken()}`,
       },
     })).json();
     return { success, data: transformData(data) };
@@ -29,9 +30,12 @@ const Auth = {
   redirect(path) {
     window.location.href = `${this.origin}${path}`;
   },
-  logout() {
+  clear() {
     localStorage.clear();
-    this.redirect('/login')
+  },
+  logout() {
+    this.clear();
+    this.redirect('/login');
   },
   saveToken: token => localStorage.setItem('token', token),
   getToken: () => localStorage.getItem('token'),
@@ -41,7 +45,7 @@ const Auth = {
     } else {
       setup(this.user);
     }
-  }
+  },
 };
 
 function setup(user) {
@@ -69,12 +73,9 @@ function buildNav(user, path, theme) {
       <ul class="menu mr-2">
           <li><a class="${path === 'dashboard' ? 'active' : ''}" href="${Auth.origin}/dashboard"><i class="fa fa-chart-bar mr-2"></i>Dashboard</a></li>
           ${user.isAdmin ? `<li><a class="${path === 'admin' ? 'active' : ''}" href="${Auth.origin}/admin"><i class="fa fa-user mr-2"></i>Admin</a></li>` : ''}
-          <li class="dropdown" id="dropdown"><a href="#"><i class="fa fa-book mr-2"></i>API Docs</a>
-              <ul class="dropdown-menu">
-                  <li><a href="/docs">Swagger</a></li>
-                  <li><a href="https://documenter.getpostman.com/view/2332557/S1ZudBGA">Postman</a></li>
-              </ul>
-          </li>
+          
+          <li><a target="_blank" href="https://documenter.getpostman.com/view/2332557/S1ZudBGA"><i class="fa fa-book mr-2"></i>API Documentation</a></li>
+          
           <li class="dropdown"><a href="#"><i class="fa fa-user-circle mr-2"></i>${user.firstName}<i class="fa fa-caret-down ml-2"></i></a>
               <ul class="dropdown-menu">
                   <li><a href="#" id="theme">
@@ -85,20 +86,20 @@ function buildNav(user, path, theme) {
           </li>
       </ul>
     </div>
-  `
+  `;
 }
 
-(async function () {
+(async () => {
   if (Auth.path.match(/login|signup/gi)) {
     if (!Auth.getToken()) return;
-    else return Auth.redirect('/');
+    return Auth.redirect('/');
   }
   if (!Auth.getToken()) return Auth.redirect('/login');
   try {
     const res = await Auth.getUser();
-    if ((Auth.path.match(/login|signup/gi)) && !res.success) return;
+    if ((Auth.path.match(/login|signup/gi)) && !res.success) return Auth.clear();
     if (res.success) {
-      if (Auth.path === 'admin') !res.data.isAdmin && Auth.redirect('/');
+      if (Auth.path === 'admin' && !res.data.isAdmin) Auth.redirect('/');
       Auth.user = transformData(res.data);
       Auth.init();
     } else {

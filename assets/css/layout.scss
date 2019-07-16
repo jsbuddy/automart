@@ -121,6 +121,9 @@ p {
   .logo {
     color: var(--text-color);
     font-weight: bolder;
+    img {
+      max-width: 30px;
+    }
   }
 
   .menu {
@@ -377,6 +380,7 @@ p {
 
   &-view {
     display: none;
+    position: relative;
 
     &.active {
       display: block;
@@ -638,4 +642,11 @@ main {
       padding-left: 1rem;
     }
   }
+}
+
+.admin-filter {
+  position: absolute;
+  top: -77px;
+  right: 0;
+  max-width: 100px;
 }

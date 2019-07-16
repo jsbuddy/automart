@@ -3,11 +3,14 @@ const adsWrapper = document.getElementById('ads');
 const flagsWrapper = document.getElementById('flags');
 const confirmDelete = document.getElementById('confirmDelete');
 const cancelDelete = document.getElementById('cancelDelete');
+const filter = document.getElementById('filter');
 // Modals
 const deleteCarModal = new ModalController(document.getElementById('deleteModal'));
 // Data
 let cars = [];
+let filteredCars = [];
 let flags = [];
+let current;
 
 function populateCars(cars) {
   if (!cars.length) {
@@ -45,6 +48,13 @@ async function deleteCar() {
   }
 }
 
+function handleFilterChange(e) {
+  const { value } = e.target;
+  if (value === 'all') return populateCars(cars);
+  filteredCars = cars.filter(car => car.status === value);
+  populateCars(filteredCars);
+}
+
 async function init() {
   [cars, flags] = await Promise.all([Api.getAllCars(), Api.getFlags()]);
   populateCars(cars);
@@ -61,4 +71,5 @@ window.addEventListener('click', async (e) => {
 });
 
 confirmDelete.addEventListener('click', deleteCar);
-cancelDelete.addEventListener('click', deleteCarModal.close());
+cancelDelete.addEventListener('click', () => deleteCarModal.close());
+filter.addEventListener('change', handleFilterChange);

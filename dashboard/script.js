@@ -1,3 +1,4 @@
+const dropzone = document.getElementById('dropzone');
 // Forms
 const createForm = document.getElementById('createForm');
 const createMessage = document.getElementById('createMessage');
@@ -19,6 +20,7 @@ let cars = [];
 let orders = [];
 let offers = [];
 let current;
+let images;
 
 const updateCar = new Form(updateCarForm, updateCarMessage);
 updateCar.handle = async function (done) {
@@ -68,12 +70,11 @@ offersModal.preClose = () => {
 const create = new Form(createForm, createMessage);
 create.handle = async function (done) {
   const data = create.getValuesAsObject();
-  const files = this.getField('file').files;
   if (this.err) return this.showMessage('All fields are required', 'error');
-  if (!files.length) return this.showMessage('At least one image is required', 'error');
-  if (!validateFiles([...files])) return;
+  if (!images.length) return this.showMessage('At least one image is required', 'error');
+  if (!validateImages(images)) return;
   const fd = new FormData();
-  [...files].forEach(file => fd.append("images", file || ''));
+  images.forEach(image => fd.append("images", image || ''));
   Object.keys(data).forEach(key => fd.append(key, data[key]));
   this.disableForm();
   const res = await Api.createAd(fd);
@@ -88,7 +89,7 @@ create.handle = async function (done) {
   }
 };
 
-function validateFiles(files) {
+function validateImages(files) {
   create.hideMessage();
   const types = ['image/png', 'image/jpeg', 'image/jpg'];
   const invalidLength = files.length > 3;
@@ -111,8 +112,9 @@ function validateFiles(files) {
 }
 
 async function handleImages(files) {
+  images = [...files];
   imagesWrapper.innerHTML = '';
-  if (!this.validateFiles([...files])) return;
+  if (!this.validateImages([...files])) return;
   const urls = await Promise.all([...files].map(file => toDataUrl(file)));
   imagesWrapper.innerHTML = urls.map(url => `<img src="${url}" alt="Car"/>`).join('');
 }
@@ -145,12 +147,12 @@ function populateCars(cars) {
   adsWrapper.innerHTML = cars.map(car => Markup.car(car)).join('');
 }
 
-function populateOffers(offers) {
-  if (!offers.length) {
+function populateOffers(_offers) {
+  if (!_offers.length) {
     offersWrapper.innerHTML = Markup.empty('There are no offers for this vehicle yet');
     return;
   }
-  offersWrapper.innerHTML = offers.map(offer => Markup.offer(offer)).join('');
+  offersWrapper.innerHTML = _offers.map(offer => Markup.offer(offer)).join('');
 }
 
 function updateCars(car) {
@@ -203,7 +205,7 @@ async function handleClick(e) {
   }
   if (e.target.classList && e.target.classList.contains('offer-respond')) {
     const { id, status } = e.target.dataset;
-    document.querySelectorAll('.offer-respond').forEach(el => {
+    document.querySelectorAll('.offer-respond').forEach((el) => {
       el.disabled = true
     });
     const offer = await Api.updateOffer(id, { status });
@@ -211,10 +213,26 @@ async function handleClick(e) {
   }
 }
 
-createForm.addEventListener('submit', (e) => create.submit(e));
-createForm.querySelector('input[name="file"]').addEventListener('change', (e) => handleImages(e.target.files));
-updateCarForm.addEventListener('submit', (e) => updateCar.submit(e));
-updateOrderForm.addEventListener('submit', (e) => updateOrder.submit(e));
+dropzone.addEventListener('drop', (e) => {
+  e.preventDefault();
+  dropzone.classList.remove('active');
+  handleImages(e.dataTransfer.files);
+});
+
+dropzone.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  dropzone.classList.add('active');
+})
+
+dropzone.addEventListener('dragleave', (e) => {
+  e.preventDefault();
+  dropzone.classList.remove('active');
+})
+
+createForm.addEventListener('submit', e => create.submit(e));
+createForm.querySelector('input[name="file"]').addEventListener('change', e => handleImages(e.target.files));
+updateCarForm.addEventListener('submit', e => updateCar.submit(e));
+updateOrderForm.addEventListener('submit', e => updateOrder.submit(e));
 
 window.addEventListener('click', handleClick);
 

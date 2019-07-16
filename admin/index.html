@@ -6,6 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Admin</title>
+    <link rel="icon" href="../assets/images/favicon.ico">
     <link href="../assets/css/elements.min.css" rel="stylesheet">
     <link href="../assets/css/utils.min.css" rel="stylesheet">
     <link href="../assets/css/layout.min.css" rel="stylesheet">
@@ -35,17 +36,17 @@
                 <div class="tab-item">Flagged Ads</div>
             </div>
             <div class="flex align-center">
-                <label class="input-box" style="width: 100px">
-                    <select class="control" name="filter">
-                        <option value="all">All</option>
-                        <option value="sold">Sold</option>
-                        <option value="unsold">Unsold</option>
-                    </select>
-                </label>
             </div>
         </div>
         <div class="tab-views">
             <div class="tab-view active">
+                <label class="input-box admin-filter">
+                    <select class="control" id="filter" name="filter">
+                        <option value="all">All</option>
+                        <option value="sold">Sold</option>
+                        <option value="available">Available</option>
+                    </select>
+                </label>
                 <div class="dashboard-items" id="ads">
                     <div class="dashboard-item">
                         <div class="flex justify-between details">
