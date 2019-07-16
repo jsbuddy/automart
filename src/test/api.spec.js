@@ -154,8 +154,26 @@ describe('/api', () => {
         });
     });
 
+    it('should not return cars due to invalid owner id', (done) => {
+      request(app).get(`${api}/car/owner/1`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('success').that.equals(false);
+          done();
+        });
+    });
+
     it('should not be able to find car with specified id', (done) => {
       request(app).get(`${api}/car/99c92791-ef23-4cc4-8e71-ca81b109d3eb`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('success').that.equals(false);
+          done();
+        });
+    });
+
+    it('should not be able to find car due to invalid id', (done) => {
+      request(app).get(`${api}/car/1`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body).to.have.property('success').that.equals(false);
@@ -310,11 +328,48 @@ describe('/api', () => {
         });
     });
 
+    it('should not return order due to invalid id', (done) => {
+      request(app).get(`${api}/order/1`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('success').that.equals(false);
+          done();
+        });
+    });
+
     it('should return all order for a specific car', (done) => {
       request(app).get(`${api}/order/car/${carId}`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(200);
           expect(res.body).to.have.property('data').that.is.an('array');
+          done();
+        });
+    });
+
+    it('should not return orders due to invalid carId', (done) => {
+      request(app).get(`${api}/order/car/1`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('success').that.equals(false);
+          done();
+        });
+    });
+
+    it('should return all order for a specific buyer', (done) => {
+      request(app).get(`${api}/order/buyer/${userId}`).set(headers)
+        .end((err, res) => {
+          console.log(res.body);
+          expect(res.status).to.equal(200);
+          expect(res.body).to.have.property('data').that.is.an('array');
+          done();
+        });
+    });
+
+    it('should not return orders due to invalid buyer id', (done) => {
+      request(app).get(`${api}/order/car/1`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('success').that.equals(false);
           done();
         });
     });
@@ -328,8 +383,17 @@ describe('/api', () => {
         });
     });
 
-    it('should not be able to update order with specified id', (done) => {
+    it('should not update order with unknown id', (done) => {
       request(app).patch(`${api}/order/99c92791-ef23-4cc4-8e71-ca81b109d3eb`).set(headers)
+        .end((err, res) => {
+          expect(res.status).to.equal(404);
+          expect(res.body).to.have.property('success').that.equals(false);
+          done();
+        });
+    });
+
+    it('should not update order due to invalid id provided', (done) => {
+      request(app).patch(`${api}/order/1`).set(headers)
         .end((err, res) => {
           expect(res.status).to.equal(404);
           expect(res.body).to.have.property('success').that.equals(false);
