@@ -310,12 +310,15 @@ p {
   .title {
     font-size: 1.7rem;
     color: #fff;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
   }
 
   .subtitle {
     font-size: 1.1rem;
     color: #eee;
+    width: 30%;
+    margin-bottom: 10px;
+    line-height: 1.4rem;
   }
 
   > * {
