@@ -6,6 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="ie=edge" http-equiv="X-UA-Compatible">
     <title>Dashboard</title>
+    <link rel="icon" href="../assets/images/favicon.ico">
     <link href="../assets/css/elements.min.css" rel="stylesheet">
     <link href="../assets/css/utils.min.css" rel="stylesheet">
     <link href="../assets/css/layout.min.css" rel="stylesheet">
@@ -120,7 +121,7 @@
             </div>
             <div class="message red mt-4 d-none" id="createMessage"></div>
             <form class="form-group" id="createForm">
-                <div class="file-drop-area mb-2">
+                <div class="file-drop-area mb-2" id="dropzone">
                     <span class="fake-btn">Choose images</span>
                     <span class="file-msg">or drag and drop images here</span>
                     <input accept=".png, .jpg, .jpeg" class="file-input" multiple name="file" type="file">
@@ -151,7 +152,14 @@
                     <select class="control" name="bodyType">
                         <option value="car">Car</option>
                         <option value="truck">Truck</option>
+                        <option value="trailer">Trailer</option>
                         <option value="van">Van</option>
+                        <option value="sedan">Sedan</option>
+                        <option value="hatchback">Hatchback</option>
+                        <option value="convertible">Convertible</option>
+                        <option value="minivan">Minivan</option>
+                        <option value="coupe">Coupe</option>
+                        <option value="station wagon">Station Wagon</option>
                     </select>
                     <span class="label-text">Body Type</span>
                 </label>
