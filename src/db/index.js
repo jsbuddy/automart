@@ -18,7 +18,7 @@ const pool = new Pool({ connectionString: env.DATABASE_URL });
             CREATE TYPE TCarStatus AS ENUM ('sold', 'available');
           END IF;
           IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'tcarbody') THEN
-            CREATE TYPE TCarBody AS ENUM ('car', 'truck', 'trailer', 'van');
+            CREATE TYPE TCarBody AS ENUM ('car', 'truck', 'trailer', 'van', 'sedan', 'hatchback', 'convertible', 'minivan', 'coupe', 'station wagon');
           END IF;
           IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'torderstatus') THEN
             CREATE TYPE TOrderStatus AS ENUM ('pending', 'accepted', 'rejected');

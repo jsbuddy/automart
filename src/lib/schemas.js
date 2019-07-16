@@ -35,7 +35,7 @@ export const carPostSchema = {
     price: Joi.number().required(),
     manufacturer: Joi.string().trim().required(),
     model: Joi.string().trim().required(),
-    bodyType: Joi.string().valid('car', 'truck', 'trailer', 'van').required(),
+    bodyType: Joi.string().valid('car', 'truck', 'trailer', 'van', 'sedan', 'hatchback', 'convertible', 'minivan', 'coupe', 'station wagon').required(),
     status: Joi.string().valid('available', 'sold').default('available'),
   }).unknown(true),
 };
@@ -44,9 +44,6 @@ export const carPatchSchema = {
   body: Joi.object({
     state: Joi.string().valid('new', 'used'),
     price: Joi.number(),
-    manufacturer: Joi.string().trim(),
-    model: Joi.string().trim(),
-    bodyType: Joi.string().valid('car', 'truck', 'trailer', 'van'),
     status: Joi.string().valid('available', 'sold'),
   }).unknown(true),
 };
