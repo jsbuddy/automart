@@ -3,7 +3,6 @@ import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
 import api from './api';
-import swagger from './docs/swagger';
 import { transform } from './middlewares';
 import debug from './lib/debug';
 
@@ -23,11 +22,6 @@ if (dev) {
 
 app.use(transform);
 
-app.use('/docs', swagger);
-app.use('/api', (req, res, next) => {
-  debug.log(req.body);
-  next();
-});
 app.use('/api', api);
 
 app.use(express.static(path.resolve(__dirname, '../ui')));
