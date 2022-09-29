@@ -39,7 +39,7 @@
     "supertest": "^4.0.2"
   },
   "dependencies": {
-    "@hapi/joi": "^15.0.3",
+    "@hapi/joi": "^15.1.1",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.14.0",
     "cors": "^2.8.5",
